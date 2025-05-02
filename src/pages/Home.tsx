@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import Featured from '../components/Featured';
+import OrderPartners from '../components/OrderPartners';
 import Testimonials from '../components/Testimonials';
 import CTASection from '../components/CTASection';
 
@@ -21,6 +22,7 @@ const Home = () => {
       <main>
         <Hero />
         <Featured />
+        <OrderPartners />
         <Testimonials />
         <CTASection />
       </main>
