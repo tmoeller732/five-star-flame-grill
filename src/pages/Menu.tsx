@@ -1,10 +1,17 @@
 
 import { Helmet } from 'react-helmet-async';
+import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MenuContent from '../components/MenuContent';
 
 const Menu = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+  
   return (
     <>
       <Helmet>
@@ -16,7 +23,9 @@ const Menu = () => {
       <Header />
       
       <main className="pt-28 pb-16">
-        <MenuContent />
+        <div className={`transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+          <MenuContent />
+        </div>
       </main>
       
       <Footer />
