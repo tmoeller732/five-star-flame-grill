@@ -24,7 +24,7 @@ const Hero = () => {
             <div className="flex justify-center mb-8">
               <div className="relative -mt-24">
                 <img 
-                  src="/public/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
+                  src="/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
                   alt="5 Star Grill Logo" 
                   className="h-40 md:h-56 animate-flame-slow flame-animation"
                 />

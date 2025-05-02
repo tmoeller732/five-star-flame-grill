@@ -49,7 +49,7 @@ const Order = () => {
               >
                 <div className="h-32 flex items-center justify-center mb-6">
                   <img 
-                    src="/public/lovable-uploads/328cfcfd-602a-46f6-83d2-88419ec75beb.png" 
+                    src="/lovable-uploads/328cfcfd-602a-46f6-83d2-88419ec75beb.png" 
                     alt="GrubHub Logo" 
                     className={`h-24 object-contain transition-all duration-300 ${activeOption === 'grubhub' ? 'scale-110 pulse-glow' : ''}`}
                   />
@@ -74,7 +74,7 @@ const Order = () => {
               >
                 <div className="h-32 flex items-center justify-center mb-6">
                   <img 
-                    src="/public/lovable-uploads/3023517f-db29-4fe3-a755-849d2a497738.png" 
+                    src="/lovable-uploads/3023517f-db29-4fe3-a755-849d2a497738.png" 
                     alt="DoorDash Logo" 
                     className={`h-24 object-contain transition-all duration-300 ${activeOption === 'doordash' ? 'scale-110 pulse-glow' : ''}`}
                   />
@@ -99,9 +99,9 @@ const Order = () => {
               >
                 <div className="h-32 flex items-center justify-center mb-6 relative">
                   <img 
-                    src="/public/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
+                    src="/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
                     alt="5 Star Direct" 
-                    className={`h-24 object-contain transition-all duration-300 ${activeOption === 'direct' ? 'scale-110 animate-flame-slow' : ''}`}
+                    className={`h-24 object-contain transition-all duration-300 ${activeOption === 'direct' ? 'scale-110' : ''}`}
                   />
                 </div>
                 <h3 className="text-xl text-center font-bold mb-3 text-grill-gold">Order Direct</h3>

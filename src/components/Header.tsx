@@ -48,7 +48,7 @@ const Header = () => {
           {showLogo && (
             <Link to="/" className={`flex justify-center items-center absolute left-1/2 transform -translate-x-1/2 transition-all duration-500 ${showLogo ? 'opacity-100' : 'opacity-0'}`}>
               <img 
-                src="/public/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
+                src="/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
                 alt="5 Star Grill" 
                 className={`transition-all duration-300 ${isScrolled ? 'h-16' : 'h-24'}`}
               />

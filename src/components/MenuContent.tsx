@@ -133,15 +133,15 @@ const MenuContent = () => {
   
   useEffect(() => {
     const generateMenuImages = async () => {
-      if (menuItems.some(item => item.imageUrl)) return; // Skip if we already have images
-      
       setIsLoading(true);
       try {
         const updatedItems = [...menuItems];
         
-        for (const item of updatedItems) {
+        for (let i = 0; i < updatedItems.length; i++) {
+          const item = updatedItems[i];
           if (!item.imageUrl) {
             try {
+              console.log(`Generating image for ${item.name}...`);
               const result = await runwareService.generateImage({
                 positivePrompt: `Professional food photography of ${item.name}, ${item.description}, gourmet restaurant quality, extreme close-up, bokeh background, high definition`,
                 width: 512,
@@ -149,7 +149,12 @@ const MenuContent = () => {
               });
               
               if (result.imageURL) {
-                item.imageUrl = result.imageURL;
+                console.log(`Image generated for ${item.name}: ${result.imageURL}`);
+                updatedItems[i] = {
+                  ...item,
+                  imageUrl: result.imageURL
+                };
+                
                 // Update state incrementally to show images as they're generated
                 setMenuItems([...updatedItems]);
               }
