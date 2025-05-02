@@ -94,7 +94,7 @@ const OrderPartners = () => {
                 <img 
                   src="/public/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
                   alt="5 Star Direct" 
-                  className="h-24 object-contain hover:scale-110 transition-transform duration-300 pulse-glow animate-flame-slow"
+                  className="h-24 object-contain hover:scale-110 transition-transform duration-300"
                 />
               )}
             </div>
