@@ -15,7 +15,7 @@ const Footer = () => {
               <img 
                 src="/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
                 alt="5 Star Grill" 
-                className="h-20 mb-4"
+                className="h-20 mb-4 transition-transform duration-500 hover:rotate-360"
               />
             </Link>
             <p className="text-gray-400 text-sm text-center md:text-left">

@@ -112,6 +112,10 @@ export default {
 						opacity: '1',
 						transform: 'translateY(0)'
 					}
+				},
+				'spin': {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg)' }
 				}
 			},
 			animation: {
@@ -119,7 +123,11 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'flame': 'flame 3s ease-in-out infinite',
 				'flame-slow': 'flame 4s ease-in-out infinite',
-				'fade-in': 'fade-in 0.5s ease-out forwards'
+				'fade-in': 'fade-in 0.5s ease-out forwards',
+				'spin': 'spin 1s linear infinite'
+			},
+			rotate: {
+				'360': '360deg'
 			},
 			fontFamily: {
 				'playfair': ['"Playfair Display"', 'serif'],
