@@ -77,6 +77,9 @@ const Footer = () => {
           <p className="text-gray-500 text-sm">
             &copy; {currentYear} 5 Star Grill. All rights reserved.
           </p>
+          <p className="text-gray-500 text-sm mt-2">
+            Custom Site Designed By: <a href="https://moeller.marketing" target="_blank" rel="noopener noreferrer" className="text-grill-gold hover:underline">Moeller Marketing</a>
+          </p>
         </div>
       </div>
     </footer>
