@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,13 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				grill: {
+					gold: '#E2B13C',
+					orange: '#FF9D00',
+					brown: '#3C2415',
+					black: '#121212',
+					cream: '#F5F5DC'
 				}
 			},
 			borderRadius: {
@@ -84,11 +92,41 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'flame': {
+					'0%, 100%': { 
+						transform: 'scale(1) rotate(-2deg)',
+						filter: 'brightness(1)'
+					},
+					'50%': { 
+						transform: 'scale(1.05) rotate(2deg)',
+						filter: 'brightness(1.1)'
+					}
+				},
+				'fade-in': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(10px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'flame': 'flame 3s ease-in-out infinite',
+				'flame-slow': 'flame 4s ease-in-out infinite',
+				'fade-in': 'fade-in 0.5s ease-out forwards'
+			},
+			fontFamily: {
+				'playfair': ['"Playfair Display"', 'serif'],
+				'raleway': ['Raleway', 'sans-serif']
+			},
+			backgroundImage: {
+				'hero-pattern': "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/public/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png')"
 			}
 		}
 	},
