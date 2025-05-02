@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Flame } from 'lucide-react';
+import OrderDropdown from './OrderDropdown';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -42,7 +43,7 @@ const Header = () => {
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-grill-black bg-opacity-95 shadow-lg' : 'bg-transparent'}`}>
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-6">
         <div className="flex justify-center items-center relative">
           {/* Logo (centered) - hidden on home page until scrolled past hero */}
           {showLogo && (
@@ -84,15 +85,10 @@ const Header = () => {
           </nav>
 
           {/* Right navigation items - moved closer to center */}
-          <nav className="hidden md:flex space-x-6 ml-28">
-            <Link to="/order" className="nav-item group">
-              <div className="relative">
-                <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
-                <span className={`font-medium text-lg transition-all duration-300 hover:text-grill-gold ${isActive('/order') ? 'text-grill-gold' : 'text-white'}`}>
-                  Order
-                </span>
-              </div>
-            </Link>
+          <nav className="hidden md:flex space-x-6 ml-28 items-center">
+            <div className="nav-item group">
+              <OrderDropdown />
+            </div>
             <Link to="/blog" className="nav-item group">
               <div className="relative">
                 <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
