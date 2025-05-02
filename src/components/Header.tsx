@@ -7,6 +7,7 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isHeroVisible, setIsHeroVisible] = useState(true);
+  const [isLightMode, setIsLightMode] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -17,6 +18,9 @@ const Header = () => {
       // Check if user has scrolled past hero section (roughly viewport height)
       const heroHeight = window.innerHeight * 0.7; // 70% of viewport height
       setIsHeroVisible(scrollPosition <= heroHeight);
+      
+      // Set light mode when scrolled past certain point
+      setIsLightMode(scrollPosition > heroHeight);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -40,9 +44,20 @@ const Header = () => {
 
   const showLogo = !isHeroVisible || location.pathname !== '/';
 
+  // Determine text color based on mode
+  const textColorClass = isLightMode ? 'text-grill-black' : 'text-white';
+  const hoverColorClass = 'hover:text-grill-gold';
+  const activeColorClass = 'text-grill-gold';
+
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-grill-black bg-opacity-95 shadow-lg' : 'bg-transparent'}`}>
-      <div className="container mx-auto px-4 py-4">
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled 
+        ? isLightMode 
+          ? 'bg-white bg-opacity-95 shadow-lg' 
+          : 'bg-grill-black bg-opacity-95 shadow-lg' 
+        : 'bg-transparent'
+    }`}>
+      <div className="container mx-auto px-4 py-6">
         <div className="flex justify-center items-center relative">
           {/* Logo (centered) - hidden on home page until scrolled past hero */}
           {showLogo && (
@@ -59,8 +74,8 @@ const Header = () => {
           <nav className="hidden md:flex space-x-6 mr-28">
             <Link to="/" className="nav-item group">
               <div className="relative">
-                <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
-                <span className={`font-medium text-lg transition-all duration-300 hover:text-grill-gold ${isActive('/') ? 'text-grill-gold' : 'text-white'}`}>
+                <Flame size={20} className={`absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame`} />
+                <span className={`font-medium text-lg transition-all duration-300 ${hoverColorClass} ${isActive('/') ? activeColorClass : textColorClass}`}>
                   Home
                 </span>
               </div>
@@ -68,7 +83,7 @@ const Header = () => {
             <Link to="/about" className="nav-item group">
               <div className="relative">
                 <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
-                <span className={`font-medium text-lg transition-all duration-300 hover:text-grill-gold ${isActive('/about') ? 'text-grill-gold' : 'text-white'}`}>
+                <span className={`font-medium text-lg transition-all duration-300 ${hoverColorClass} ${isActive('/about') ? activeColorClass : textColorClass}`}>
                   About
                 </span>
               </div>
@@ -76,7 +91,7 @@ const Header = () => {
             <Link to="/menu" className="nav-item group">
               <div className="relative">
                 <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
-                <span className={`font-medium text-lg transition-all duration-300 hover:text-grill-gold ${isActive('/menu') ? 'text-grill-gold' : 'text-white'}`}>
+                <span className={`font-medium text-lg transition-all duration-300 ${hoverColorClass} ${isActive('/menu') ? activeColorClass : textColorClass}`}>
                   Menu
                 </span>
               </div>
@@ -88,7 +103,7 @@ const Header = () => {
             <Link to="/order" className="nav-item group">
               <div className="relative">
                 <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
-                <span className={`font-medium text-lg transition-all duration-300 hover:text-grill-gold ${isActive('/order') ? 'text-grill-gold' : 'text-white'}`}>
+                <span className={`font-medium text-lg transition-all duration-300 ${hoverColorClass} ${isActive('/order') ? activeColorClass : textColorClass}`}>
                   Order
                 </span>
               </div>
@@ -96,7 +111,7 @@ const Header = () => {
             <Link to="/blog" className="nav-item group">
               <div className="relative">
                 <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
-                <span className={`font-medium text-lg transition-all duration-300 hover:text-grill-gold ${isActive('/blog') ? 'text-grill-gold' : 'text-white'}`}>
+                <span className={`font-medium text-lg transition-all duration-300 ${hoverColorClass} ${isActive('/blog') ? activeColorClass : textColorClass}`}>
                   Blog
                 </span>
               </div>
@@ -104,7 +119,7 @@ const Header = () => {
             <Link to="/contact" className="nav-item group">
               <div className="relative">
                 <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
-                <span className={`font-medium text-lg transition-all duration-300 hover:text-grill-gold ${isActive('/contact') ? 'text-grill-gold' : 'text-white'}`}>
+                <span className={`font-medium text-lg transition-all duration-300 ${hoverColorClass} ${isActive('/contact') ? activeColorClass : textColorClass}`}>
                   Contact
                 </span>
               </div>
@@ -115,7 +130,7 @@ const Header = () => {
           <div className="md:hidden absolute right-0">
             <button 
               onClick={toggleMobileMenu}
-              className="text-white hover:text-grill-gold transition-colors"
+              className={`${textColorClass} hover:text-grill-gold transition-colors`}
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -126,11 +141,11 @@ const Header = () => {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-grill-black bg-opacity-95 p-4">
+        <div className={`md:hidden p-4 ${isLightMode ? 'bg-white bg-opacity-95' : 'bg-grill-black bg-opacity-95'}`}>
           <nav className="flex flex-col space-y-4">
             <Link 
               to="/" 
-              className={`font-medium text-lg transition-colors hover:text-grill-gold ${isActive('/') ? 'text-grill-gold' : 'text-white'} flex items-center`}
+              className={`font-medium text-lg transition-colors hover:text-grill-gold ${isActive('/') ? 'text-grill-gold' : textColorClass} flex items-center`}
               onClick={closeMobileMenu}
             >
               <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
@@ -138,7 +153,7 @@ const Header = () => {
             </Link>
             <Link 
               to="/about" 
-              className={`font-medium text-lg transition-colors hover:text-grill-gold ${isActive('/about') ? 'text-grill-gold' : 'text-white'} flex items-center`}
+              className={`font-medium text-lg transition-colors hover:text-grill-gold ${isActive('/about') ? 'text-grill-gold' : textColorClass} flex items-center`}
               onClick={closeMobileMenu}
             >
               <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
@@ -146,7 +161,7 @@ const Header = () => {
             </Link>
             <Link 
               to="/menu" 
-              className={`font-medium text-lg transition-colors hover:text-grill-gold ${isActive('/menu') ? 'text-grill-gold' : 'text-white'} flex items-center`}
+              className={`font-medium text-lg transition-colors hover:text-grill-gold ${isActive('/menu') ? 'text-grill-gold' : textColorClass} flex items-center`}
               onClick={closeMobileMenu}
             >
               <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
@@ -154,7 +169,7 @@ const Header = () => {
             </Link>
             <Link 
               to="/order" 
-              className={`font-medium text-lg transition-colors hover:text-grill-gold ${isActive('/order') ? 'text-grill-gold' : 'text-white'} flex items-center`}
+              className={`font-medium text-lg transition-colors hover:text-grill-gold ${isActive('/order') ? 'text-grill-gold' : textColorClass} flex items-center`}
               onClick={closeMobileMenu}
             >
               <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
@@ -162,7 +177,7 @@ const Header = () => {
             </Link>
             <Link 
               to="/blog" 
-              className={`font-medium text-lg transition-colors hover:text-grill-gold ${isActive('/blog') ? 'text-grill-gold' : 'text-white'} flex items-center`}
+              className={`font-medium text-lg transition-colors hover:text-grill-gold ${isActive('/blog') ? 'text-grill-gold' : textColorClass} flex items-center`}
               onClick={closeMobileMenu}
             >
               <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
@@ -170,7 +185,7 @@ const Header = () => {
             </Link>
             <Link 
               to="/contact" 
-              className={`font-medium text-lg transition-colors hover:text-grill-gold ${isActive('/contact') ? 'text-grill-gold' : 'text-white'} flex items-center`}
+              className={`font-medium text-lg transition-colors hover:text-grill-gold ${isActive('/contact') ? 'text-grill-gold' : textColorClass} flex items-center`}
               onClick={closeMobileMenu}
             >
               <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
