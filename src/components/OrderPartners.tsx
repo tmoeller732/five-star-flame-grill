@@ -32,23 +32,8 @@ const OrderPartners = () => {
   }, []);
 
   useEffect(() => {
-    async function generateLogo() {
-      try {
-        setIsLoading(true);
-        const result = await runwareService.generateImage({
-          positivePrompt: "A professional, clean logo that says '5 Star Direct' with a flame icon, on transparent background, flat design, minimalist",
-          width: 512,
-          height: 256
-        });
-        setDirectLogoUrl(result.imageURL);
-      } catch (error) {
-        console.error("Failed to generate logo:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    
-    generateLogo();
+    // Using site logo for the Direct option instead of generating one
+    setIsLoading(false);
   }, []);
 
   return (
@@ -66,7 +51,7 @@ const OrderPartners = () => {
           <div className="bg-card p-6 rounded-lg shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
             <div className="h-32 flex items-center justify-center mb-6">
               <img 
-                src="https://logowik.com/content/uploads/images/grubhub5225.jpg" 
+                src="/public/lovable-uploads/328cfcfd-602a-46f6-83d2-88419ec75beb.png" 
                 alt="GrubHub Logo" 
                 className="h-24 object-contain hover:scale-110 transition-transform duration-300 pulse-glow"
               />
@@ -105,17 +90,12 @@ const OrderPartners = () => {
             <div className="h-32 flex items-center justify-center mb-6 relative">
               {isLoading ? (
                 <div className="animate-pulse bg-gray-300 h-24 w-full rounded"></div>
-              ) : directLogoUrl ? (
-                <img 
-                  src={directLogoUrl} 
-                  alt="5 Star Direct" 
-                  className="h-24 object-contain hover:scale-110 transition-transform duration-300 pulse-glow"
-                />
               ) : (
-                <div className="flex flex-col items-center justify-center text-grill-gold pulse-glow">
-                  <span className="text-2xl font-bold">5 Star Direct</span>
-                  <div className="text-4xl animate-flame">🔥</div>
-                </div>
+                <img 
+                  src="/public/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
+                  alt="5 Star Direct" 
+                  className="h-24 object-contain hover:scale-110 transition-transform duration-300 pulse-glow animate-flame-slow"
+                />
               )}
             </div>
             <Button 

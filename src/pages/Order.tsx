@@ -5,34 +5,14 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Button } from '@/components/ui/button';
-import runwareService from '../services/RunwareService';
 
 const Order = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [directLogoUrl, setDirectLogoUrl] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [activeOption, setActiveOption] = useState<string | null>(null);
 
   useEffect(() => {
     setIsVisible(true);
-    
-    async function generateLogo() {
-      try {
-        setIsLoading(true);
-        const result = await runwareService.generateImage({
-          positivePrompt: "A professional, clean logo that says '5 Star Direct' with a flame icon, on transparent background, flat design, minimalist",
-          width: 512,
-          height: 256
-        });
-        setDirectLogoUrl(result.imageURL);
-      } catch (error) {
-        console.error("Failed to generate logo:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    
-    generateLogo();
   }, []);
 
   const handleOptionHover = (option: string) => {
@@ -69,9 +49,9 @@ const Order = () => {
               >
                 <div className="h-32 flex items-center justify-center mb-6">
                   <img 
-                    src="https://logowik.com/content/uploads/images/grubhub5225.jpg" 
+                    src="/public/lovable-uploads/328cfcfd-602a-46f6-83d2-88419ec75beb.png" 
                     alt="GrubHub Logo" 
-                    className={`h-24 object-contain transition-all duration-300 ${activeOption === 'grubhub' ? 'scale-110' : ''}`}
+                    className={`h-24 object-contain transition-all duration-300 ${activeOption === 'grubhub' ? 'scale-110 pulse-glow' : ''}`}
                   />
                 </div>
                 <h3 className="text-xl text-center font-bold mb-3 text-grill-gold">Order with GrubHub</h3>
@@ -96,7 +76,7 @@ const Order = () => {
                   <img 
                     src="https://logowik.com/content/uploads/images/doordash5214.jpg" 
                     alt="DoorDash Logo" 
-                    className={`h-24 object-contain transition-all duration-300 ${activeOption === 'doordash' ? 'scale-110' : ''}`}
+                    className={`h-24 object-contain transition-all duration-300 ${activeOption === 'doordash' ? 'scale-110 pulse-glow' : ''}`}
                   />
                 </div>
                 <h3 className="text-xl text-center font-bold mb-3 text-grill-gold">Order with DoorDash</h3>
@@ -118,20 +98,11 @@ const Order = () => {
                 onMouseLeave={() => setActiveOption(null)}
               >
                 <div className="h-32 flex items-center justify-center mb-6 relative">
-                  {isLoading ? (
-                    <div className="animate-pulse bg-gray-300 h-24 w-full rounded"></div>
-                  ) : directLogoUrl ? (
-                    <img 
-                      src={directLogoUrl} 
-                      alt="5 Star Direct" 
-                      className={`h-24 object-contain transition-all duration-300 ${activeOption === 'direct' ? 'scale-110' : ''}`}
-                    />
-                  ) : (
-                    <div className="flex flex-col items-center justify-center text-grill-gold">
-                      <span className="text-2xl font-bold">5 Star Direct</span>
-                      <div className="text-4xl">🔥</div>
-                    </div>
-                  )}
+                  <img 
+                    src="/public/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
+                    alt="5 Star Direct" 
+                    className={`h-24 object-contain transition-all duration-300 ${activeOption === 'direct' ? 'scale-110 animate-flame-slow' : ''}`}
+                  />
                 </div>
                 <h3 className="text-xl text-center font-bold mb-3 text-grill-gold">Order Direct</h3>
                 <p className="text-gray-300 text-sm mb-4 text-center">Order directly from us for the best experience and savings.</p>
