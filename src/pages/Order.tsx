@@ -74,7 +74,7 @@ const Order = () => {
               >
                 <div className="h-32 flex items-center justify-center mb-6">
                   <img 
-                    src="https://logowik.com/content/uploads/images/doordash5214.jpg" 
+                    src="/public/lovable-uploads/c5847baf-4449-4d88-aac4-abb11049befb.png" 
                     alt="DoorDash Logo" 
                     className={`h-24 object-contain transition-all duration-300 ${activeOption === 'doordash' ? 'scale-110 pulse-glow' : ''}`}
                   />
