@@ -70,7 +70,7 @@ const OrderPartners = () => {
           <div className="bg-card p-6 rounded-lg shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
             <div className="h-32 flex items-center justify-center mb-6">
               <img 
-                src="/public/lovable-uploads/c5847baf-4449-4d88-aac4-abb11049befb.png" 
+                src="/public/lovable-uploads/3023517f-db29-4fe3-a755-849d2a497738.png" 
                 alt="DoorDash Logo" 
                 className="h-24 object-contain hover:scale-110 transition-transform duration-300 pulse-glow"
               />
