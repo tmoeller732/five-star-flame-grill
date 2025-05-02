@@ -13,7 +13,7 @@ const Footer = () => {
           <div className="flex flex-col items-center md:items-start">
             <Link to="/">
               <img 
-                src="/public/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
+                src="/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
                 alt="5 Star Grill" 
                 className="h-20 mb-4"
               />
