@@ -6,14 +6,23 @@ import { Menu, X, Flame } from 'lucide-react';
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isHeroVisible, setIsHeroVisible] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      const scrollPosition = window.scrollY;
+      setIsScrolled(scrollPosition > 10);
+      
+      // Check if user has scrolled past hero section (roughly viewport height)
+      const heroHeight = window.innerHeight * 0.7; // 70% of viewport height
+      setIsHeroVisible(scrollPosition <= heroHeight);
     };
 
     window.addEventListener('scroll', handleScroll);
+    // Initial check
+    handleScroll();
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -29,18 +38,22 @@ const Header = () => {
     return location.pathname === path;
   };
 
+  const showLogo = !isHeroVisible || location.pathname !== '/';
+
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-grill-black bg-opacity-95 shadow-lg' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-center items-center relative">
-          {/* Logo (centered) */}
-          <Link to="/" className="flex justify-center items-center absolute left-1/2 transform -translate-x-1/2">
-            <img 
-              src="/public/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
-              alt="5 Star Grill" 
-              className={`transition-all duration-300 ${isScrolled ? 'h-16' : 'h-24'}`}
-            />
-          </Link>
+          {/* Logo (centered) - hidden on home page until scrolled past hero */}
+          {showLogo && (
+            <Link to="/" className={`flex justify-center items-center absolute left-1/2 transform -translate-x-1/2 transition-all duration-500 ${showLogo ? 'opacity-100' : 'opacity-0'}`}>
+              <img 
+                src="/public/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
+                alt="5 Star Grill" 
+                className={`transition-all duration-300 ${isScrolled ? 'h-16' : 'h-24'}`}
+              />
+            </Link>
+          )}
 
           {/* Left navigation items - moved closer to center */}
           <nav className="hidden md:flex space-x-6 mr-28">

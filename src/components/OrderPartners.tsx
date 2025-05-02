@@ -68,7 +68,7 @@ const OrderPartners = () => {
               <img 
                 src="https://logowik.com/content/uploads/images/grubhub5225.jpg" 
                 alt="GrubHub Logo" 
-                className="h-24 object-contain hover:scale-110 transition-transform duration-300"
+                className="h-24 object-contain hover:scale-110 transition-transform duration-300 pulse-glow"
               />
             </div>
             <Button 
@@ -87,7 +87,7 @@ const OrderPartners = () => {
               <img 
                 src="https://logowik.com/content/uploads/images/doordash5214.jpg" 
                 alt="DoorDash Logo" 
-                className="h-24 object-contain hover:scale-110 transition-transform duration-300"
+                className="h-24 object-contain hover:scale-110 transition-transform duration-300 pulse-glow"
               />
             </div>
             <Button 
@@ -109,12 +109,12 @@ const OrderPartners = () => {
                 <img 
                   src={directLogoUrl} 
                   alt="5 Star Direct" 
-                  className="h-24 object-contain hover:scale-110 transition-transform duration-300"
+                  className="h-24 object-contain hover:scale-110 transition-transform duration-300 pulse-glow"
                 />
               ) : (
-                <div className="flex flex-col items-center justify-center text-grill-gold">
+                <div className="flex flex-col items-center justify-center text-grill-gold pulse-glow">
                   <span className="text-2xl font-bold">5 Star Direct</span>
-                  <div className="text-4xl">🔥</div>
+                  <div className="text-4xl animate-flame">🔥</div>
                 </div>
               )}
             </div>

@@ -22,7 +22,7 @@ const Hero = () => {
         <div className="max-w-3xl mx-auto text-center">
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="flex justify-center mb-8">
-              <div className="relative">
+              <div className="relative -mt-24">
                 <img 
                   src="/public/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
                   alt="5 Star Grill Logo" 
