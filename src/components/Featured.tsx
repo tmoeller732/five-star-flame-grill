@@ -69,11 +69,11 @@ const Featured = () => {
     };
   }, []);
 
-  // Static Runware-generated images
+  // Using direct Unsplash images for reliability
   const staticImages = {
-    steak: "https://im.runware.ai/image/ws/0.5/ii/b419d000-e38f-4a58-9acb-f3af2697c20c.webp",
-    breakfast: "https://im.runware.ai/image/ws/0.5/ii/429489aa-5ee9-4ca5-a550-dca465e372e4.webp",
-    burger: "https://im.runware.ai/image/ws/0.5/ii/5f382641-16c8-4e0c-a01f-2fad270e7951.webp"
+    steak: "https://images.unsplash.com/photo-1565299507177-b0ac66763828?q=80&w=2264",
+    breakfast: "https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=2380",
+    burger: "https://images.unsplash.com/photo-1513271075334-039ed3c51b18?q=80&w=2419"
   };
 
   return (
