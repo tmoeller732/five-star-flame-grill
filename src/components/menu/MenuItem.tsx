@@ -2,7 +2,6 @@
 import React from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import useAnimationState from '@/hooks/useAnimationState';
 
 export interface MenuItemProps {
   id: number;
@@ -15,14 +14,8 @@ export interface MenuItemProps {
 }
 
 const MenuItem = ({ item }: { item: MenuItemProps }) => {
-  const { play, stop } = useAnimationState();
-  
   return (
-    <Card 
-      className="overflow-hidden bg-card hover:shadow-lg transition-all duration-300 menu-item"
-      onMouseEnter={play}
-      onMouseLeave={stop}
-    >
+    <Card className="overflow-hidden bg-card hover:shadow-lg transition-all duration-300 menu-item">
       <div className="aspect-video overflow-hidden bg-muted">
         {item.imageUrl ? (
           <img 
