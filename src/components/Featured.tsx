@@ -69,11 +69,11 @@ const Featured = () => {
     };
   }, []);
 
-  // Using direct Unsplash images for reliability
+  // Using direct Unsplash images for reliability and uploaded burger image
   const staticImages = {
     steak: "https://images.unsplash.com/photo-1565299507177-b0ac66763828?q=80&w=2264",
     breakfast: "https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=2380",
-    burger: "https://images.unsplash.com/photo-1513271075334-039ed3c51b18?q=80&w=2419"
+    burger: "/lovable-uploads/823ac36a-de5b-476a-9754-27a1bf8f842f.png"
   };
 
   return (
