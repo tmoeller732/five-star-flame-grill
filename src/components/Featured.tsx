@@ -1,8 +1,8 @@
-
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import useAnimationState from '@/hooks/useAnimationState';
 
 const FeaturedItem = ({ 
   image, 
@@ -17,10 +17,14 @@ const FeaturedItem = ({
   tag: string;
   delay?: string;
 }) => {
+  const { play, stop } = useAnimationState();
+  
   return (
     <div 
       className={`menu-item bg-grill-brown/20 rounded-lg overflow-hidden opacity-0 animate-fade-in`} 
       style={{ animationDelay: `${delay}s` }}
+      onMouseEnter={() => play()}
+      onMouseLeave={() => stop()}
     >
       <div className="h-48 md:h-56 overflow-hidden">
         <img 
