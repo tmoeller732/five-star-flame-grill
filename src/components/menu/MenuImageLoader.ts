@@ -6,7 +6,6 @@ import { toast } from "sonner";
 export const generateMenuImages = async (menuItems: MenuItemProps[]) => {
   try {
     const updatedItems = [...menuItems];
-    let anyImagesGenerated = false;
     
     for (let i = 0; i < updatedItems.length; i++) {
       const item = updatedItems[i];
@@ -25,7 +24,6 @@ export const generateMenuImages = async (menuItems: MenuItemProps[]) => {
               ...item,
               imageUrl: result.imageURL
             };
-            anyImagesGenerated = true;
           }
         } catch (err) {
           console.error("Failed to generate image for:", item.name, err);
@@ -34,21 +32,10 @@ export const generateMenuImages = async (menuItems: MenuItemProps[]) => {
       }
     }
     
-    if (anyImagesGenerated) {
-      // Store generated images in localStorage to avoid regenerating them
-      localStorage.setItem('menuItemsWithImages', JSON.stringify(updatedItems));
-    }
-    
     return updatedItems;
   } catch (error) {
     console.error("Error generating images:", error);
     toast.error("Failed to generate some menu images");
     return menuItems;
   }
-};
-
-// Function to load cached menu items with images
-export const loadCachedMenuImages = () => {
-  const cachedItems = localStorage.getItem('menuItemsWithImages');
-  return cachedItems ? JSON.parse(cachedItems) : null;
 };
