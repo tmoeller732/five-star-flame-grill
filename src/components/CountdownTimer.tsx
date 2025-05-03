@@ -48,7 +48,7 @@ const CountdownTimer = ({ className = '' }: CountdownTimerProps) => {
 
   return (
     <div className={`mt-6 mb-2 ${className}`}>
-      <p className="text-grill-gold font-medium text-lg mb-2 font-playfair">Limited Time Offer Ends In:</p>
+      <p className="text-grill-gold font-medium text-lg mb-2 font-playfair">Ordering Apps Ready In:</p>
       <div className="flex justify-center gap-3 md:gap-4">
         <div className="flex flex-col items-center">
           <div className="bg-grill-brown/80 text-grill-gold font-bold text-xl md:text-2xl w-14 md:w-16 h-14 md:h-16 flex items-center justify-center rounded-md border border-grill-gold/30">
