@@ -8,7 +8,7 @@ interface AnimationSidebarProps {
 const AnimationSidebar: React.FC<AnimationSidebarProps> = ({ isVisible }) => {
   return (
     <div 
-      className={`fixed left-0 top-0 h-full w-40 pointer-events-none z-10 transition-opacity duration-300 flex items-center justify-center ${
+      className={`fixed bottom-0 left-0 right-0 h-40 pointer-events-none z-10 transition-opacity duration-300 flex items-center justify-center ${
         isVisible ? 'opacity-70' : 'opacity-0'
       }`}
     >
