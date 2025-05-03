@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -23,8 +24,8 @@ const FeaturedItem = ({
     <div 
       className={`menu-item bg-grill-brown/20 rounded-lg overflow-hidden opacity-0 animate-fade-in`} 
       style={{ animationDelay: `${delay}s` }}
-      onMouseEnter={() => play()}
-      onMouseLeave={() => stop()}
+      onMouseEnter={play}
+      onMouseLeave={stop}
     >
       <div className="h-48 md:h-56 overflow-hidden">
         <img 

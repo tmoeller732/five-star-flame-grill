@@ -20,8 +20,8 @@ const MenuItem = ({ item }: { item: MenuItemProps }) => {
   return (
     <Card 
       className="overflow-hidden bg-card hover:shadow-lg transition-all duration-300 menu-item"
-      onMouseEnter={() => play()}
-      onMouseLeave={() => stop()}
+      onMouseEnter={play}
+      onMouseLeave={stop}
     >
       <div className="aspect-video overflow-hidden bg-muted">
         {item.imageUrl ? (

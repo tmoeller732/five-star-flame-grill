@@ -9,8 +9,14 @@ interface AnimationState {
 
 const useAnimationState = create<AnimationState>((set) => ({
   isPlaying: false,
-  play: () => set({ isPlaying: true }),
-  stop: () => set({ isPlaying: false }),
+  play: () => {
+    console.log('Animation play triggered');
+    set({ isPlaying: true });
+  },
+  stop: () => {
+    console.log('Animation stop triggered');
+    set({ isPlaying: false });
+  },
 }));
 
 export default useAnimationState;
