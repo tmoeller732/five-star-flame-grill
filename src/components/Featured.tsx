@@ -69,6 +69,13 @@ const Featured = () => {
     };
   }, []);
 
+  // Static Runware-generated images
+  const staticImages = {
+    steak: "https://im.runware.ai/image/ws/0.5/ii/b419d000-e38f-4a58-9acb-f3af2697c20c.webp",
+    breakfast: "https://im.runware.ai/image/ws/0.5/ii/429489aa-5ee9-4ca5-a550-dca465e372e4.webp",
+    burger: "https://im.runware.ai/image/ws/0.5/ii/5f382641-16c8-4e0c-a01f-2fad270e7951.webp"
+  };
+
   return (
     <section id="featured" className="py-20 bg-grain bg-grill-black">
       <div className="container mx-auto px-4">
@@ -83,21 +90,21 @@ const Featured = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <FeaturedItem 
-            image="https://images.unsplash.com/photo-1565299507177-b0ac66763828?q=80&w=2264"
+            image={staticImages.steak}
             title="Flame-Grilled Steak"
             description="Premium Angus beef grilled to perfection, served with roasted vegetables and your choice of side."
             tag="Dinner"
             delay="0.1"
           />
           <FeaturedItem 
-            image="https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=2380"
+            image={staticImages.breakfast}
             title="Sunrise Breakfast Platter"
             description="Eggs your way, smoked bacon, sausage, grilled tomatoes, and toast with homemade jam."
             tag="Breakfast"
             delay="0.3"
           />
           <FeaturedItem 
-            image="https://images.unsplash.com/photo-1513271075334-039ed3c51b18?q=80&w=2419"
+            image={staticImages.burger}
             title="Gourmet Grilled Burger"
             description="Half-pound Angus burger with aged cheddar, caramelized onions, and our signature sauce."
             tag="Lunch"
