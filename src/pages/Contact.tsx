@@ -1,9 +1,16 @@
-
 import { Helmet } from 'react-helmet-async';
+import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import CountdownTimer from '../components/CountdownTimer';
 
 const Contact = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+  
   return (
     <>
       <Helmet>
@@ -16,11 +23,12 @@ const Contact = () => {
       
       <main className="pt-28 pb-16">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <div className={`text-center mb-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h1 className="text-4xl md:text-5xl font-playfair mb-4 text-grill-gold">Contact Us</h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Have questions or want to make a reservation? Reach out to us!
             </p>
+            <CountdownTimer className="mb-6" />
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -99,7 +107,6 @@ const Contact = () => {
             </div>
           </div>
           
-          {/* Google Maps embed */}
           <div className="mt-12 max-w-4xl mx-auto bg-card rounded-lg overflow-hidden">
             <div className="aspect-video w-full">
               <iframe 

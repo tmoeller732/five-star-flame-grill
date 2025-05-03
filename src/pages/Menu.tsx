@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MenuContent from '../components/MenuContent';
+import CountdownTimer from '../components/CountdownTimer';
 
 const Menu = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -24,6 +25,15 @@ const Menu = () => {
       
       <main className="pt-28 pb-16">
         <div className={`transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="container mx-auto px-4 mb-8">
+            <div className="text-center">
+              <h1 className="text-4xl md:text-5xl font-playfair mb-4 text-grill-gold">Our Menu</h1>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-6">
+                Explore our delicious selection of grilled specialties.
+              </p>
+              <CountdownTimer />
+            </div>
+          </div>
           <MenuContent />
         </div>
       </main>
