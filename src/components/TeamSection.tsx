@@ -81,16 +81,16 @@ const TeamSection = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <TeamMember 
-            name="Syed"
+            name="Founder"
             role="Co-Founder"
             description="A local resident with a passion for creating a welcoming spot where the community can enjoy exceptional food."
             imageUrl={imageUrls.owner1}
             delay="0.1"
           />
           <TeamMember 
-            name="Carlos"
+            name="Founder"
             role="Co-Founder"
-            description="Brings his love for culinary excellence to 5 Star Grill, ensuring quality in every dish that leaves the kitchen."
+            description="Brings their love for culinary excellence to 5 Star Grill, ensuring quality in every dish that leaves the kitchen."
             imageUrl={imageUrls.owner2}
             delay="0.3"
           />

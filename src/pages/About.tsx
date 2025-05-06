@@ -74,7 +74,7 @@ const About = () => {
                 </h2>
                 
                 <p className="text-gray-300 mb-4">
-                  Welcome to 5 Star Grill, Toms River's newest culinary gem, proudly founded in 2025 by local residents Syed and Carlos. Driven by their passion for exceptional food and community, they created 5 Star Grill as a welcoming spot where locals can enjoy an eclectic blend of classic American favorites, vibrant Spanish dishes, and fresh, satisfying salads—all under one roof.
+                  Welcome to 5 Star Grill, Toms River's newest culinary gem, proudly founded in 2025 by two local residents. Driven by their passion for exceptional food and community, they created 5 Star Grill as a welcoming spot where locals can enjoy an eclectic blend of classic American favorites, vibrant Spanish dishes, and fresh, satisfying salads—all under one roof.
                 </p>
                 
                 <p className="text-gray-300 mb-4">
@@ -82,7 +82,7 @@ const About = () => {
                 </p>
                 
                 <p className="text-gray-300">
-                  At its heart, 5 Star Grill embodies community spirit and culinary excellence. Syed, Carlos, Chef Juan, and the entire dedicated team are committed to serving delicious, memorable meals to the residents of Toms River and beyond.
+                  At its heart, 5 Star Grill embodies community spirit and culinary excellence. Chef Juan and the entire dedicated team are committed to serving delicious, memorable meals to the residents of Toms River and beyond.
                 </p>
               </div>
             </div>
@@ -141,12 +141,12 @@ const About = () => {
                   <div className="h-64 overflow-hidden">
                     <img 
                       src="https://images.unsplash.com/photo-1583394293214-28ded15ee548?q=80&w=2080" 
-                      alt="Syed" 
+                      alt="Local Founder" 
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="p-6 text-center">
-                    <h3 className="text-xl font-bold text-white mb-1">Syed</h3>
+                    <h3 className="text-xl font-bold text-white mb-1">Founder</h3>
                     <p className="text-grill-gold mb-4">Co-Founder</p>
                     <p className="text-gray-300">
                       A local resident with a passion for creating a welcoming spot where the community can enjoy exceptional food.
@@ -161,15 +161,15 @@ const About = () => {
                   <div className="h-64 overflow-hidden">
                     <img 
                       src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961" 
-                      alt="Carlos" 
+                      alt="Local Founder" 
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="p-6 text-center">
-                    <h3 className="text-xl font-bold text-white mb-1">Carlos</h3>
+                    <h3 className="text-xl font-bold text-white mb-1">Founder</h3>
                     <p className="text-grill-gold mb-4">Co-Founder</p>
                     <p className="text-gray-300">
-                      Brings his love for culinary excellence to 5 Star Grill, ensuring quality in every dish that leaves the kitchen.
+                      Brings their love for culinary excellence to 5 Star Grill, ensuring quality in every dish that leaves the kitchen.
                     </p>
                   </div>
                 </div>

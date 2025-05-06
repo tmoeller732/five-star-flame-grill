@@ -54,7 +54,7 @@ const StorySection = () => {
             </h2>
             
             <p className="text-gray-300 mb-4">
-              Founded in 2025 by local residents Syed and Carlos, 5 Star Grill was born from a shared passion for exceptional food and community. They envisioned creating a welcoming spot where locals could enjoy an eclectic blend of cuisines — all under one roof.
+              Founded in 2025 by two local residents, 5 Star Grill was born from a shared passion for exceptional food and community. They envisioned creating a welcoming spot where locals could enjoy an eclectic blend of cuisines — all under one roof.
             </p>
             
             <p className="text-gray-300 mb-4">
@@ -62,7 +62,7 @@ const StorySection = () => {
             </p>
             
             <p className="text-gray-300">
-              Today, 5 Star Grill is open seven days a week for breakfast, lunch, and dinner, embodying the community spirit and culinary excellence that Syed and Carlos first envisioned. Every dish that leaves our kitchen is a testament to their commitment to bringing memorable dining experiences to Toms River.
+              Today, 5 Star Grill is open seven days a week for breakfast, lunch, and dinner, embodying the community spirit and culinary excellence that was first envisioned. Every dish that leaves our kitchen is a testament to their commitment to bringing memorable dining experiences to Toms River.
             </p>
             
             <div className="mt-8">
