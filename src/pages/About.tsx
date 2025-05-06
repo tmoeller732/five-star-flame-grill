@@ -74,47 +74,47 @@ const About = () => {
                 </h2>
                 
                 <p className="text-gray-300 mb-4">
-                  5 Star Grill was founded in 2015 by the Johnson family, who brought their passion for exceptional grilling and hospitality to Toms River. What started as a small family-run breakfast spot has evolved into a beloved culinary destination serving breakfast, lunch, and dinner to locals and visitors alike.
+                  Welcome to 5 Star Grill, Toms River's newest culinary gem, proudly founded in 2025 by local residents Syed and Carlos. Driven by their passion for exceptional food and community, they created 5 Star Grill as a welcoming spot where locals can enjoy an eclectic blend of classic American favorites, vibrant Spanish dishes, and fresh, satisfying salads—all under one roof.
                 </p>
                 
                 <p className="text-gray-300 mb-4">
-                  Our journey began when Master Chef Michael Johnson decided to combine his expertise in flame grilling with his wife Sarah's talent for creating inviting dining experiences. Together, they crafted a restaurant concept that would showcase the very best of grilled cuisine while maintaining a welcoming, family-friendly atmosphere.
+                  Open seven days a week, 5 Star Grill has quickly become a staple for breakfast, lunch, and dinner, consistently serving meals crafted from high-quality ingredients and seasoned with care. Whether you're grabbing a quick bite or planning a family dinner, the restaurant's extensive menu ensures there's something for every palate.
                 </p>
                 
                 <p className="text-gray-300">
-                  Today, 5 Star Grill continues to honor its founding principles: sourcing the finest ingredients, preparing them with care and expertise, and serving each dish with genuine hospitality.
+                  At its heart, 5 Star Grill embodies community spirit and culinary excellence. Syed, Carlos, Chef Juan, and the entire dedicated team are committed to serving delicious, memorable meals to the residents of Toms River and beyond.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Our Vision Section */}
+        {/* Culinary Offerings Section */}
         <section className="py-20 bg-grill-brown/20">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="order-2 lg:order-1 fade-in-element opacity-0 translate-y-10 transition-all duration-1000">
                 <h2 className="text-3xl font-bold text-white mb-6 font-playfair">
-                  Our <span className="text-grill-gold">Vision</span>
+                  Our <span className="text-grill-gold">Cuisine</span>
                 </h2>
                 
                 <p className="text-gray-300 mb-4">
-                  At 5 Star Grill, we believe that great food brings people together. Our vision is to create memorable dining experiences by combining tradition with innovation, quality with accessibility, and flavor with presentation.
+                  Morning enthusiasts rave about 5 Star Grill's breakfast sandwiches, which effortlessly capture that iconic New York street cart experience. Imagine biting into a warm, freshly-made sandwich packed with sizzling eggs, crispy bacon, melted cheese, and perfectly toasted bread—an indulgent start to any day.
                 </p>
                 
                 <p className="text-gray-300 mb-4">
-                  We aim to be more than just a restaurant – we strive to be a gathering place where families create memories, friends share laughter, and individuals savor moments of culinary delight. Each dish we serve is a testament to our dedication to the art of grilling.
+                  As the day moves forward, lunchtime brings an array of mouthwatering options. Renowned for their cheesesteaks and smash burgers, 5 Star Grill sets itself apart through culinary precision and flavor-packed dishes that keep customers returning for more.
                 </p>
                 
                 <p className="text-gray-300">
-                  As we grow, we remain committed to supporting our local community, embracing sustainable practices, and continuing to elevate the dining experience in Toms River, all while staying true to our core values of quality, service, and passion.
+                  Dinner at 5 Star Grill introduces diners to a vibrant Spanish culinary journey, guided expertly by Chef Juan and his talented culinary team. With decades of combined experience, Chef Juan leads the kitchen in creating authentic Spanish dishes that are rich, hearty, and packed with robust flavors.
                 </p>
               </div>
               
               <div className="order-1 lg:order-2 fade-in-element opacity-0 translate-y-10 transition-all duration-1000 delay-200">
                 <img 
                   src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=2274" 
-                  alt="Restaurant vision" 
+                  alt="Restaurant cuisine" 
                   className="rounded-lg shadow-xl"
                 />
               </div>
@@ -141,15 +141,15 @@ const About = () => {
                   <div className="h-64 overflow-hidden">
                     <img 
                       src="https://images.unsplash.com/photo-1583394293214-28ded15ee548?q=80&w=2080" 
-                      alt="Executive Chef" 
+                      alt="Syed" 
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="p-6 text-center">
-                    <h3 className="text-xl font-bold text-white mb-1">Michael Johnson</h3>
-                    <p className="text-grill-gold mb-4">Executive Chef & Founder</p>
+                    <h3 className="text-xl font-bold text-white mb-1">Syed</h3>
+                    <p className="text-grill-gold mb-4">Co-Founder</p>
                     <p className="text-gray-300">
-                      With over 20 years of culinary experience, Chef Michael brings his passion for flame-grilled perfection to every dish.
+                      A local resident with a passion for creating a welcoming spot where the community can enjoy exceptional food.
                     </p>
                   </div>
                 </div>
@@ -161,15 +161,15 @@ const About = () => {
                   <div className="h-64 overflow-hidden">
                     <img 
                       src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961" 
-                      alt="General Manager" 
+                      alt="Carlos" 
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="p-6 text-center">
-                    <h3 className="text-xl font-bold text-white mb-1">Sarah Johnson</h3>
-                    <p className="text-grill-gold mb-4">General Manager & Co-Founder</p>
+                    <h3 className="text-xl font-bold text-white mb-1">Carlos</h3>
+                    <p className="text-grill-gold mb-4">Co-Founder</p>
                     <p className="text-gray-300">
-                      Sarah creates the warm, inviting atmosphere that complements our exceptional cuisine, ensuring every guest feels welcome.
+                      Brings his love for culinary excellence to 5 Star Grill, ensuring quality in every dish that leaves the kitchen.
                     </p>
                   </div>
                 </div>
@@ -181,15 +181,15 @@ const About = () => {
                   <div className="h-64 overflow-hidden">
                     <img 
                       src="https://images.unsplash.com/photo-1567072379583-c75f10e1c325?q=80&w=2068" 
-                      alt="Sous Chef" 
+                      alt="Chef Juan" 
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="p-6 text-center">
-                    <h3 className="text-xl font-bold text-white mb-1">David Rodriguez</h3>
-                    <p className="text-grill-gold mb-4">Sous Chef</p>
+                    <h3 className="text-xl font-bold text-white mb-1">Chef Juan</h3>
+                    <p className="text-grill-gold mb-4">Head Chef</p>
                     <p className="text-gray-300">
-                      David's innovative approach to grilled cuisine brings exciting new flavors to our seasonal menu offerings.
+                      With decades of experience, Chef Juan leads the kitchen in creating authentic Spanish dishes rich with robust flavors.
                     </p>
                   </div>
                 </div>
