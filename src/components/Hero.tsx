@@ -33,11 +33,11 @@ const Hero = () => {
             </div>
 
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 font-playfair">
-              Experience <span className="text-grill-gold">Perfect Grilling</span>
+              Toms River's <span className="text-grill-gold">Culinary Gem</span>
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-200 mb-8">
-              Serving the finest grilled breakfast, lunch, and dinner in Toms River, NJ
+              Serving the finest American classics, Spanish delights, and fresh salads since 2025
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center gap-4">

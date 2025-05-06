@@ -37,12 +37,18 @@ const OrderPartners = () => {
   }, []);
 
   return (
-    <section id="order-partners" className="py-16 bg-grill-black">
-      <div className="container mx-auto px-4">
+    <section id="order-partners" className="py-16 bg-grill-black relative overflow-hidden">
+      {/* Background animation effect */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-0 left-0 w-full h-1/3 bg-gradient-to-b from-grill-gold/10 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-grill-gold/10 to-transparent"></div>
+      </div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className={`text-center mb-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h2 className="text-3xl md:text-4xl font-playfair mb-4 text-grill-gold">Order With Our Partners</h2>
+          <h2 className="text-3xl md:text-4xl font-playfair mb-4 text-grill-gold">Affordable Quality, Easy Access</h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Get your favorite grilled dishes delivered right to your door through our delivery partners.
+            Open seven days a week with easy options for both pick-up and delivery. Enjoy our quality meals at reasonable prices, delivered right to your door.
           </p>
         </div>
 

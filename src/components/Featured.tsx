@@ -71,9 +71,9 @@ const Featured = () => {
 
   // Using direct Unsplash images for reliability and uploaded burger image
   const staticImages = {
-    steak: "https://images.unsplash.com/photo-1565299507177-b0ac66763828?q=80&w=2264",
+    cheesesteak: "https://images.unsplash.com/photo-1600628421055-4d30de868b8f?q=80&w=2187",
     breakfast: "https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=2380",
-    burger: "/lovable-uploads/823ac36a-de5b-476a-9754-27a1bf8f842f.png"
+    spanish: "https://images.unsplash.com/photo-1515443961218-a51367888e4b?q=80&w=2340"
   };
 
   return (
@@ -81,33 +81,33 @@ const Featured = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 font-playfair">
-            Our Featured <span className="text-grill-gold">Specialties</span>
+            Our Signature <span className="text-grill-gold">Specialties</span>
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto">
-            Experience our signature dishes prepared on our flame grill, showcasing the best of breakfast, lunch, and dinner options.
+            From NY-style breakfast sandwiches to authentic Spanish cuisine and everything in between, our diverse menu satisfies every craving.
           </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <FeaturedItem 
-            image={staticImages.steak}
-            title="Flame-Grilled Steak"
-            description="Premium Angus beef grilled to perfection, served with roasted vegetables and your choice of side."
-            tag="Dinner"
+            image={staticImages.breakfast}
+            title="NY-Style Breakfast Sandwiches"
+            description="Warm, freshly-made sandwiches with sizzling eggs, crispy bacon, and melted cheese on perfectly toasted bread."
+            tag="Breakfast"
             delay="0.1"
           />
           <FeaturedItem 
-            image={staticImages.breakfast}
-            title="Sunrise Breakfast Platter"
-            description="Eggs your way, smoked bacon, sausage, grilled tomatoes, and toast with homemade jam."
-            tag="Breakfast"
+            image={staticImages.cheesesteak}
+            title="Signature Cheesesteaks"
+            description="Tender, flavorful steak with grilled onions, peppers, and the perfect layer of melted cheese, served on a fresh roll."
+            tag="Lunch"
             delay="0.3"
           />
           <FeaturedItem 
-            image={staticImages.burger}
-            title="Gourmet Grilled Burger"
-            description="Half-pound Angus burger with aged cheddar, caramelized onions, and our signature sauce."
-            tag="Lunch"
+            image={staticImages.spanish}
+            title="Authentic Spanish Cuisine"
+            description="Savory rice and bean platters and perfectly seasoned grilled meats that transport you to the streets of Barcelona."
+            tag="Dinner"
             delay="0.5"
           />
         </div>

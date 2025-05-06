@@ -131,3 +131,71 @@ button:hover, .button:hover {
 button:active, .button:active {
   transform: translateY(0);
 }
+
+/* New animations for updated content */
+@keyframes border-pulse {
+  0% { border-color: rgba(226, 177, 60, 0.3); }
+  50% { border-color: rgba(226, 177, 60, 1); }
+  100% { border-color: rgba(226, 177, 60, 0.3); }
+}
+
+.border-animate {
+  animation: border-pulse 3s infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+.float-animation {
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes highlight-text {
+  0% { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.highlight-text {
+  background: linear-gradient(to right, rgba(226, 177, 60, 0) 0%, rgba(226, 177, 60, 0.8) 50%, rgba(226, 177, 60, 0) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: highlight-text 3s infinite;
+}
+
+/* Team section animations */
+.team-member:hover .team-member-overlay {
+  opacity: 1;
+}
+
+.team-member-overlay {
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+/* Animated underline for links */
+.animated-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #E2B13C;
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-out;
+}
+
+.animated-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}

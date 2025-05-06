@@ -78,21 +78,21 @@ const Testimonials = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <TestimonialCard 
-            text="The flame-grilled steak was perfectly cooked and seasoned. I've never had a better dining experience in Toms River!" 
-            name="Michael Johnson"
-            title="Toms River Local"
+            text="Their NY-style breakfast sandwich is the real deal! Reminds me of the best street carts in Manhattan. I stop by every morning on my way to work." 
+            name="Jennifer R."
+            title="Daily Customer"
             delay="0.1"
           />
           <TestimonialCard 
-            text="I bring my family here every Sunday for breakfast. The sunrise platter is amazing and the staff always make us feel welcome." 
-            name="Sarah Williams"
-            title="Regular Customer"
+            text="The cheesesteaks here are incredible - perfectly seasoned meat, the right amount of cheese, and fresh rolls. My family gets takeout from 5 Star Grill at least once a week!" 
+            name="Marcus T."
+            title="Toms River Resident"
             delay="0.3"
           />
           <TestimonialCard 
-            text="The burgers here are next level! Juicy, flavorful, and that signature sauce is addictive. Best lunch spot in town." 
-            name="David Thompson"
-            title="Food Blogger"
+            text="Chef Juan's Spanish dishes are authentic and bursting with flavor. The rice and bean platters take me right back to my grandmother's kitchen in Barcelona." 
+            name="Elena Gonzalez"
+            title="Food Enthusiast"
             delay="0.5"
           />
         </div>
