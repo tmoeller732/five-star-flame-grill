@@ -95,7 +95,7 @@ const ReviewWidget = () => {
               Review
             </span>
             {!isVisible && (
-              <span className="absolute top-1/2 -right-14 transform -translate-y-1/2 text-xs font-medium bg-white px-2 py-1 rounded-t-md shadow-md">
+              <span className="absolute top-1/2 -right-14 transform -translate-y-1/2 text-xs font-medium bg-white px-2 py-1 rounded-t-md shadow-md text-grill-black">
                 Review Us
               </span>
             )}
