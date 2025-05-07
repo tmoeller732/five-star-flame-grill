@@ -4,9 +4,12 @@ import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import CountdownTimer from '../components/CountdownTimer';
+import FlameEffect from '../components/effects/FlameEffect';
+import useFlameEffect from '../hooks/useFlameEffect';
 
 const Blog = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const { isFlameVisible } = useFlameEffect();
 
   useEffect(() => {
     setIsVisible(true);
@@ -38,6 +41,7 @@ const Blog = () => {
             </p>
           </div>
         </div>
+        <FlameEffect isVisible={isFlameVisible} />
       </main>
       
       <Footer />

@@ -1,19 +1,12 @@
 
 import React from 'react';
 
-interface OurStoryProps {
-  onImageHover?: () => void;
-}
-
-const OurStory: React.FC<OurStoryProps> = ({ onImageHover }) => {
+const OurStory: React.FC = () => {
   return (
     <section className="py-20 bg-grain">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div 
-            className="fade-in-element opacity-0 translate-y-10 transition-all duration-1000"
-            onMouseEnter={onImageHover}
-          >
+          <div className="fade-in-element opacity-0 translate-y-10 transition-all duration-1000">
             <div className="relative group overflow-hidden rounded-lg shadow-xl">
               <img 
                 src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=2274" 

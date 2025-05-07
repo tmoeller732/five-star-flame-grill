@@ -11,7 +11,7 @@ import FlameEffect from '../components/effects/FlameEffect';
 import useFlameEffect from '../hooks/useFlameEffect';
 
 const About = () => {
-  const { isFlameVisible, showFlame } = useFlameEffect();
+  const { isFlameVisible } = useFlameEffect();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -51,7 +51,7 @@ const About = () => {
       
       <main>
         <AboutHero />
-        <OurStory onImageHover={showFlame} />
+        <OurStory />
         <OurCuisine />
         <TeamSection />
         <FlameEffect isVisible={isFlameVisible} />

@@ -5,9 +5,12 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MenuContent from '../components/MenuContent';
 import CountdownTimer from '../components/CountdownTimer';
+import FlameEffect from '../components/effects/FlameEffect';
+import useFlameEffect from '../hooks/useFlameEffect';
 
 const Menu = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const { isFlameVisible } = useFlameEffect();
 
   useEffect(() => {
     setIsVisible(true);
@@ -35,6 +38,7 @@ const Menu = () => {
             </div>
           </div>
           <MenuContent />
+          <FlameEffect isVisible={isFlameVisible} />
         </div>
       </main>
       

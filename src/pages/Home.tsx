@@ -10,8 +10,12 @@ import CTASection from '../components/CTASection';
 import TeamSection from '../components/TeamSection';
 import CulinarySpecialties from '../components/CulinarySpecialties';
 import StorySection from '../components/StorySection';
+import FlameEffect from '../components/effects/FlameEffect';
+import useFlameEffect from '../hooks/useFlameEffect';
 
 const Home = () => {
+  const { isFlameVisible } = useFlameEffect();
+  
   return (
     <>
       <Helmet>
@@ -31,6 +35,7 @@ const Home = () => {
         <OrderPartners />
         <Testimonials />
         <CTASection />
+        <FlameEffect isVisible={isFlameVisible} />
       </main>
       
       <Footer />
