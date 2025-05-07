@@ -15,6 +15,7 @@ const ReviewWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const reviewUrl = "https://g.page/r/CVMgJx-yFLxcEBM/review";
   
   // Function to start the collapse timer
@@ -39,6 +40,9 @@ const ReviewWidget = () => {
       if (timerRef.current) {
         clearTimeout(timerRef.current);
       }
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+      }
     };
   }, []);
   
@@ -49,22 +53,38 @@ const ReviewWidget = () => {
     }
   }, [isVisible]);
 
-  // Handle button click
-  const handleButtonClick = () => {
+  // Handle button mouse over
+  const handleMouseOver = () => {
     if (!isVisible) {
       setIsVisible(true); // Show the widget
     } else {
-      setIsOpen(true); // Open the dialog
+      // Add a small delay before opening to prevent accidental triggering
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+      }
+      hoverTimeoutRef.current = setTimeout(() => {
+        setIsOpen(true);
+      }, 300);
+    }
+  };
+
+  // Handle mouse leave
+  const handleMouseLeave = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
     }
   };
   
   return (
     <>
-      <div className={`fixed left-0 top-1/2 -translate-y-1/2 z-40 transition-transform duration-300 ${
-        isVisible ? 'translate-x-0' : 'translate-x-[-85%]'
-      }`}>
+      <div 
+        className={`fixed left-0 top-1/2 -translate-y-1/2 z-40 transition-transform duration-300 ${
+          isVisible ? 'translate-x-0' : 'translate-x-[-85%]'
+        }`}
+        onMouseOver={handleMouseOver}
+        onMouseLeave={handleMouseLeave}
+      >
         <button 
-          onClick={handleButtonClick}
           className="bg-white rounded-r-lg shadow-lg p-3 transform transition-transform hover:translate-x-1 hover:shadow-xl border border-gray-200 border-l-0 relative"
           aria-label="Leave a review"
         >
@@ -79,13 +99,13 @@ const ReviewWidget = () => {
                 <Star key={i} className="h-3 w-3 fill-current" />
               ))}
             </div>
-            <span className={`text-xs font-medium text-grill-black mt-1 rotate-90 ${
+            <span className={`text-xs font-medium text-grill-black mt-1 ${
               !isVisible ? 'opacity-0' : 'opacity-100'
             } transition-opacity duration-300`}>
               Review
             </span>
             {!isVisible && (
-              <span className="absolute top-1/2 -right-12 transform -translate-y-1/2 rotate-90 text-xs font-medium bg-white px-2 py-1 rounded-t-md shadow-md">
+              <span className="absolute top-1/2 -right-14 transform -translate-y-1/2 text-xs font-medium bg-white px-2 py-1 rounded-t-md shadow-md">
                 Review Us
               </span>
             )}
