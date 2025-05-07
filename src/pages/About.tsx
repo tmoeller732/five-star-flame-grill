@@ -7,8 +7,12 @@ import AboutHero from '../components/about/AboutHero';
 import OurStory from '../components/about/OurStory';
 import OurCuisine from '../components/about/OurCuisine';
 import TeamSection from '../components/TeamSection';
+import FlameEffect from '../components/effects/FlameEffect';
+import useFlameEffect from '../hooks/useFlameEffect';
 
 const About = () => {
+  const { isFlameVisible, showFlame } = useFlameEffect();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -47,9 +51,10 @@ const About = () => {
       
       <main>
         <AboutHero />
-        <OurStory />
+        <OurStory onImageHover={showFlame} />
         <OurCuisine />
         <TeamSection />
+        <FlameEffect isVisible={isFlameVisible} />
       </main>
       
       <Footer />

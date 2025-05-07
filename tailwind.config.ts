@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -116,6 +115,24 @@ export default {
 				'spin': {
 					'0%': { transform: 'rotate(0deg)' },
 					'100%': { transform: 'rotate(360deg)' }
+				},
+				'flame-intense': {
+					'0%, 100%': { 
+						transform: 'scale(0.95) rotate(-3deg)',
+						filter: 'brightness(1) blur(0px)'
+					},
+					'25%': { 
+						transform: 'scale(1.05) rotate(1deg)',
+						filter: 'brightness(1.2) blur(1px)'
+					},
+					'50%': { 
+						transform: 'scale(1) rotate(-1deg)',
+						filter: 'brightness(1.1) blur(0px)'
+					},
+					'75%': { 
+						transform: 'scale(1.03) rotate(2deg)',
+						filter: 'brightness(1.3) blur(1px)'
+					}
 				}
 			},
 			animation: {
@@ -124,7 +141,8 @@ export default {
 				'flame': 'flame 3s ease-in-out infinite',
 				'flame-slow': 'flame 4s ease-in-out infinite',
 				'fade-in': 'fade-in 0.5s ease-out forwards',
-				'spin': 'spin 1s linear infinite'
+				'spin': 'spin 1s linear infinite',
+				'flame-intense': 'flame-intense 2s ease-in-out infinite'
 			},
 			rotate: {
 				'360': '360deg'

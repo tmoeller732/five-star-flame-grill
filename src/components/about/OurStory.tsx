@@ -1,17 +1,27 @@
 
 import React from 'react';
 
-const OurStory = () => {
+interface OurStoryProps {
+  onImageHover?: () => void;
+}
+
+const OurStory: React.FC<OurStoryProps> = ({ onImageHover }) => {
   return (
     <section className="py-20 bg-grain">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="fade-in-element opacity-0 translate-y-10 transition-all duration-1000">
-            <img 
-              src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=2274" 
-              alt="Restaurant founders" 
-              className="rounded-lg shadow-xl"
-            />
+          <div 
+            className="fade-in-element opacity-0 translate-y-10 transition-all duration-1000"
+            onMouseEnter={onImageHover}
+          >
+            <div className="relative group overflow-hidden rounded-lg shadow-xl">
+              <img 
+                src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=2274" 
+                alt="Restaurant founders" 
+                className="w-full transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-grill-black/10 to-grill-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
           </div>
           
           <div className="fade-in-element opacity-0 translate-y-10 transition-all duration-1000 delay-200">
