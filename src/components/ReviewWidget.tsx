@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Star } from 'lucide-react';
 import { 
   Dialog,
@@ -13,14 +13,59 @@ import { Button } from '@/components/ui/button';
 
 const ReviewWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
   const reviewUrl = "https://g.page/r/CVMgJx-yFLxcEBM/review";
+  
+  // Function to start the collapse timer
+  const startCollapseTimer = () => {
+    // Clear any existing timers
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    
+    // Set a new timer to collapse the widget
+    timerRef.current = setTimeout(() => {
+      setIsVisible(false);
+    }, isVisible ? 10000 : 15000); // 10 seconds for initial display, 15 seconds after click
+  };
+
+  // Set initial timer on component mount
+  useEffect(() => {
+    startCollapseTimer();
+    
+    // Cleanup function to clear timer on unmount
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, []);
+  
+  // Reset timer when visibility changes
+  useEffect(() => {
+    if (isVisible) {
+      startCollapseTimer();
+    }
+  }, [isVisible]);
+
+  // Handle button click
+  const handleButtonClick = () => {
+    if (!isVisible) {
+      setIsVisible(true); // Show the widget
+    } else {
+      setIsOpen(true); // Open the dialog
+    }
+  };
   
   return (
     <>
-      <div className="fixed left-0 top-1/2 -translate-y-1/2 z-40">
+      <div className={`fixed left-0 top-1/2 -translate-y-1/2 z-40 transition-transform duration-300 ${
+        isVisible ? 'translate-x-0' : 'translate-x-[-85%]'
+      }`}>
         <button 
-          onClick={() => setIsOpen(true)}
-          className="bg-white rounded-r-lg shadow-lg p-3 transform transition-transform hover:translate-x-1 hover:shadow-xl border border-gray-200 border-l-0"
+          onClick={handleButtonClick}
+          className="bg-white rounded-r-lg shadow-lg p-3 transform transition-transform hover:translate-x-1 hover:shadow-xl border border-gray-200 border-l-0 relative"
           aria-label="Leave a review"
         >
           <div className="flex flex-col items-center">
@@ -34,7 +79,16 @@ const ReviewWidget = () => {
                 <Star key={i} className="h-3 w-3 fill-current" />
               ))}
             </div>
-            <span className="text-xs font-medium text-grill-black mt-1 rotate-90">Review</span>
+            <span className={`text-xs font-medium text-grill-black mt-1 rotate-90 ${
+              !isVisible ? 'opacity-0' : 'opacity-100'
+            } transition-opacity duration-300`}>
+              Review
+            </span>
+            {!isVisible && (
+              <span className="absolute top-1/2 -right-12 transform -translate-y-1/2 rotate-90 text-xs font-medium bg-white px-2 py-1 rounded-t-md shadow-md">
+                Review Us
+              </span>
+            )}
           </div>
         </button>
       </div>
