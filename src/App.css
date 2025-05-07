@@ -1,3 +1,4 @@
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -75,12 +76,32 @@
   100% { opacity: 0.8; transform: scale(0.95); }
 }
 
+/* Enhanced flame animations for realism */
+@keyframes flicker-enhanced {
+  0% { transform: scale(0.9) rotate(-1deg); opacity: 0.7; filter: brightness(0.9); }
+  25% { transform: scale(1.1) rotate(3deg); opacity: 1; filter: brightness(1.2); }
+  50% { transform: scale(0.95) rotate(-2deg); opacity: 0.8; filter: brightness(1); }
+  75% { transform: scale(1.05) rotate(1deg); opacity: 0.9; filter: brightness(1.1); }
+  100% { transform: scale(0.9) rotate(-1deg); opacity: 0.7; filter: brightness(0.9); }
+}
+
 .animate-flame {
-  animation: flicker 1.5s ease-in-out infinite;
+  animation: flicker-enhanced 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(255, 157, 0, 0.8));
+  will-change: transform, opacity, filter;
 }
 
 .animate-flame-slow {
-  animation: flicker 3s ease-in-out infinite;
+  animation: flicker-enhanced 3.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 157, 0, 0.6));
+  will-change: transform, opacity, filter;
+}
+
+/* Flame container */
+.flame-container {
+  position: relative;
+  filter: drop-shadow(0 5px 15px rgba(255, 100, 0, 0.4));
+  transform-origin: center bottom;
 }
 
 /* Partner logos animations */
@@ -206,14 +227,6 @@ button:active, .button:active {
   50% { transform: scale(0.95) rotate(-2deg); opacity: 0.8; }
   75% { transform: scale(1.05) rotate(1deg); opacity: 0.9; }
   100% { transform: scale(0.9) rotate(-1deg); opacity: 0.7; }
-}
-
-.animate-flame {
-  animation: flicker-enhanced 2s ease-in-out infinite;
-}
-
-.animate-flame-slow {
-  animation: flicker-enhanced 3.5s ease-in-out infinite;
 }
 
 /* Cooldown indicator */

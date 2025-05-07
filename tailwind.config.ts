@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -133,6 +134,46 @@ export default {
 						transform: 'scale(1.03) rotate(2deg)',
 						filter: 'brightness(1.3) blur(1px)'
 					}
+				},
+				'ember-float': {
+					'0%': { 
+						transform: 'translate(0, 0) scale(1)', 
+						opacity: '1' 
+					},
+					'100%': { 
+						transform: 'translate(10px, -20px) scale(0)', 
+						opacity: '0'
+					}
+				},
+				'ember-float-alt': {
+					'0%': { 
+						transform: 'translate(0, 0) scale(1)', 
+						opacity: '1' 
+					},
+					'100%': { 
+						transform: 'translate(-10px, -15px) scale(0)', 
+						opacity: '0'
+					}
+				},
+				'ember-float-slow': {
+					'0%': { 
+						transform: 'translate(0, 0) scale(1)', 
+						opacity: '1' 
+					},
+					'100%': { 
+						transform: 'translate(5px, -25px) scale(0)', 
+						opacity: '0'
+					}
+				},
+				'glow-pulse': {
+					'0%, 100%': { 
+						opacity: '0.3',
+						transform: 'scale(0.95)'
+					},
+					'50%': { 
+						opacity: '0.5',
+						transform: 'scale(1.05)'
+					}
 				}
 			},
 			animation: {
@@ -142,7 +183,11 @@ export default {
 				'flame-slow': 'flame 4s ease-in-out infinite',
 				'fade-in': 'fade-in 0.5s ease-out forwards',
 				'spin': 'spin 1s linear infinite',
-				'flame-intense': 'flame-intense 2s ease-in-out infinite'
+				'flame-intense': 'flame-intense 2s ease-in-out infinite',
+				'ember-1': 'ember-float 2s ease-out forwards infinite',
+				'ember-2': 'ember-float-alt 2.5s ease-out forwards infinite',
+				'ember-3': 'ember-float-slow 3s ease-out forwards infinite',
+				'glow': 'glow-pulse 2s ease-in-out infinite'
 			},
 			rotate: {
 				'360': '360deg'
