@@ -37,7 +37,7 @@ const ScrollingBanner = () => {
             <div className="flex items-center">
               <Phone size={16} className="text-grill-orange mr-1" />
               <span className="text-sm font-medium text-grill-black">
-                Call (555) 123-4567 to order direct
+                Call (856) 559-4938 to order direct
               </span>
             </div>
           </div>

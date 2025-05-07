@@ -21,7 +21,7 @@ const Home = () => {
     <>
       <Helmet>
         <title>5 Star Grill | Breakfast, Lunch & Dinner | Toms River, NJ</title>
-        <meta name="description" content="5 Star Grill in Toms River, NJ offers delicious breakfast, lunch, and dinner specialties including NY-style breakfast sandwiches, signature cheesesteaks, and authentic Spanish cuisine. Founded in 2025 by Syed and Carlos." />
+        <meta name="description" content="5 Star Grill in Toms River, NJ offers delicious breakfast, lunch, and dinner specialties including NY-style breakfast sandwiches, signature cheesesteaks, and authentic Spanish cuisine. Founded in 2015." />
         <meta name="keywords" content="restaurant, grill, breakfast sandwiches, cheesesteaks, Spanish cuisine, Toms River, NJ, 5 Star Grill, smash burgers" />
       </Helmet>
       
