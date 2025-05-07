@@ -26,7 +26,7 @@ const Menu = () => {
       
       <Header />
       
-      <main className="pt-28 pb-16">
+      <main className="pt-36 pb-16">
         <div className={`transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           <div className="container mx-auto px-4 mb-8">
             <div className="text-center">

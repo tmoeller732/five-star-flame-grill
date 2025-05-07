@@ -174,6 +174,10 @@ export default {
 						opacity: '0.5',
 						transform: 'scale(1.05)'
 					}
+				},
+				'marquee': {
+					'0%': { transform: 'translateX(100%)' },
+					'100%': { transform: 'translateX(-100%)' }
 				}
 			},
 			animation: {
@@ -187,7 +191,8 @@ export default {
 				'ember-1': 'ember-float 2s ease-out forwards infinite',
 				'ember-2': 'ember-float-alt 2.5s ease-out forwards infinite',
 				'ember-3': 'ember-float-slow 3s ease-out forwards infinite',
-				'glow': 'glow-pulse 2s ease-in-out infinite'
+				'glow': 'glow-pulse 2s ease-in-out infinite',
+				'marquee': 'marquee 30s linear infinite'
 			},
 			rotate: {
 				'360': '360deg'

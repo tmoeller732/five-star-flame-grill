@@ -26,7 +26,7 @@ const Home = () => {
       
       <Header />
       
-      <main>
+      <main className="mt-10">
         <Hero />
         <StorySection />
         <Featured />
