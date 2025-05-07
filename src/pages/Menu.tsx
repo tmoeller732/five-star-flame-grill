@@ -7,6 +7,7 @@ import MenuContent from '../components/MenuContent';
 import CountdownTimer from '../components/CountdownTimer';
 import FlameEffect from '../components/effects/FlameEffect';
 import useFlameEffect from '../hooks/useFlameEffect';
+import ReviewWidget from '../components/ReviewWidget';
 
 const Menu = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -25,6 +26,7 @@ const Menu = () => {
       </Helmet>
       
       <Header />
+      <ReviewWidget />
       
       <main className="pt-36 pb-16">
         <div className={`transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>

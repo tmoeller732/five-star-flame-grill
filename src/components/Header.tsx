@@ -59,8 +59,8 @@ const Header = () => {
               </Link>
             )}
 
-            {/* Left navigation items - moved closer to center */}
-            <nav className="hidden md:flex space-x-6 mr-28">
+            {/* Left navigation items - spaced wider apart */}
+            <nav className="hidden md:flex space-x-10 mr-36">
               <Link to="/" className="nav-item group">
                 <div className="relative">
                   <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
@@ -87,8 +87,8 @@ const Header = () => {
               </Link>
             </nav>
 
-            {/* Right navigation items - moved closer to center */}
-            <nav className="hidden md:flex space-x-6 ml-28 items-center">
+            {/* Right navigation items - spaced wider apart */}
+            <nav className="hidden md:flex space-x-10 ml-36 items-center">
               <div className="nav-item group">
                 <OrderDropdown />
               </div>

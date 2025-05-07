@@ -12,6 +12,7 @@ import CulinarySpecialties from '../components/CulinarySpecialties';
 import StorySection from '../components/StorySection';
 import FlameEffect from '../components/effects/FlameEffect';
 import useFlameEffect from '../hooks/useFlameEffect';
+import ReviewWidget from '../components/ReviewWidget';
 
 const Home = () => {
   const { isFlameVisible } = useFlameEffect();
@@ -25,6 +26,7 @@ const Home = () => {
       </Helmet>
       
       <Header />
+      <ReviewWidget />
       
       <main className="mt-10">
         <Hero />
