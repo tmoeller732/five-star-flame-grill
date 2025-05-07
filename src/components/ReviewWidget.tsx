@@ -53,26 +53,16 @@ const ReviewWidget = () => {
     }
   }, [isVisible]);
 
-  // Handle button mouse over
+  // Handle button hover
   const handleMouseOver = () => {
     if (!isVisible) {
-      setIsVisible(true); // Show the widget
-    } else {
-      // Add a small delay before opening to prevent accidental triggering
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current);
-      }
-      hoverTimeoutRef.current = setTimeout(() => {
-        setIsOpen(true);
-      }, 300);
+      setIsVisible(true); // Show the widget on hover
     }
   };
-
-  // Handle mouse leave
-  const handleMouseLeave = () => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-    }
+  
+  // Handle button click
+  const handleClick = () => {
+    setIsOpen(true); // Only open the dialog on click
   };
   
   return (
@@ -82,9 +72,9 @@ const ReviewWidget = () => {
           isVisible ? 'translate-x-0' : 'translate-x-[-85%]'
         }`}
         onMouseOver={handleMouseOver}
-        onMouseLeave={handleMouseLeave}
       >
         <button 
+          onClick={handleClick}
           className="bg-white rounded-r-lg shadow-lg p-3 transform transition-transform hover:translate-x-1 hover:shadow-xl border border-gray-200 border-l-0 relative"
           aria-label="Leave a review"
         >
