@@ -20,11 +20,13 @@ export function useCarouselAutoplay(api: CarouselApi | null, interval = 5000, en
     }
     
     // Make sure loop is enabled when the API is ready
-    api.on("reInit", () => {
+    const onReInit = () => {
       // Log that the carousel is initialized
       console.log('Carousel initialized/re-initialized');
       setAutoplayActive(true);
-    });
+    };
+    
+    api.on("reInit", onReInit);
     
     // Set up the interval for auto-scrolling
     const timer = setInterval(doScroll, interval);
@@ -49,7 +51,7 @@ export function useCarouselAutoplay(api: CarouselApi | null, interval = 5000, en
     return () => {
       clearInterval(timer);
       if (api) {
-        api.off("reInit");
+        api.off("reInit", onReInit);
         api.off("select", pauseAutoplay);
         api.off("pointerDown", pauseAutoplay);
       }
