@@ -1,62 +1,60 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { type CarouselApi } from "@/components/ui/carousel";
 
-export function useCarouselAutoplay(api: CarouselApi | null, interval = 3000, enabled = true) {
-  const [intervalId, setIntervalId] = useState<number | null>(null);
+export function useCarouselAutoplay(api: CarouselApi | null, interval = 5000, enabled = true) {
+  const [autoplayActive, setAutoplayActive] = useState(enabled);
   
+  // Function to handle the actual scrolling
+  const doScroll = useCallback(() => {
+    if (api && autoplayActive) {
+      api.scrollNext();
+      console.log('Auto scrolling carousel to next slide at', new Date().toLocaleTimeString());
+    }
+  }, [api, autoplayActive]);
+  
+  // Set up the autoplay timer
   useEffect(() => {
-    // Define function to clear any existing autoplay interval
-    const clearAutoplay = () => {
-      if (intervalId) {
-        window.clearInterval(intervalId);
-        setIntervalId(null);
-      }
-    };
-    
-    // Define function to start autoplay with proper timing
-    const startAutoplay = () => {
-      clearAutoplay();
-      if (api) {
-        const id = window.setInterval(() => {
-          if (api) {
-            api.scrollNext();
-            console.log('Auto scrolling carousel to next slide at', new Date().toLocaleTimeString());
-          }
-        }, interval);
-        setIntervalId(Number(id));
-      }
-    };
-    
-    // If api is null or autoplay is disabled, clear any existing interval and return
     if (!api || !enabled) {
-      clearAutoplay();
       return;
     }
     
-    // Start autoplay immediately
-    startAutoplay();
+    // Make sure loop is enabled when the API is ready
+    api.on("reInit", () => {
+      // Log that the carousel is initialized
+      console.log('Carousel initialized/re-initialized');
+      setAutoplayActive(true);
+    });
     
-    // Add event listeners for user interaction
-    const onSelect = () => {
-      // Restart autoplay when user interacts with carousel
-      if (enabled) {
-        clearAutoplay();
-        startAutoplay();
+    // Set up the interval for auto-scrolling
+    const timer = setInterval(doScroll, interval);
+    
+    // Add event listeners for pause on user interaction
+    const pauseAutoplay = () => {
+      console.log('Carousel interaction detected, pausing autoplay');
+      setAutoplayActive(false);
+      
+      // Resume autoplay after a short delay
+      setTimeout(() => {
+        console.log('Resuming autoplay after interaction');
+        setAutoplayActive(true);
+      }, 2000);
+    };
+    
+    // Listen for user interaction events to pause autoplay
+    api.on("select", pauseAutoplay);
+    api.on("pointerDown", pauseAutoplay);
+    
+    // Clean up all event listeners and timers
+    return () => {
+      clearInterval(timer);
+      if (api) {
+        api.off("reInit");
+        api.off("select", pauseAutoplay);
+        api.off("pointerDown", pauseAutoplay);
       }
     };
-    
-    // Listen for select event to restart autoplay after user interaction
-    api.on("select", onSelect);
-    
-    // Only restart autoplay on reInit event (when carousel is initialized or reset)
-    api.on("reInit", startAutoplay);
-    
-    // Cleanup function to clear interval and remove event listeners when component unmounts
-    return () => {
-      clearAutoplay();
-      api.off("select", onSelect);
-      api.off("reInit", startAutoplay);
-    };
-  }, [api, interval, enabled, intervalId]);
+  }, [api, interval, enabled, doScroll]);
+  
+  return { isAutoplayActive: autoplayActive };
 }

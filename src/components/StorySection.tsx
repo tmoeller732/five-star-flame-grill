@@ -19,6 +19,12 @@ const StorySection = () => {
   ];
 
   useEffect(() => {
+    // Log when the API changes
+    if (api) {
+      console.log('StorySection carousel API ready');
+    }
+    
+    // Intersection observer setup
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -40,7 +46,7 @@ const StorySection = () => {
         observer.unobserve(element);
       }
     };
-  }, []);
+  }, [api]);
 
   return (
     <section className="py-24 bg-grill-brown/5 story-section overflow-hidden">

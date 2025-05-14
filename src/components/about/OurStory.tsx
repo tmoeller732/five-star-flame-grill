@@ -17,6 +17,13 @@ const OurStory: React.FC = () => {
     "/lovable-uploads/8d943221-6932-4417-8f75-dd26216e8d6a.png"
   ];
 
+  useEffect(() => {
+    // Log when the API changes
+    if (api) {
+      console.log('OurStory carousel API ready');
+    }
+  }, [api]);
+
   return (
     <section className="py-10 bg-grain">
       <div className="container mx-auto px-4">
