@@ -20,6 +20,7 @@ export function useCarouselAutoplay(api: CarouselApi | null, interval = 3000, en
       if (api) {
         const id = window.setInterval(() => {
           if (api) {
+            // Using scrollNext() to advance to the next slide
             api.scrollNext();
           }
         }, interval);
@@ -36,8 +37,7 @@ export function useCarouselAutoplay(api: CarouselApi | null, interval = 3000, en
     // Start autoplay immediately
     startAutoplay();
     
-    // The key change: DON'T restart autoplay on "select" events
-    // This prevents double-advancing which can cause skipping
+    // Only restart autoplay on reInit event (when carousel is initialized or reset)
     api.on("reInit", startAutoplay);
     
     // Cleanup function to clear interval and remove event listeners when component unmounts

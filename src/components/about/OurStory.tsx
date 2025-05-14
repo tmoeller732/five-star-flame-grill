@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -25,17 +24,15 @@ const OurStory: React.FC = () => {
             <div className="relative group overflow-hidden rounded-lg shadow-xl">
               <Carousel 
                 opts={{
-                  align: "center",
+                  align: "start",
                   loop: true,
-                  skipSnaps: false,  // Prevent skipping snappoints
-                  dragFree: false,   // Disable free dragging
                 }}
                 setApi={setApi}
                 className="w-full overflow-hidden pointer-events-none"
               >
                 <CarouselContent>
                   {foodImages.map((src, index) => (
-                    <CarouselItem key={index}>
+                    <CarouselItem key={index} className="min-w-full">
                       <AspectRatio ratio={4/3} className="bg-muted">
                         <img 
                           src={src} 

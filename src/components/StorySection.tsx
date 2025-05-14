@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -53,17 +52,15 @@ const StorySection = () => {
               
               <Carousel 
                 opts={{
-                  align: "center",
+                  align: "start",
                   loop: true,
-                  skipSnaps: false,  // Prevent skipping snappoints
-                  dragFree: false,   // Disable free dragging
                 }}
                 setApi={setApi}
                 className="w-full rounded-lg shadow-2xl overflow-hidden pointer-events-none" 
               >
                 <CarouselContent>
                   {foodImages.map((src, index) => (
-                    <CarouselItem key={index}>
+                    <CarouselItem key={index} className="min-w-full">
                       <AspectRatio ratio={4/3} className="bg-muted">
                         <img 
                           src={src} 
