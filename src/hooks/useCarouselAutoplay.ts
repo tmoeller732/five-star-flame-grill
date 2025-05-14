@@ -34,11 +34,6 @@ export function useCarouselAutoplay(api: CarouselApi | null, interval = 3000, en
       return;
     }
     
-    // Make sure the loop option is set
-    if (api.options && typeof api.options.loop === 'boolean') {
-      api.options.loop = true;
-    }
-    
     // Start autoplay immediately
     startAutoplay();
     
