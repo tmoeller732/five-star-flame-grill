@@ -7,9 +7,25 @@ export function useCarouselAutoplay(api: CarouselApi | null, interval = 3000, en
   
   useEffect(() => {
     if (!api || !enabled) {
+      // Define clearAutoplay first before using it
+      const clearAutoplay = () => {
+        if (intervalId) {
+          window.clearInterval(intervalId);
+          setIntervalId(null);
+        }
+      };
+      
       clearAutoplay();
       return;
     }
+    
+    // Define all functions first before using them
+    const clearAutoplay = () => {
+      if (intervalId) {
+        window.clearInterval(intervalId);
+        setIntervalId(null);
+      }
+    };
     
     const startAutoplay = () => {
       clearAutoplay();
@@ -17,13 +33,6 @@ export function useCarouselAutoplay(api: CarouselApi | null, interval = 3000, en
         api.scrollNext();
       }, interval);
       setIntervalId(Number(id));
-    };
-    
-    const clearAutoplay = () => {
-      if (intervalId) {
-        window.clearInterval(intervalId);
-        setIntervalId(null);
-      }
     };
     
     startAutoplay();
