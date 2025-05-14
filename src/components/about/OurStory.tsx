@@ -1,18 +1,50 @@
 
-import React from 'react';
+import React, { useState } from 'react';
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { useCarouselAutoplay } from "../../hooks/useCarouselAutoplay";
+import { type CarouselApi } from "@/components/ui/carousel";
 
 const OurStory: React.FC = () => {
+  const [api, setApi] = useState<CarouselApi | null>(null);
+  
+  // Use our custom autoplay hook
+  useCarouselAutoplay(api, 4000);
+  
+  const foodImages = [
+    "/lovable-uploads/267bc1e8-d899-45ce-984c-5ebcba58c0b0.png",
+    "/lovable-uploads/8e53c131-2e7e-47f3-9dbb-cbcb26ac1d77.png",
+    "/lovable-uploads/8d943221-6932-4417-8f75-dd26216e8d6a.png"
+  ];
+
   return (
     <section className="py-20 bg-grain">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="fade-in-element opacity-0 translate-y-10 transition-all duration-1000">
             <div className="relative group overflow-hidden rounded-lg shadow-xl">
-              <img 
-                src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=2274" 
-                alt="Restaurant founders" 
-                className="w-full transition-transform duration-500 group-hover:scale-105"
-              />
+              <Carousel 
+                opts={{
+                  align: "center",
+                  loop: true,
+                }}
+                setApi={setApi}
+                className="w-full overflow-hidden"
+              >
+                <CarouselContent>
+                  {foodImages.map((src, index) => (
+                    <CarouselItem key={index}>
+                      <AspectRatio ratio={4/3} className="bg-muted">
+                        <img 
+                          src={src} 
+                          alt={`5 Star Grill Food Item ${index + 1}`} 
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      </AspectRatio>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
               <div className="absolute inset-0 bg-gradient-to-r from-grill-black/10 to-grill-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
           </div>

@@ -1,12 +1,22 @@
 
 import { useEffect, useState } from 'react';
-import runwareService from '../services/RunwareService';
-import { toast } from "sonner";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { useCarouselAutoplay } from "../hooks/useCarouselAutoplay";
+import { type CarouselApi } from "@/components/ui/carousel";
 
 const StorySection = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [imageUrl, setImageUrl] = useState("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=2070");
-  const [isLoading, setIsLoading] = useState(false);
+  const [api, setApi] = useState<CarouselApi | null>(null);
+  
+  // Use our custom autoplay hook
+  useCarouselAutoplay(api, 4000);
+  
+  const foodImages = [
+    "/lovable-uploads/267bc1e8-d899-45ce-984c-5ebcba58c0b0.png",
+    "/lovable-uploads/8e53c131-2e7e-47f3-9dbb-cbcb26ac1d77.png",
+    "/lovable-uploads/8d943221-6932-4417-8f75-dd26216e8d6a.png"
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -38,13 +48,31 @@ const StorySection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
             <div className="relative">
-              <div className="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-grill-gold animate-pulse"></div>
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-grill-gold animate-pulse"></div>
-              <img 
-                src={imageUrl} 
-                alt="5 Star Grill Story" 
-                className="w-full h-auto object-cover rounded-lg shadow-2xl"
-              />
+              <div className="absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-grill-gold animate-pulse z-10"></div>
+              <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-grill-gold animate-pulse z-10"></div>
+              
+              <Carousel 
+                opts={{
+                  align: "center",
+                  loop: true,
+                }}
+                setApi={setApi}
+                className="w-full rounded-lg shadow-2xl overflow-hidden"
+              >
+                <CarouselContent>
+                  {foodImages.map((src, index) => (
+                    <CarouselItem key={index}>
+                      <AspectRatio ratio={4/3} className="bg-muted">
+                        <img 
+                          src={src} 
+                          alt={`5 Star Grill Food Item ${index + 1}`} 
+                          className="w-full h-full object-cover"
+                        />
+                      </AspectRatio>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
             </div>
           </div>
           
