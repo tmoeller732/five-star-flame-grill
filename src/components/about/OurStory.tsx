@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -8,7 +9,7 @@ const OurStory: React.FC = () => {
   const [api, setApi] = useState<CarouselApi | null>(null);
   
   // Use our custom autoplay hook with 5000ms (5 seconds) interval
-  useCarouselAutoplay(api, 5000);
+  useCarouselAutoplay(api, 5000, true);
   
   const foodImages = [
     "/lovable-uploads/267bc1e8-d899-45ce-984c-5ebcba58c0b0.png",
@@ -26,6 +27,8 @@ const OurStory: React.FC = () => {
                 opts={{
                   align: "center",
                   loop: true,
+                  skipSnaps: false,  // Prevent skipping snappoints
+                  dragFree: false,   // Disable free dragging
                 }}
                 setApi={setApi}
                 className="w-full overflow-hidden pointer-events-none"

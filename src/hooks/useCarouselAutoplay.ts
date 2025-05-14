@@ -6,7 +6,7 @@ export function useCarouselAutoplay(api: CarouselApi | null, interval = 3000, en
   const [intervalId, setIntervalId] = useState<number | null>(null);
   
   useEffect(() => {
-    // Define all functions first before using them
+    // Define function to clear any existing autoplay interval
     const clearAutoplay = () => {
       if (intervalId) {
         window.clearInterval(intervalId);
@@ -14,11 +14,14 @@ export function useCarouselAutoplay(api: CarouselApi | null, interval = 3000, en
       }
     };
     
+    // Define function to start autoplay with proper timing
     const startAutoplay = () => {
       clearAutoplay();
       if (api) {
         const id = window.setInterval(() => {
-          if (api) api.scrollNext();
+          if (api) {
+            api.scrollNext();
+          }
         }, interval);
         setIntervalId(Number(id));
       }
@@ -33,15 +36,14 @@ export function useCarouselAutoplay(api: CarouselApi | null, interval = 3000, en
     // Start autoplay immediately
     startAutoplay();
     
-    // Add event listeners to restart autoplay after certain events
+    // The key change: DON'T restart autoplay on "select" events
+    // This prevents double-advancing which can cause skipping
     api.on("reInit", startAutoplay);
-    api.on("select", startAutoplay);
     
     // Cleanup function to clear interval and remove event listeners when component unmounts
     return () => {
       clearAutoplay();
       api.off("reInit", startAutoplay);
-      api.off("select", startAutoplay);
     };
   }, [api, interval, enabled, intervalId]);
 }
