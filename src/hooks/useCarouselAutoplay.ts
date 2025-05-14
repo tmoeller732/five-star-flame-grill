@@ -34,8 +34,25 @@ export function useCarouselAutoplay(api: CarouselApi | null, interval = 3000, en
       return;
     }
     
+    // Make sure the loop option is set
+    if (api.options && typeof api.options.loop === 'boolean') {
+      api.options.loop = true;
+    }
+    
     // Start autoplay immediately
     startAutoplay();
+    
+    // Add event listeners for user interaction
+    const onSelect = () => {
+      // Restart autoplay when user interacts with carousel
+      if (enabled) {
+        clearAutoplay();
+        startAutoplay();
+      }
+    };
+    
+    // Listen for select event to restart autoplay after user interaction
+    api.on("select", onSelect);
     
     // Only restart autoplay on reInit event (when carousel is initialized or reset)
     api.on("reInit", startAutoplay);
@@ -43,6 +60,7 @@ export function useCarouselAutoplay(api: CarouselApi | null, interval = 3000, en
     // Cleanup function to clear interval and remove event listeners when component unmounts
     return () => {
       clearAutoplay();
+      api.off("select", onSelect);
       api.off("reInit", startAutoplay);
     };
   }, [api, interval, enabled, intervalId]);
