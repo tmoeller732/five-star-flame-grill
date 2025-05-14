@@ -16,27 +16,30 @@ export function useCarouselAutoplay(api: CarouselApi | null, interval = 3000, en
     
     const startAutoplay = () => {
       clearAutoplay();
-      const id = window.setInterval(() => {
-        api?.scrollNext();
-      }, interval);
-      setIntervalId(Number(id));
+      if (api) {
+        const id = window.setInterval(() => {
+          if (api) api.scrollNext();
+        }, interval);
+        setIntervalId(Number(id));
+      }
     };
     
+    // If api is null or autoplay is disabled, clear any existing interval and return
     if (!api || !enabled) {
       clearAutoplay();
       return;
     }
     
+    // Start autoplay immediately
     startAutoplay();
     
+    // Add event listeners to restart autoplay after certain events
     api.on("reInit", startAutoplay);
     api.on("select", startAutoplay);
     
-    // Remove mouse/touch event listeners to prevent control
-    
+    // Cleanup function to clear interval and remove event listeners when component unmounts
     return () => {
       clearAutoplay();
-      
       api.off("reInit", startAutoplay);
       api.off("select", startAutoplay);
     };

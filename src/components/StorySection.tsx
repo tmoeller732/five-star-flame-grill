@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -55,10 +54,9 @@ const StorySection = () => {
                 opts={{
                   align: "center",
                   loop: true,
-                  dragFree: false, // Disable dragging
                 }}
                 setApi={setApi}
-                className="w-full rounded-lg shadow-2xl overflow-hidden pointer-events-none" // Disable pointer events to prevent interactions
+                className="w-full rounded-lg shadow-2xl overflow-hidden pointer-events-none" 
               >
                 <CarouselContent>
                   {foodImages.map((src, index) => (
