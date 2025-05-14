@@ -1,12 +1,15 @@
+
 import { useEffect, useState } from 'react';
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useCarouselAutoplay } from "../hooks/useCarouselAutoplay";
 import { type CarouselApi } from "@/components/ui/carousel";
+import { Slider } from "@/components/ui/slider";
 
 const StorySection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [api, setApi] = useState<CarouselApi | null>(null);
+  const [current, setCurrent] = useState(0);
   
   // Use our custom autoplay hook with 5000ms (5 seconds) interval
   useCarouselAutoplay(api, 5000, true);
@@ -16,6 +19,25 @@ const StorySection = () => {
     "/lovable-uploads/8e53c131-2e7e-47f3-9dbb-cbcb26ac1d77.png",
     "/lovable-uploads/8d943221-6932-4417-8f75-dd26216e8d6a.png"
   ];
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+    
+    // Update current index when the carousel changes
+    const onSelect = () => {
+      setCurrent(api.selectedScrollSnap());
+    };
+    
+    api.on("select", onSelect);
+    api.on("reInit", onSelect);
+    
+    return () => {
+      api.off("select", onSelect);
+      api.off("reInit", onSelect);
+    };
+  }, [api]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -72,6 +94,20 @@ const StorySection = () => {
                   ))}
                 </CarouselContent>
               </Carousel>
+              
+              <div className="mt-4">
+                <Slider
+                  value={[current]}
+                  max={foodImages.length - 1}
+                  step={1}
+                  className="cursor-pointer"
+                  onValueChange={(v) => {
+                    if (api) {
+                      api.scrollTo(v[0]);
+                    }
+                  }}
+                />
+              </div>
             </div>
           </div>
           
