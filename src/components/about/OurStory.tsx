@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useCarouselAutoplay } from "../../hooks/useCarouselAutoplay";
@@ -29,7 +29,7 @@ const OurStory: React.FC = () => {
                   loop: true,
                 }}
                 setApi={setApi}
-                className="w-full overflow-hidden pointer-events-none"
+                className="w-full overflow-hidden"
               >
                 <CarouselContent>
                   {foodImages.map((src, index) => (

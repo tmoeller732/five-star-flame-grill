@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -56,7 +57,7 @@ const StorySection = () => {
                   loop: true,
                 }}
                 setApi={setApi}
-                className="w-full rounded-lg shadow-2xl overflow-hidden pointer-events-none" 
+                className="w-full rounded-lg shadow-2xl overflow-hidden" 
               >
                 <CarouselContent>
                   {foodImages.map((src, index) => (

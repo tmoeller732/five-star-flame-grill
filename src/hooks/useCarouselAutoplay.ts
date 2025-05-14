@@ -20,8 +20,8 @@ export function useCarouselAutoplay(api: CarouselApi | null, interval = 3000, en
       if (api) {
         const id = window.setInterval(() => {
           if (api) {
-            // Using scrollNext() to advance to the next slide
             api.scrollNext();
+            console.log('Auto scrolling carousel to next slide');
           }
         }, interval);
         setIntervalId(Number(id));
