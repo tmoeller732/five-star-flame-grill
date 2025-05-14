@@ -21,7 +21,7 @@ export function useCarouselAutoplay(api: CarouselApi | null, interval = 3000, en
         const id = window.setInterval(() => {
           if (api) {
             api.scrollNext();
-            console.log('Auto scrolling carousel to next slide');
+            console.log('Auto scrolling carousel to next slide at', new Date().toLocaleTimeString());
           }
         }, interval);
         setIntervalId(Number(id));
