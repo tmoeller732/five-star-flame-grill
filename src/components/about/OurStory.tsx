@@ -8,8 +8,8 @@ import { type CarouselApi } from "@/components/ui/carousel";
 const OurStory: React.FC = () => {
   const [api, setApi] = useState<CarouselApi | null>(null);
   
-  // Use our custom autoplay hook
-  useCarouselAutoplay(api, 4000);
+  // Use our custom autoplay hook with 5000ms (5 seconds) interval
+  useCarouselAutoplay(api, 5000);
   
   const foodImages = [
     "/lovable-uploads/267bc1e8-d899-45ce-984c-5ebcba58c0b0.png",
@@ -27,9 +27,10 @@ const OurStory: React.FC = () => {
                 opts={{
                   align: "center",
                   loop: true,
+                  dragFree: false, // Disable dragging
                 }}
                 setApi={setApi}
-                className="w-full overflow-hidden"
+                className="w-full overflow-hidden pointer-events-none" // Disable pointer events to prevent interactions
               >
                 <CarouselContent>
                   {foodImages.map((src, index) => (
@@ -38,7 +39,7 @@ const OurStory: React.FC = () => {
                         <img 
                           src={src} 
                           alt={`5 Star Grill Food Item ${index + 1}`} 
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          className="w-full h-full object-cover"
                         />
                       </AspectRatio>
                     </CarouselItem>

@@ -9,8 +9,8 @@ const StorySection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [api, setApi] = useState<CarouselApi | null>(null);
   
-  // Use our custom autoplay hook
-  useCarouselAutoplay(api, 4000);
+  // Use our custom autoplay hook with 5000ms (5 seconds) interval
+  useCarouselAutoplay(api, 5000);
   
   const foodImages = [
     "/lovable-uploads/267bc1e8-d899-45ce-984c-5ebcba58c0b0.png",
@@ -55,9 +55,10 @@ const StorySection = () => {
                 opts={{
                   align: "center",
                   loop: true,
+                  dragFree: false, // Disable dragging
                 }}
                 setApi={setApi}
-                className="w-full rounded-lg shadow-2xl overflow-hidden"
+                className="w-full rounded-lg shadow-2xl overflow-hidden pointer-events-none" // Disable pointer events to prevent interactions
               >
                 <CarouselContent>
                   {foodImages.map((src, index) => (
