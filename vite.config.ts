@@ -14,9 +14,6 @@ export default defineConfig(({ mode }) => ({
     react({
       // Add support for React 18 hydration
       jsxImportSource: 'react',
-      babel: {
-        plugins: [],
-      }
     }),
     mode === 'development' &&
     componentTagger(),
