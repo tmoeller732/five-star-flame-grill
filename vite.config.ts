@@ -25,4 +25,8 @@ export default defineConfig(({ mode }) => ({
     // For SSG support
     ssrManifest: true,
   },
+  ssr: {
+    // Add this to prevent SSR issues
+    noExternal: ['react-helmet-async'],
+  },
 }));
