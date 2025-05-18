@@ -11,7 +11,13 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   plugins: [
-    react(),
+    react({
+      // Add support for React 18 hydration
+      jsxImportSource: 'react',
+      babel: {
+        plugins: [],
+      }
+    }),
     mode === 'development' &&
     componentTagger(),
   ].filter(Boolean),
@@ -27,6 +33,6 @@ export default defineConfig(({ mode }) => ({
   },
   ssr: {
     // Add this to prevent SSR issues
-    noExternal: ['react-helmet-async'],
+    noExternal: ['react-helmet-async', '@tanstack/react-query'],
   },
 }));
