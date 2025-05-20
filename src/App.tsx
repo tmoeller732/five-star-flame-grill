@@ -14,6 +14,7 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 
+// Create a client for React Query
 const queryClient = new QueryClient();
 
 const App = () => (

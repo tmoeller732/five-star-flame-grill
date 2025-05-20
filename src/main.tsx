@@ -4,7 +4,8 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App.tsx'
 import './index.css'
 
-// Clear menu cache if needed for debugging
+// For debugging menu issues:
+// Uncomment this line if you need to reset the menu cache
 // localStorage.removeItem('menuItemsWithImages');
 
 const root = document.getElementById("root")!;

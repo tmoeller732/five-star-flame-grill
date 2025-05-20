@@ -22,5 +22,7 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     sourcemap: true,
+    // Disable SSR features
+    ssr: false,
   },
 }));
