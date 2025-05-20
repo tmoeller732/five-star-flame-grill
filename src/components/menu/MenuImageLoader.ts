@@ -3,11 +3,6 @@ import { MenuItemProps } from './MenuItem';
 import { toast } from "sonner";
 import runwareService from '../../services/RunwareService';
 
-// Clear cached menu images to force new image generation
-export const clearCachedMenuImages = () => {
-  localStorage.removeItem('menuItemsWithImages');
-};
-
 // Generate images for menu items using Runware
 export const generateImagesWithRunware = async (menuItems: MenuItemProps[]) => {
   try {
@@ -38,8 +33,10 @@ export const generateImagesWithRunware = async (menuItems: MenuItemProps[]) => {
       }
     }
     
-    toast.success(`Generated ${generated} new menu item images.`);
-    localStorage.setItem('menuItemsWithImages', JSON.stringify(updatedItems));
+    if (generated > 0) {
+      toast.success(`Generated ${generated} menu item images.`);
+      localStorage.setItem('menuItemsWithImages', JSON.stringify(updatedItems));
+    }
     return updatedItems;
     
   } catch (error) {
@@ -60,7 +57,7 @@ export const loadCachedMenuImages = () => {
   }
 };
 
-// Generate menu images - uses Runware to generate images for all items
+// Generate menu images - uses Runware to generate images for all items only once
 export const generateMenuImages = async (menuItems: MenuItemProps[]) => {
   try {
     // Check if we have cached items first

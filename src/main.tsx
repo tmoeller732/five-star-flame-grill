@@ -4,16 +4,12 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App.tsx'
 import './index.css'
 
-// For debugging menu issues:
-// Clear menu cache on every load during development
-localStorage.removeItem('menuItemsWithImages');
-
 // Add safeguard to detect deployment environment and handle accordingly
 const isProduction = window.location.hostname !== 'localhost';
 if (isProduction) {
   // Get cached version from localStorage
   const cachedVersion = localStorage.getItem('siteVersion');
-  const currentVersion = '1.0.6'; // Increment this to trigger a cache clear when deploying updates
+  const currentVersion = '1.0.7'; // Increment this to trigger a cache clear when deploying updates
   
   // If version changed or first visit, clear cache
   if (cachedVersion !== currentVersion) {
