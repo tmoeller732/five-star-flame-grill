@@ -1,3 +1,4 @@
+
 import { Helmet } from 'react-helmet-async';
 import { useEffect, useState } from 'react';
 import Header from '../components/Header';
@@ -5,15 +6,19 @@ import Footer from '../components/Footer';
 import CountdownTimer from '../components/CountdownTimer';
 import FlameEffect from '../components/effects/FlameEffect';
 import useFlameEffect from '../hooks/useFlameEffect';
+
 const Blog = () => {
   const [isVisible, setIsVisible] = useState(false);
   const {
     isFlameVisible
   } = useFlameEffect();
+  
   useEffect(() => {
     setIsVisible(true);
   }, []);
-  return <>
+  
+  return (
+    <>
       <Helmet>
         <title>Blog | 5 Star Grill | Toms River, NJ</title>
         <meta name="description" content="Read the latest updates, recipes, and culinary insights from 5 Star Grill in Toms River, NJ." />
@@ -42,6 +47,8 @@ const Blog = () => {
       </main>
       
       <Footer />
-    </>;
+    </>
+  );
 };
+
 export default Blog;

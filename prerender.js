@@ -25,7 +25,7 @@ const routesToPrerender = [
   for (const url of routesToPrerender) {
     const appHtml = await render(url)
     
-    // Replace the placeholder with the app HTML
+    // Make sure we're replacing the placeholder correctly
     const html = template.replace(`<!--app-html-->`, appHtml)
 
     // Create the file path

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 interface CountdownTimerProps {
   className?: string;
@@ -43,9 +44,9 @@ const CountdownTimer = ({
     return () => clearInterval(timer);
   }, []);
 
-  // Default display for the menu page
+  // Return a default empty div instead of conditionally returning nothing
   if (!className.includes('inline-flex')) {
-    return;
+    return <div className={className}></div>;
   }
 
   // Compact display for the banner
