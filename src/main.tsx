@@ -9,12 +9,13 @@ const isProduction = window.location.hostname !== 'localhost';
 if (isProduction) {
   // Get cached version from localStorage
   const cachedVersion = localStorage.getItem('siteVersion');
-  const currentVersion = '1.0.7'; // Increment this to trigger a cache clear when deploying updates
+  const currentVersion = '1.0.8'; // Increment this to trigger a cache clear when deploying updates
   
   // If version changed or first visit, clear cache
   if (cachedVersion !== currentVersion) {
-    console.log('New version detected, clearing cache');
-    localStorage.removeItem('menuItemsWithImages');
+    console.log('New version detected, updating cache');
+    // Don't clear menuItemsWithImages anymore since we want consistent images
+    // Only update version number
     localStorage.setItem('siteVersion', currentVersion);
   }
 }
