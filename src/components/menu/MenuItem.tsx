@@ -9,7 +9,7 @@ export interface MenuItemProps {
   description: string;
   price: number;
   imageUrl: string;
-  category: 'breakfast' | 'lunch' | 'dinner';
+  category: 'breakfast' | 'lunch' | 'bowls';
   popular?: boolean;
 }
 

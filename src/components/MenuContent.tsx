@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MENU_ITEMS } from '../data/menuItems';
@@ -43,7 +44,7 @@ const MenuContent = () => {
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-playfair mb-4 text-grill-gold">Our Menu</h1>
         <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-          Savor the finest flavors prepared on our signature grill. From hearty breakfasts to elegant dinners, 
+          Savor the finest flavors prepared on our signature grill. From hearty breakfasts to authentic Mexican cuisine, 
           each dish is crafted with premium ingredients and expert technique.
         </p>
       </div>
@@ -55,12 +56,19 @@ const MenuContent = () => {
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid grid-cols-3 w-full max-w-md mx-auto mb-8">
           <TabsTrigger value="breakfast">Breakfast</TabsTrigger>
-          <TabsTrigger value="lunch">Lunch</TabsTrigger>
-          <TabsTrigger value="dinner">Dinner</TabsTrigger>
+          <TabsTrigger value="lunch">Lunch/Dinner</TabsTrigger>
+          <TabsTrigger value="bowls">Bowls & Salads</TabsTrigger>
         </TabsList>
         
-        {["breakfast", "lunch", "dinner"].map((category) => (
+        {["breakfast", "lunch", "bowls"].map((category) => (
           <TabsContent key={category} value={category} className="mt-0">
+            <div className="mb-8">
+              <h2 className="text-2xl font-playfair text-grill-gold text-center mb-4">
+                {category === "breakfast" ? "Breakfast Menu" : 
+                 category === "lunch" ? "Lunch/Dinner Menu" : 
+                 "Bowls & Salads"}
+              </h2>
+            </div>
             <CategoryItems items={filteredItems} />
           </TabsContent>
         ))}
