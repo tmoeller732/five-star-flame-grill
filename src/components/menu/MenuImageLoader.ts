@@ -1,6 +1,7 @@
 
 import { MenuItemProps } from './MenuItem';
 import { toast } from "sonner";
+import runwareService from '../../services/RunwareService';
 
 // Define static image URLs for menu items - these will be the same for all users
 const STATIC_MENU_IMAGES = {
@@ -29,6 +30,42 @@ const STATIC_MENU_IMAGES = {
 // Remove any previously cached menu items to force regeneration
 export const clearCachedMenuImages = () => {
   localStorage.removeItem('menuItemsWithImages');
+};
+
+// This function will be used by admin to generate images once
+export const generateImagesWithRunware = async (menuItems: MenuItemProps[]) => {
+  try {
+    const updatedItems = [...menuItems];
+    let generated = 0;
+    
+    for (let i = 0; i < updatedItems.length; i++) {
+      const item = updatedItems[i];
+      if (!STATIC_MENU_IMAGES[item.name]) {
+        try {
+          console.log(`Generating image for ${item.name}...`);
+          const result = await runwareService.generateImage({
+            positivePrompt: `Professional food photography of ${item.name}, ${item.description}, gourmet restaurant quality, extreme close-up, bokeh background, high definition`,
+            width: 1024,
+            height: 1024
+          });
+          
+          if (result.imageURL) {
+            console.log(`Image generated for ${item.name}: ${result.imageURL}`);
+            console.log(`ADD THIS TO STATIC_MENU_IMAGES: "${item.name}": "${result.imageURL}",`);
+            generated++;
+          }
+        } catch (err) {
+          console.error("Failed to generate image for:", item.name, err);
+        }
+      }
+    }
+    
+    toast.success(`Generated ${generated} new menu item images. Copy the URLs from the console.`);
+    
+  } catch (error) {
+    console.error("Error generating images:", error);
+    toast.error("Failed to generate menu images");
+  }
 };
 
 export const generateMenuImages = async (menuItems: MenuItemProps[]) => {
@@ -78,3 +115,4 @@ export const loadCachedMenuImages = () => {
     return null;
   }
 };
+

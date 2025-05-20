@@ -1,10 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 import { MENU_ITEMS } from '../data/menuItems';
 import FeaturedItems from './menu/FeaturedItems';
 import CategoryItems from './menu/CategoryItems';
-import { generateMenuImages, loadCachedMenuImages } from './menu/MenuImageLoader';
+import { generateMenuImages, loadCachedMenuImages, generateImagesWithRunware } from './menu/MenuImageLoader';
 import { MenuItemProps } from './menu/MenuItem';
 import { toast } from "sonner";
 
@@ -12,6 +13,7 @@ const MenuContent = () => {
   const [activeTab, setActiveTab] = useState<string>("breakfast");
   const [menuItems, setMenuItems] = useState<MenuItemProps[]>(MENU_ITEMS);
   const [isLoading, setIsLoading] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(false);
   
   useEffect(() => {
     const loadMenuImages = async () => {
@@ -43,6 +45,39 @@ const MenuContent = () => {
     loadMenuImages();
   }, []);
   
+  // Enable admin interface with a secret key combo
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Press 'Ctrl+Shift+A' to toggle admin interface
+      if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+        setShowAdmin(prev => !prev);
+        if (!showAdmin) {
+          toast.info("Admin interface enabled");
+        }
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [showAdmin]);
+  
+  const handleGenerateImages = async () => {
+    if (confirm("This will use Runware to generate new images for menu items. Continue?")) {
+      try {
+        setIsLoading(true);
+        toast.info("Generating images with Runware. Check console for results.");
+        await generateImagesWithRunware(MENU_ITEMS);
+      } catch (error) {
+        console.error("Error generating images:", error);
+        toast.error("Failed to generate images");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+  
   // Safely filter items, handling potential undefined values
   const filteredItems = menuItems.filter(item => item && item.category === activeTab);
   const popularItems = menuItems.filter(item => item && item.popular);
@@ -55,6 +90,22 @@ const MenuContent = () => {
           Savor the finest flavors prepared on our signature grill. From hearty breakfasts to authentic Mexican cuisine, 
           each dish is crafted with premium ingredients and expert technique.
         </p>
+        
+        {showAdmin && (
+          <div className="mt-4 p-4 bg-red-900/20 border border-red-500 rounded-md">
+            <h2 className="text-red-400 mb-2">Admin Interface</h2>
+            <Button 
+              onClick={handleGenerateImages}
+              disabled={isLoading}
+              className="bg-red-700 hover:bg-red-800"
+            >
+              {isLoading ? "Processing..." : "Generate Images with Runware"}
+            </Button>
+            <p className="text-sm text-gray-400 mt-2">
+              Generated image URLs will appear in the browser console. Add them to STATIC_MENU_IMAGES in MenuImageLoader.ts
+            </p>
+          </div>
+        )}
       </div>
       
       {/* Featured items section */}
