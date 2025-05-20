@@ -57,16 +57,25 @@ const Featured = () => {
   const [featuredItems, setFeaturedItems] = useState<MenuItemProps[]>([]);
   
   useEffect(() => {
-    // Get random items from different categories
-    const getRandomItem = (category: string) => {
-      const categoryItems = MENU_ITEMS.filter(item => item.category === category);
+    // Find menu items with images
+    const itemsWithImages = MENU_ITEMS.filter(item => item.imageUrl);
+    
+    // Get random items from different categories with images
+    const getRandomItemWithImage = (category: string) => {
+      const categoryItems = itemsWithImages.filter(item => item.category === category);
+      // If no items with images in this category, fall back to all items in category
+      if (categoryItems.length === 0) {
+        const allCategoryItems = MENU_ITEMS.filter(item => item.category === category);
+        const randomIndex = Math.floor(Math.random() * allCategoryItems.length);
+        return allCategoryItems[randomIndex];
+      }
       const randomIndex = Math.floor(Math.random() * categoryItems.length);
       return categoryItems[randomIndex];
     };
     
-    const breakfast = getRandomItem('breakfast');
-    const lunch = getRandomItem('lunch');
-    const bowls = getRandomItem('bowls');
+    const breakfast = getRandomItemWithImage('breakfast');
+    const lunch = getRandomItemWithImage('lunch');
+    const bowls = getRandomItemWithImage('bowls');
     
     setFeaturedItems([breakfast, lunch, bowls]);
     
@@ -91,13 +100,6 @@ const Featured = () => {
     };
   }, []);
 
-  // Default fallback images to use when menu items don't have images
-  const fallbackImages = [
-    "https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=2380",
-    "https://images.unsplash.com/photo-1600628421055-4d30de868b8f?q=80&w=2187",
-    "https://images.unsplash.com/photo-1515443961218-a51367888e4b?q=80&w=2340"
-  ];
-
   return (
     <section id="featured" className="py-20 bg-grain bg-grill-black">
       <div className="container mx-auto px-4">
@@ -114,7 +116,7 @@ const Featured = () => {
           {featuredItems.map((item, index) => (
             <FeaturedItem 
               key={item.id}
-              image={item.imageUrl || fallbackImages[index % fallbackImages.length]}
+              image={item.imageUrl}
               title={item.name}
               description={item.description}
               tag={item.category === 'breakfast' ? 'Breakfast' : 
