@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MENU_ITEMS } from '../data/menuItems';
 import { MenuItemProps } from './menu/MenuItem';
+import { loadCachedMenuImages } from './menu/MenuImageLoader';
 
 const FeaturedItem = ({ 
   image, 
@@ -57,15 +58,19 @@ const Featured = () => {
   const [featuredItems, setFeaturedItems] = useState<MenuItemProps[]>([]);
   
   useEffect(() => {
+    // Try to get cached menu items with images first
+    const cachedItems = loadCachedMenuImages();
+    const itemsToUse = cachedItems || MENU_ITEMS;
+    
     // Find menu items with images
-    const itemsWithImages = MENU_ITEMS.filter(item => item.imageUrl);
+    const itemsWithImages = itemsToUse.filter(item => item.imageUrl);
     
     // Get random items from different categories with images
     const getRandomItemWithImage = (category: string) => {
       const categoryItems = itemsWithImages.filter(item => item.category === category);
       // If no items with images in this category, fall back to all items in category
       if (categoryItems.length === 0) {
-        const allCategoryItems = MENU_ITEMS.filter(item => item.category === category);
+        const allCategoryItems = itemsToUse.filter(item => item.category === category);
         const randomIndex = Math.floor(Math.random() * allCategoryItems.length);
         return allCategoryItems[randomIndex];
       }

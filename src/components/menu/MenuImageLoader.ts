@@ -10,6 +10,13 @@ export const clearCachedMenuImages = () => {
 
 export const generateMenuImages = async (menuItems: MenuItemProps[]) => {
   try {
+    // First check if we already have cached images
+    const cachedItems = loadCachedMenuImages();
+    if (cachedItems) {
+      console.log("Using cached menu items with images");
+      return cachedItems;
+    }
+    
     const updatedItems = [...menuItems];
     let anyImagesGenerated = false;
     
