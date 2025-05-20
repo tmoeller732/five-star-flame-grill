@@ -59,12 +59,52 @@ const STATIC_MENU_IMAGES = {
   "Mediterranean Bowl": "https://im.runware.ai/image/ii/1e7b5b1e-1a27-4043-ae0b-8e9309522d1d.WEBP",
   "Keto Bowl": "https://im.runware.ai/image/ii/3caca178-0f2d-46bc-8514-aa54ccb4c8f0.WEBP",
   
+  // Now let's add mappings for our actual menu item names
+  "#1 'CLASSIC' EGG & CHEESE": "https://im.runware.ai/image/ii/822bf26b-9117-4d04-9354-5eec8f9dc34c.WEBP",
+  "#2 EGG & CHEESE W/MEAT": "https://im.runware.ai/image/ii/d3a4f8ab-b4f9-4571-8934-b4e1f346c988.WEBP",
+  "#3 STEAK EGG & CHEESE": "https://im.runware.ai/image/ii/0d030efb-c51a-4589-b0e4-1059ab205139.WEBP",
+  "#4 WESTERN OMELET SANDWICH": "https://im.runware.ai/image/ii/0d030efb-c51a-4589-b0e4-1059ab205139.WEBP",
+  "#5 CLASSIC BREAKFAST PLATE": "https://im.runware.ai/image/ii/d3a4f8ab-b4f9-4571-8934-b4e1f346c988.WEBP",
+  "#6 BREAKFAST PLATE W/MEAT": "https://im.runware.ai/image/ii/d3a4f8ab-b4f9-4571-8934-b4e1f346c988.WEBP",
+  "#7 BAGEL WITH BUTTER": "https://im.runware.ai/image/ii/822bf26b-9117-4d04-9354-5eec8f9dc34c.WEBP",
+  "#8 BAGEL WITH CREAM CHEESE": "https://im.runware.ai/image/ii/822bf26b-9117-4d04-9354-5eec8f9dc34c.WEBP",
+  
+  // Lunch items
+  "#1 Chorizo Tacos": "https://im.runware.ai/image/ii/d77d49dc-c694-4edd-9fa6-f6acb3527216.WEBP",
+  "#2 Chicken Tacos": "https://im.runware.ai/image/ii/d77d49dc-c694-4edd-9fa6-f6acb3527216.WEBP",
+  "#3 Steak Tacos": "https://im.runware.ai/image/ii/d77d49dc-c694-4edd-9fa6-f6acb3527216.WEBP",
+  "#4 Chorizo Burrito": "https://im.runware.ai/image/ii/cce3a605-22b7-4e50-8127-a4b6f058c548.WEBP",
+  "#5 Chicken Burrito": "https://im.runware.ai/image/ii/cce3a605-22b7-4e50-8127-a4b6f058c548.WEBP",
+  "#6 Steak Burrito": "https://im.runware.ai/image/ii/cce3a605-22b7-4e50-8127-a4b6f058c548.WEBP",
+  "#7 Smash Burger": "https://im.runware.ai/image/ii/a7fb47a3-f06e-4158-8805-d22d6affb6fe.WEBP",
+  "#8 Beef Burger": "https://im.runware.ai/image/ii/02d30d43-f0c4-4ccc-b19d-93f592054c9d.WEBP",
+  "#9 Chicken Sandwich": "https://im.runware.ai/image/ii/8f24c365-79b1-4693-8157-c508c4f428c5.WEBP",
+  "#10 Steak Quesadilla": "https://im.runware.ai/image/ii/dc9f0872-ee13-42f8-b1c4-759cdbdf1f6f.WEBP",
+  "#11 Chicken Quesadilla": "https://im.runware.ai/image/ii/dc9f0872-ee13-42f8-b1c4-759cdbdf1f6f.WEBP",
+  "#15 Philly Cheesesteak": "https://im.runware.ai/image/ii/1d4c1afc-9f12-428b-b101-71faf949a8b6.WEBP",
+  "#16 Chicken Cheesesteak": "https://im.runware.ai/image/ii/1d4c1afc-9f12-428b-b101-71faf949a8b6.WEBP",
+  "#17 California Cheesesteak": "https://im.runware.ai/image/ii/1d4c1afc-9f12-428b-b101-71faf949a8b6.WEBP",
+  "#18 Chicken Wings": "https://im.runware.ai/image/ii/b6768e84-1080-4601-99cd-2f43c88e0d5e.WEBP",
+  
+  // Bowls & Salads
+  "#1 CHICKEN BURRITO BOWL": "https://im.runware.ai/image/ii/cce3a605-22b7-4e50-8127-a4b6f058c548.WEBP",
+  "#2 CHORIZO BURRITO BOWL": "https://im.runware.ai/image/ii/cce3a605-22b7-4e50-8127-a4b6f058c548.WEBP",
+  "#3 STEAK BURRITO BOWL": "https://im.runware.ai/image/ii/cce3a605-22b7-4e50-8127-a4b6f058c548.WEBP",
+  "#4 ICEBERG SALAD": "https://im.runware.ai/image/ii/7ca60825-3883-436b-9743-22e9bbf704e4.WEBP",
+  "#5 ROMAINE SALAD": "https://im.runware.ai/image/ii/1189e400-bc2a-4358-857d-5b7dc9588a62.WEBP",
+  "#6 GARDEN SALAD": "https://im.runware.ai/image/ii/7ca60825-3883-436b-9743-22e9bbf704e4.WEBP",
+  "#7 CAESAR SALAD": "https://im.runware.ai/image/ii/1189e400-bc2a-4358-857d-5b7dc9588a62.WEBP",
+  "#8 CHICKEN TACO SALAD": "https://im.runware.ai/image/ii/187b4643-0f8f-4964-aaf9-718f9c45b584.WEBP",
+  "#9 CHORIZO TACO SALAD": "https://im.runware.ai/image/ii/187b4643-0f8f-4964-aaf9-718f9c45b584.WEBP",
+  "#10 STEAK TACO SALAD": "https://im.runware.ai/image/ii/187b4643-0f8f-4964-aaf9-718f9c45b584.WEBP",
+  
   // Default fallback image
   "default": "/placeholder.svg"
 };
 
 // Remove any previously cached menu items to force regeneration
 export const clearCachedMenuImages = () => {
+  console.log("Clearing cached menu images");
   localStorage.removeItem('menuItemsWithImages');
 };
 
@@ -113,6 +153,7 @@ export const generateMenuImages = async (menuItems: MenuItemProps[]) => {
       return cachedItems;
     }
     
+    console.log("No cached menu items found, assigning images to menu items");
     const updatedItems = [...menuItems];
     
     // Assign static images to menu items based on their names
@@ -151,4 +192,3 @@ export const loadCachedMenuImages = () => {
     return null;
   }
 };
-

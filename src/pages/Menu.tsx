@@ -7,12 +7,18 @@ import MenuContent from '../components/MenuContent';
 import FlameEffect from '../components/effects/FlameEffect';
 import useFlameEffect from '../hooks/useFlameEffect';
 import ReviewWidget from '../components/ReviewWidget';
+import { toast } from "sonner";
+import { clearCachedMenuImages } from '../components/menu/MenuImageLoader';
 
 const Menu = () => {
   const [isVisible, setIsVisible] = useState(false);
   const { isFlameVisible } = useFlameEffect();
   
   useEffect(() => {
+    // Clear cached menu images when menu page loads
+    clearCachedMenuImages();
+    toast.info("Menu images refreshed");
+    
     setIsVisible(true);
   }, []);
   

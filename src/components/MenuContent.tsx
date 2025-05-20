@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { MENU_ITEMS } from '../data/menuItems';
 import FeaturedItems from './menu/FeaturedItems';
 import CategoryItems from './menu/CategoryItems';
-import { generateMenuImages, loadCachedMenuImages, generateImagesWithRunware } from './menu/MenuImageLoader';
+import { generateMenuImages, loadCachedMenuImages, generateImagesWithRunware, clearCachedMenuImages } from './menu/MenuImageLoader';
 import { MenuItemProps } from './menu/MenuItem';
 import { toast } from "sonner";
 
@@ -20,19 +20,13 @@ const MenuContent = () => {
       try {
         setIsLoading(true);
         
-        // First try to load cached images from localStorage
-        const cachedItems = loadCachedMenuImages();
+        // Clear cache first to ensure we get fresh images
+        clearCachedMenuImages();
         
-        if (cachedItems) {
-          console.log("Using cached menu images");
-          setMenuItems(cachedItems);
-          setIsLoading(false);
-          return;
-        }
-        
-        // If no cached images, generate new ones
-        console.log("No cached images found, generating new ones");
+        // Generate new images
+        console.log("Loading menu images");
         const updatedItems = await generateMenuImages(menuItems);
+        console.log("Menu items with images:", updatedItems);
         setMenuItems(updatedItems);
       } catch (error) {
         console.error("Error loading menu images:", error);
@@ -77,6 +71,22 @@ const MenuContent = () => {
       }
     }
   };
+
+  const handleRefreshImages = async () => {
+    try {
+      setIsLoading(true);
+      clearCachedMenuImages();
+      toast.info("Refreshing menu images...");
+      const updatedItems = await generateMenuImages(MENU_ITEMS);
+      setMenuItems(updatedItems);
+      toast.success("Menu images refreshed!");
+    } catch (error) {
+      console.error("Error refreshing images:", error);
+      toast.error("Failed to refresh images");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   
   // Safely filter items, handling potential undefined values
   const filteredItems = menuItems.filter(item => item && item.category === activeTab);
@@ -90,6 +100,16 @@ const MenuContent = () => {
           Savor the finest flavors prepared on our signature grill. From hearty breakfasts to authentic Mexican cuisine, 
           each dish is crafted with premium ingredients and expert technique.
         </p>
+        
+        <div className="mt-4">
+          <Button 
+            onClick={handleRefreshImages}
+            disabled={isLoading}
+            className="bg-grill-gold hover:bg-grill-orange text-grill-black"
+          >
+            {isLoading ? "Refreshing..." : "Refresh Menu Images"}
+          </Button>
+        </div>
         
         {showAdmin && (
           <div className="mt-4 p-4 bg-red-900/20 border border-red-500 rounded-md">
