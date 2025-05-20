@@ -1,9 +1,6 @@
-
 import React from 'react';
-
 const OurCuisine = () => {
-  return (
-    <section className="py-20 bg-grill-brown/20">
+  return <section className="py-20 bg-grill-brown/20">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="order-2 lg:order-1 fade-in-element opacity-0 translate-y-10 transition-all duration-1000">
@@ -25,16 +22,10 @@ const OurCuisine = () => {
           </div>
           
           <div className="order-1 lg:order-2 fade-in-element opacity-0 translate-y-10 transition-all duration-1000 delay-200">
-            <img 
-              src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=2274" 
-              alt="Restaurant cuisine" 
-              className="rounded-lg shadow-xl"
-            />
+            <img alt="Restaurant cuisine" className="rounded-lg shadow-xl" src="/lovable-uploads/e76625d9-e323-4127-bf17-f0d9f1b5c2e6.jpg" />
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default OurCuisine;
