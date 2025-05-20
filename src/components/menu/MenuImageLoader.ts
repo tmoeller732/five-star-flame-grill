@@ -3,6 +3,11 @@ import runwareService from '../../services/RunwareService';
 import { MenuItemProps } from './MenuItem';
 import { toast } from "sonner";
 
+// Remove any previously cached menu items to force regeneration
+export const clearCachedMenuImages = () => {
+  localStorage.removeItem('menuItemsWithImages');
+};
+
 export const generateMenuImages = async (menuItems: MenuItemProps[]) => {
   try {
     const updatedItems = [...menuItems];

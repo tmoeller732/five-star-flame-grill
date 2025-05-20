@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MENU_ITEMS } from '../data/menuItems';
 import FeaturedItems from './menu/FeaturedItems';
 import CategoryItems from './menu/CategoryItems';
-import { generateMenuImages, loadCachedMenuImages } from './menu/MenuImageLoader';
+import { generateMenuImages, loadCachedMenuImages, clearCachedMenuImages } from './menu/MenuImageLoader';
 import { MenuItemProps } from './menu/MenuItem';
 
 const MenuContent = () => {
@@ -15,6 +15,9 @@ const MenuContent = () => {
   useEffect(() => {
     const loadMenuImages = async () => {
       setIsLoading(true);
+      
+      // Clear cache to force regeneration with the new menu items
+      clearCachedMenuImages();
       
       // First try to load cached images from localStorage
       const cachedItems = loadCachedMenuImages();

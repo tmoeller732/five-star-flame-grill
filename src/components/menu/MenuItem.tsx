@@ -2,6 +2,7 @@
 import React from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { utensils } from "lucide-react";
 
 export interface MenuItemProps {
   id: number;
