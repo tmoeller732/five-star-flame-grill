@@ -13,6 +13,7 @@ import Order from "./pages/Order";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <HelmetProvider>
       <TooltipProvider>
+        <ScrollToTop />
         <Toaster />
         <Sonner />
         <Routes>

@@ -1,20 +1,24 @@
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { MENU_ITEMS } from '../data/menuItems';
+import { MenuItemProps } from './menu/MenuItem';
 
 const FeaturedItem = ({ 
   image, 
   title, 
   description, 
   tag,
+  price,
   delay = "0"
 }: {
   image: string;
   title: string;
   description: string;
   tag: string;
+  price: number;
   delay?: string;
 }) => {
   return (
@@ -33,7 +37,10 @@ const FeaturedItem = ({
         <span className="inline-block px-3 py-1 bg-grill-gold text-grill-black rounded-full text-sm font-medium mb-3">
           {tag}
         </span>
-        <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+        <div className="flex justify-between items-start mb-2">
+          <h3 className="text-xl font-bold text-white mr-2">{title}</h3>
+          <span className="font-medium text-grill-gold">${price.toFixed(2)}</span>
+        </div>
         <p className="text-gray-300 mb-4">{description}</p>
         <Link 
           to="/menu" 
@@ -47,7 +54,22 @@ const FeaturedItem = ({
 };
 
 const Featured = () => {
+  const [featuredItems, setFeaturedItems] = useState<MenuItemProps[]>([]);
+  
   useEffect(() => {
+    // Get random items from different categories
+    const getRandomItem = (category: string) => {
+      const categoryItems = MENU_ITEMS.filter(item => item.category === category);
+      const randomIndex = Math.floor(Math.random() * categoryItems.length);
+      return categoryItems[randomIndex];
+    };
+    
+    const breakfast = getRandomItem('breakfast');
+    const lunch = getRandomItem('lunch');
+    const bowls = getRandomItem('bowls');
+    
+    setFeaturedItems([breakfast, lunch, bowls]);
+    
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
@@ -69,12 +91,12 @@ const Featured = () => {
     };
   }, []);
 
-  // Using direct Unsplash images for reliability and uploaded burger image
-  const staticImages = {
-    cheesesteak: "https://images.unsplash.com/photo-1600628421055-4d30de868b8f?q=80&w=2187",
-    breakfast: "https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=2380",
-    spanish: "https://images.unsplash.com/photo-1515443961218-a51367888e4b?q=80&w=2340"
-  };
+  // Set fallback images in case menu items don't have images yet
+  const fallbackImages = [
+    "https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=2380",
+    "https://images.unsplash.com/photo-1600628421055-4d30de868b8f?q=80&w=2187",
+    "https://images.unsplash.com/photo-1515443961218-a51367888e4b?q=80&w=2340"
+  ];
 
   return (
     <section id="featured" className="py-20 bg-grain bg-grill-black">
@@ -89,27 +111,19 @@ const Featured = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <FeaturedItem 
-            image={staticImages.breakfast}
-            title="NY-Style Breakfast Sandwiches"
-            description="Warm, freshly-made sandwiches with sizzling eggs, crispy bacon, and melted cheese on perfectly toasted bread."
-            tag="Breakfast"
-            delay="0.1"
-          />
-          <FeaturedItem 
-            image={staticImages.cheesesteak}
-            title="Signature Cheesesteaks"
-            description="Tender, flavorful steak with grilled onions, peppers, and the perfect layer of melted cheese, served on a fresh roll."
-            tag="Lunch"
-            delay="0.3"
-          />
-          <FeaturedItem 
-            image={staticImages.spanish}
-            title="Authentic Spanish Cuisine"
-            description="Savory rice and bean platters and perfectly seasoned grilled meats that transport you to the streets of Barcelona."
-            tag="Dinner"
-            delay="0.5"
-          />
+          {featuredItems.map((item, index) => (
+            <FeaturedItem 
+              key={item.id}
+              image={item.imageUrl || fallbackImages[index]}
+              title={item.name}
+              description={item.description}
+              tag={item.category === 'breakfast' ? 'Breakfast' : 
+                   item.category === 'lunch' ? 'Lunch/Dinner' : 
+                   'Bowls & Salads'}
+              price={item.price}
+              delay={`0.${index + 1}`}
+            />
+          ))}
         </div>
         
         <div className="flex justify-center mt-12">
