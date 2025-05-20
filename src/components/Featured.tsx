@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -63,40 +62,34 @@ const Featured = () => {
       const cachedItems = loadCachedMenuImages();
       const itemsToUse = cachedItems || MENU_ITEMS;
       
-      // Find menu items with images
-      const itemsWithImages = itemsToUse.filter(item => item && item.imageUrl);
+      // Find lunch menu items with images
+      const itemsWithImages = itemsToUse.filter(item => item && item.imageUrl && item.category === 'lunch');
       
-      // Get random items from different categories with images
-      const getRandomItemWithImage = (category: string) => {
-        const categoryItems = itemsWithImages.filter(item => item && item.category === category);
-        // If no items with images in this category, fall back to all items in category
-        if (categoryItems.length === 0) {
-          const allCategoryItems = itemsToUse.filter(item => item && item.category === category);
-          if (allCategoryItems.length === 0) {
-            // Return a default item if no items found in this category
-            return {
-              id: 0,
-              name: "Menu Item",
-              description: "Description unavailable",
-              price: 0,
-              category: category as 'breakfast' | 'lunch' | 'bowls',
-              imageUrl: "/placeholder.svg"
-            };
-          }
-          const randomIndex = Math.floor(Math.random() * allCategoryItems.length);
-          return allCategoryItems[randomIndex];
-        }
-        const randomIndex = Math.floor(Math.random() * categoryItems.length);
-        return categoryItems[randomIndex];
-      };
+      // If we don't have enough items with images, get any lunch items
+      let selectedItems: MenuItemProps[] = [];
       
-      const breakfast = getRandomItemWithImage('breakfast');
-      const lunch = getRandomItemWithImage('lunch');
-      const bowls = getRandomItemWithImage('bowls');
-      
-      if (breakfast && lunch && bowls) {
-        setFeaturedItems([breakfast, lunch, bowls]);
+      if (itemsWithImages.length >= 3) {
+        // If we have at least 3 items with images, use those
+        selectedItems = itemsWithImages.slice(0, 3);
+      } else {
+        // Otherwise, fall back to any lunch items
+        const lunchItems = itemsToUse.filter(item => item && item.category === 'lunch');
+        selectedItems = lunchItems.slice(0, 3);
       }
+      
+      // If we still don't have 3 items, fill in with default items
+      while (selectedItems.length < 3) {
+        selectedItems.push({
+          id: selectedItems.length,
+          name: "Featured Item",
+          description: "Description unavailable",
+          price: 0,
+          category: 'lunch',
+          imageUrl: "/placeholder.svg"
+        });
+      }
+      
+      setFeaturedItems(selectedItems);
       
       const observer = new IntersectionObserver(
         (entries) => {
@@ -137,10 +130,10 @@ const Featured = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 font-playfair">
-            Our Signature <span className="text-grill-gold">Specialties</span>
+            Our Signature <span className="text-grill-gold">Lunch Specialties</span>
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto">
-            From NY-style breakfast sandwiches to authentic Spanish cuisine and everything in between, our diverse menu satisfies every craving.
+            From authentic Spanish cuisine to signature cheesesteaks, our diverse lunch and dinner menu satisfies every craving.
           </p>
         </div>
         
@@ -151,9 +144,7 @@ const Featured = () => {
               image={item.imageUrl || '/placeholder.svg'}
               title={item.name}
               description={item.description}
-              tag={item.category === 'breakfast' ? 'Breakfast' : 
-                   item.category === 'lunch' ? 'Lunch/Dinner' : 
-                   'Bowls & Salads'}
+              tag="Lunch/Dinner"
               price={item.price}
               delay={`0.${index + 1}`}
             />
