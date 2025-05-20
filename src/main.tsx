@@ -4,9 +4,6 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App.tsx'
 import './index.css'
 
-// Force clear menu cache on load
-localStorage.removeItem('menuItemsWithImages');
-
 // For debugging menu issues:
 // Uncomment this line if you need to reset the menu cache
 // localStorage.removeItem('menuItemsWithImages');
@@ -16,7 +13,7 @@ const isProduction = window.location.hostname !== 'localhost';
 if (isProduction) {
   // Get cached version from localStorage
   const cachedVersion = localStorage.getItem('siteVersion');
-  const currentVersion = '1.0.5'; // Increment this to trigger a cache clear when deploying updates
+  const currentVersion = '1.0.4'; // Increment this to trigger a cache clear when deploying updates
   
   // If version changed or first visit, clear cache
   if (cachedVersion !== currentVersion) {
