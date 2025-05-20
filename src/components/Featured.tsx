@@ -91,7 +91,7 @@ const Featured = () => {
     };
   }, []);
 
-  // Set fallback images in case menu items don't have images yet
+  // Default fallback images to use when menu items don't have images
   const fallbackImages = [
     "https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=2380",
     "https://images.unsplash.com/photo-1600628421055-4d30de868b8f?q=80&w=2187",
@@ -114,7 +114,7 @@ const Featured = () => {
           {featuredItems.map((item, index) => (
             <FeaturedItem 
               key={item.id}
-              image={item.imageUrl || fallbackImages[index]}
+              image={item.imageUrl || fallbackImages[index % fallbackImages.length]}
               title={item.name}
               description={item.description}
               tag={item.category === 'breakfast' ? 'Breakfast' : 
