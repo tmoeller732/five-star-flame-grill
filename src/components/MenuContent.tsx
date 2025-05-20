@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { MENU_ITEMS } from '../data/menuItems';
 import FeaturedItems from './menu/FeaturedItems';
 import CategoryItems from './menu/CategoryItems';
-import { generateMenuImages, loadCachedMenuImages, clearCachedMenuImages, generateImagesWithRunware } from './menu/MenuImageLoader';
+import { generateMenuImages, clearCachedMenuImages } from './menu/MenuImageLoader';
 import { MenuItemProps } from './menu/MenuItem';
 import { toast } from "sonner";
 
@@ -13,18 +13,14 @@ const MenuContent = () => {
   const [activeTab, setActiveTab] = useState<string>("breakfast");
   const [menuItems, setMenuItems] = useState<MenuItemProps[]>(MENU_ITEMS);
   const [isLoading, setIsLoading] = useState(false);
-  const [showAdmin, setShowAdmin] = useState(false);
   
   useEffect(() => {
     const loadMenuImages = async () => {
       try {
         setIsLoading(true);
+        console.log("Loading menu images...");
         
-        // Clear cache to ensure consistent images for all users
-        clearCachedMenuImages();
-        
-        // Generate static images for all menu items
-        console.log("Generating static images for menu items");
+        // Generate images for all menu items
         const updatedItems = await generateMenuImages(menuItems);
         setMenuItems(updatedItems);
       } catch (error) {
@@ -38,30 +34,12 @@ const MenuContent = () => {
     loadMenuImages();
   }, []);
   
-  // Enable admin interface with a secret key combo
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Press 'Ctrl+Shift+A' to toggle admin interface
-      if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-        setShowAdmin(prev => !prev);
-        if (!showAdmin) {
-          toast.info("Admin interface enabled");
-        }
-      }
-    };
-    
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [showAdmin]);
-  
   const handleRefreshImages = async () => {
     try {
       setIsLoading(true);
       clearCachedMenuImages();
-      toast.info("Refreshing menu images...");
-      const updatedItems = await generateMenuImages(menuItems);
+      toast.info("Generating new menu images...");
+      const updatedItems = await generateMenuImages(MENU_ITEMS);
       setMenuItems(updatedItems);
       toast.success("Menu images refreshed");
     } catch (error) {
@@ -69,21 +47,6 @@ const MenuContent = () => {
       toast.error("Failed to refresh images");
     } finally {
       setIsLoading(false);
-    }
-  };
-  
-  const handleGenerateImages = async () => {
-    if (confirm("This will use Runware to generate new images for menu items. Continue?")) {
-      try {
-        setIsLoading(true);
-        toast.info("Generating images with Runware. Check console for results.");
-        await generateImagesWithRunware(MENU_ITEMS);
-      } catch (error) {
-        console.error("Error generating images:", error);
-        toast.error("Failed to generate images");
-      } finally {
-        setIsLoading(false);
-      }
     }
   };
   
@@ -107,25 +70,9 @@ const MenuContent = () => {
             variant="outline"
             className="bg-transparent border border-grill-gold text-grill-gold hover:bg-grill-gold/10"
           >
-            {isLoading ? "Loading..." : "Refresh Menu Images"}
+            {isLoading ? "Generating Images..." : "Generate New Menu Images"}
           </Button>
         </div>
-        
-        {showAdmin && (
-          <div className="mt-4 p-4 bg-red-900/20 border border-red-500 rounded-md">
-            <h2 className="text-red-400 mb-2">Admin Interface</h2>
-            <Button 
-              onClick={handleGenerateImages}
-              disabled={isLoading}
-              className="bg-red-700 hover:bg-red-800"
-            >
-              {isLoading ? "Processing..." : "Generate Images with Runware"}
-            </Button>
-            <p className="text-sm text-gray-400 mt-2">
-              Generated image URLs will appear in the browser console. Add them to STATIC_MENU_IMAGES in MenuImageLoader.ts
-            </p>
-          </div>
-        )}
       </div>
       
       {/* Featured items section */}
