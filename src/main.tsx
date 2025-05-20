@@ -20,7 +20,7 @@ const app = (
 );
 
 // Use hydration for SSR in production
-if (import.meta.env.PROD) {
+if (import.meta.env.PROD && root.innerHTML.trim().length) {
   hydrateRoot(root, app);
 } else {
   createRoot(root).render(app);

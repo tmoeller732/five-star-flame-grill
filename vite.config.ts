@@ -29,7 +29,13 @@ export default defineConfig(({ mode }) => ({
     ssrManifest: true,
   },
   ssr: {
-    // Add this to prevent SSR issues
-    noExternal: ['react-helmet-async', '@tanstack/react-query'],
+    // Prevent issues with external packages during SSR
+    noExternal: [
+      'react-helmet-async', 
+      '@tanstack/react-query', 
+      'sonner', 
+      '@radix-ui/react-toast',
+      /lucide-react/
+    ],
   },
 }));

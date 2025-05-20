@@ -33,4 +33,7 @@ const routesToPrerender = [
     fs.writeFileSync(toAbsolute(filePath), html)
     console.log('pre-rendered:', filePath)
   }
-})()
+})().catch(e => {
+  console.error(e)
+  process.exit(1)
+})

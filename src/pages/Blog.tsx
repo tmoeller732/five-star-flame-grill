@@ -8,13 +8,15 @@ import FlameEffect from '../components/effects/FlameEffect';
 import useFlameEffect from '../hooks/useFlameEffect';
 
 const Blog = () => {
+  // Safe initial state for SSR
   const [isVisible, setIsVisible] = useState(false);
-  const {
-    isFlameVisible
-  } = useFlameEffect();
+  const { isFlameVisible } = useFlameEffect();
   
   useEffect(() => {
-    setIsVisible(true);
+    // Only run in browser, not during SSR
+    if (typeof window !== 'undefined') {
+      setIsVisible(true);
+    }
   }, []);
   
   return (

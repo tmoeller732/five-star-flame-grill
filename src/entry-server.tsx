@@ -10,15 +10,16 @@ export function render(url: string) {
   const queryClient = new QueryClient();
   const helmetContext = {};
   
-  const html = ReactDOMServer.renderToString(
-    <HelmetProvider context={helmetContext}>
-      <QueryClientProvider client={queryClient}>
-        <StaticRouter location={url}>
-          <App />
-        </StaticRouter>
-      </QueryClientProvider>
-    </HelmetProvider>
+  // Wrap the app with all necessary providers for SSR
+  return ReactDOMServer.renderToString(
+    <React.StrictMode>
+      <HelmetProvider context={helmetContext}>
+        <QueryClientProvider client={queryClient}>
+          <StaticRouter location={url}>
+            <App />
+          </StaticRouter>
+        </QueryClientProvider>
+      </HelmetProvider>
+    </React.StrictMode>
   );
-  
-  return html;
 }

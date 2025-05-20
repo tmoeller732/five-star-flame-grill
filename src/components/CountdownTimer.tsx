@@ -1,8 +1,10 @@
 
 import { useState, useEffect } from 'react';
+
 interface CountdownTimerProps {
   className?: string;
 }
+
 const CountdownTimer = ({
   className = ''
 }: CountdownTimerProps) => {
@@ -12,7 +14,11 @@ const CountdownTimer = ({
     minutes: 0,
     seconds: 0
   });
+
   useEffect(() => {
+    // Only run in browser, not during SSR
+    if (typeof window === 'undefined') return;
+
     // Set end date to 2 weeks from the first visit
     const savedEndDate = localStorage.getItem('countdownEndDate');
     const endDate = savedEndDate ? new Date(parseInt(savedEndDate)) : new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
@@ -21,6 +27,7 @@ const CountdownTimer = ({
     if (!savedEndDate) {
       localStorage.setItem('countdownEndDate', endDate.getTime().toString());
     }
+
     const calculateTimeLeft = () => {
       const difference = endDate.getTime() - new Date().getTime();
       if (difference > 0) {
@@ -39,12 +46,13 @@ const CountdownTimer = ({
         });
       }
     };
+
     calculateTimeLeft();
     const timer = setInterval(calculateTimeLeft, 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // Return a default empty div instead of conditionally returning nothing
+  // For small screens or non-banner displays
   if (!className.includes('inline-flex')) {
     return <div className={className}></div>;
   }
@@ -67,4 +75,5 @@ const CountdownTimer = ({
       </div>
     </div>;
 };
+
 export default CountdownTimer;
