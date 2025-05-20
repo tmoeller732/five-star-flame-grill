@@ -1,7 +1,30 @@
 
-import runwareService from '../../services/RunwareService';
 import { MenuItemProps } from './MenuItem';
 import { toast } from "sonner";
+
+// Define static image URLs for menu items - these will be the same for all users
+const STATIC_MENU_IMAGES = {
+  // Breakfast items
+  "Breakfast Sandwich": "/static/images/breakfast-sandwich.jpg",
+  "Breakfast Platter": "/static/images/breakfast-platter.jpg",
+  "Avocado Toast": "/static/images/avocado-toast.jpg",
+  "Omelette": "/static/images/omelette.jpg",
+  
+  // Lunch/Dinner items
+  "Signature Cheesesteak": "/static/images/cheesesteak.jpg",
+  "Smash Burger": "/static/images/smash-burger.jpg",
+  "Spanish Paella": "/static/images/paella.jpg",
+  "Fish Tacos": "/static/images/fish-tacos.jpg",
+  
+  // Bowls & Salads
+  "Chicken Bowl": "/static/images/chicken-bowl.jpg",
+  "Steak Bowl": "/static/images/steak-bowl.jpg",
+  "Cesar Salad": "/static/images/cesar-salad.jpg",
+  "Mediterranean Salad": "/static/images/mediterranean-salad.jpg",
+  
+  // Default fallback image
+  "default": "/placeholder.svg"
+};
 
 // Remove any previously cached menu items to force regeneration
 export const clearCachedMenuImages = () => {
@@ -18,43 +41,29 @@ export const generateMenuImages = async (menuItems: MenuItemProps[]) => {
     }
     
     const updatedItems = [...menuItems];
-    let anyImagesGenerated = false;
     
+    // Assign static images to menu items based on their names
     for (let i = 0; i < updatedItems.length; i++) {
       const item = updatedItems[i];
       if (!item.imageUrl) {
-        try {
-          console.log(`Generating image for ${item.name}...`);
-          const result = await runwareService.generateImage({
-            positivePrompt: `Professional food photography of ${item.name}, ${item.description}, gourmet restaurant quality, extreme close-up, bokeh background, high definition`,
-            width: 512,
-            height: 512
-          });
-          
-          if (result.imageURL) {
-            console.log(`Image generated for ${item.name}: ${result.imageURL}`);
-            updatedItems[i] = {
-              ...item,
-              imageUrl: result.imageURL
-            };
-            anyImagesGenerated = true;
-          }
-        } catch (err) {
-          console.error("Failed to generate image for:", item.name, err);
-          // Continue with other items even if one fails
-        }
+        // Look up the image in our static mapping, or use default if not found
+        const staticImageUrl = STATIC_MENU_IMAGES[item.name] || STATIC_MENU_IMAGES.default;
+        
+        console.log(`Assigning static image for ${item.name}: ${staticImageUrl}`);
+        updatedItems[i] = {
+          ...item,
+          imageUrl: staticImageUrl
+        };
       }
     }
     
-    if (anyImagesGenerated) {
-      // Store generated images in localStorage to avoid regenerating them
-      localStorage.setItem('menuItemsWithImages', JSON.stringify(updatedItems));
-    }
+    // Store the menu items with static images in localStorage for faster loading next time
+    localStorage.setItem('menuItemsWithImages', JSON.stringify(updatedItems));
     
     return updatedItems;
   } catch (error) {
-    console.error("Error generating images:", error);
-    toast.error("Failed to generate some menu images");
+    console.error("Error assigning static images:", error);
+    toast.error("Failed to load menu images");
     return menuItems;
   }
 };
