@@ -1,7 +1,6 @@
 
 import { useState, useEffect } from 'react';
 import { Phone } from 'lucide-react';
-import CountdownTimer from './CountdownTimer';
 
 const ScrollingBanner = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
@@ -28,9 +27,8 @@ const ScrollingBanner = () => {
         <div className="inline-block animate-marquee py-2">
           <div className="flex items-center justify-center">
             <span className="text-sm font-medium mx-2 text-grill-black">
-              Ordering Apps Ready In:
+              Open 7 Days a Week | Daily Specials
             </span>
-            <CountdownTimer className="inline-flex items-center mx-2" />
             <span className="text-sm font-medium mx-2 text-grill-orange">
               |
             </span>

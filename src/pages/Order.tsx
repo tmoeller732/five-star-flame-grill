@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Button } from '@/components/ui/button';
-import CountdownTimer from '../components/CountdownTimer';
 
 const Order = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -34,11 +33,13 @@ const Order = () => {
         <div className="container mx-auto px-4">
           <div className={`text-center mb-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h1 className="text-4xl md:text-5xl font-playfair mb-4 text-grill-gold">Online Ordering</h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-6">
               Order your favorite 5 Star Grill dishes for pickup or delivery. 
               Choose your preferred ordering method below.
             </p>
-            <CountdownTimer className="mb-6" />
+            <div className="mt-6 mb-2 text-grill-gold font-medium text-lg">
+              Open 7 Days a Week | Daily Specials
+            </div>
           </div>
           
           <div className={`max-w-4xl mx-auto mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '200ms' }}>

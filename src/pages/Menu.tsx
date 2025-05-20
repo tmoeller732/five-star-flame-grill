@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import MenuContent from '../components/MenuContent';
-import CountdownTimer from '../components/CountdownTimer';
 import FlameEffect from '../components/effects/FlameEffect';
 import useFlameEffect from '../hooks/useFlameEffect';
 import ReviewWidget from '../components/ReviewWidget';
@@ -36,7 +35,6 @@ const Menu = () => {
               <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-6">
                 Explore our delicious selection of grilled specialties.
               </p>
-              <CountdownTimer />
             </div>
           </div>
           <MenuContent />

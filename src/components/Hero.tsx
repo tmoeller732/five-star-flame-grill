@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
-import CountdownTimer from './CountdownTimer';
 
 const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -61,7 +60,9 @@ const Hero = () => {
               </Button>
             </div>
             
-            <CountdownTimer />
+            <div className="mt-6 text-grill-gold font-medium">
+              Open 7 Days a Week | Daily Specials
+            </div>
           </div>
         </div>
       </div>
