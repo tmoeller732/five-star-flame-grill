@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Flame } from 'lucide-react';
@@ -49,9 +48,6 @@ const Header = () => {
         className={`fixed top-10 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled ? 'bg-grill-black bg-opacity-90 shadow-lg' : 'bg-transparent'
         }`}
-        style={{
-          position: 'relative',
-        }}
       >
         {/* Black overlay at 50% opacity */}
         <div 
