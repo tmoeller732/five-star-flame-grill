@@ -50,13 +50,21 @@ const Header = () => {
           isScrolled ? 'bg-grill-black bg-opacity-90 shadow-lg' : 'bg-transparent'
         }`}
         style={{
-          backgroundImage: `url('/lovable-uploads/b619f0c4-4d98-480e-b4b8-582c397779b4.png')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center bottom',
-          backgroundRepeat: 'no-repeat'
+          position: 'relative',
         }}
       >
-        <div className="container mx-auto px-4 py-6">
+        {/* Black overlay at 50% opacity */}
+        <div 
+          className="absolute inset-0 bg-black opacity-50 z-0"
+          style={{
+            backgroundImage: `url('/lovable-uploads/b619f0c4-4d98-480e-b4b8-582c397779b4.png')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center bottom',
+            backgroundRepeat: 'no-repeat'
+          }}
+        ></div>
+        
+        <div className="container mx-auto px-4 py-6 relative z-10">
           <div className="flex justify-center items-center relative">
             {/* Logo (centered) - hidden on home page until scrolled past hero */}
             {showLogo && (
@@ -135,7 +143,7 @@ const Header = () => {
 
         {/* Mobile menu - update mobile menu items as well */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-grill-black bg-opacity-95 p-4">
+          <div className="md:hidden bg-grill-black bg-opacity-95 p-4 relative z-10">
             <nav className="flex flex-col space-y-4">
               <Link 
                 to="/" 
