@@ -79,7 +79,7 @@ const Header = () => {
               <Link to="/" className="nav-item group">
                 <div className="relative">
                   <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
-                  <span className={`font-medium font-bold text-lg px-4 py-2 rounded transition-all duration-300 hover:text-grill-gold ${isActive('/') ? 'text-grill-gold bg-[#222222]' : 'text-white bg-[#222222] bg-opacity-80'}`}>
+                  <span className={`font-medium font-bold text-lg px-4 py-2 rounded transition-all duration-300 hover:text-grill-gold ${isActive('/') ? 'text-grill-gold' : 'text-white'}`}>
                     Home
                   </span>
                 </div>
@@ -87,7 +87,7 @@ const Header = () => {
               <Link to="/about" className="nav-item group">
                 <div className="relative">
                   <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
-                  <span className={`font-medium font-bold text-lg px-4 py-2 rounded transition-all duration-300 hover:text-grill-gold ${isActive('/about') ? 'text-grill-gold bg-[#222222]' : 'text-white bg-[#222222] bg-opacity-80'}`}>
+                  <span className={`font-medium font-bold text-lg px-4 py-2 rounded transition-all duration-300 hover:text-grill-gold ${isActive('/about') ? 'text-grill-gold' : 'text-white'}`}>
                     About
                   </span>
                 </div>
@@ -95,7 +95,7 @@ const Header = () => {
               <Link to="/menu" className="nav-item group">
                 <div className="relative">
                   <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
-                  <span className={`font-medium font-bold text-lg px-4 py-2 rounded transition-all duration-300 hover:text-grill-gold ${isActive('/menu') ? 'text-grill-gold bg-[#222222]' : 'text-white bg-[#222222] bg-opacity-80'}`}>
+                  <span className={`font-medium font-bold text-lg px-4 py-2 rounded transition-all duration-300 hover:text-grill-gold ${isActive('/menu') ? 'text-grill-gold' : 'text-white'}`}>
                     Menu
                   </span>
                 </div>
@@ -110,7 +110,7 @@ const Header = () => {
               <Link to="/blog" className="nav-item group">
                 <div className="relative">
                   <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
-                  <span className={`font-medium font-bold text-lg px-4 py-2 rounded transition-all duration-300 hover:text-grill-gold ${isActive('/blog') ? 'text-grill-gold bg-[#222222]' : 'text-white bg-[#222222] bg-opacity-80'}`}>
+                  <span className={`font-medium font-bold text-lg px-4 py-2 rounded transition-all duration-300 hover:text-grill-gold ${isActive('/blog') ? 'text-grill-gold' : 'text-white'}`}>
                     Blog
                   </span>
                 </div>
@@ -118,7 +118,7 @@ const Header = () => {
               <Link to="/contact" className="nav-item group">
                 <div className="relative">
                   <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
-                  <span className={`font-medium font-bold text-lg px-4 py-2 rounded transition-all duration-300 hover:text-grill-gold ${isActive('/contact') ? 'text-grill-gold bg-[#222222]' : 'text-white bg-[#222222] bg-opacity-80'}`}>
+                  <span className={`font-medium font-bold text-lg px-4 py-2 rounded transition-all duration-300 hover:text-grill-gold ${isActive('/contact') ? 'text-grill-gold' : 'text-white'}`}>
                     Contact
                   </span>
                 </div>
@@ -144,7 +144,7 @@ const Header = () => {
             <nav className="flex flex-col space-y-4">
               <Link 
                 to="/" 
-                className={`font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded ${isActive('/') ? 'text-grill-gold bg-[#222222]' : 'text-white bg-[#222222] bg-opacity-80'} flex items-center`}
+                className={`font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded ${isActive('/') ? 'text-grill-gold' : 'text-white'} flex items-center`}
                 onClick={closeMobileMenu}
               >
                 <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
@@ -152,7 +152,7 @@ const Header = () => {
               </Link>
               <Link 
                 to="/about" 
-                className={`font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded ${isActive('/about') ? 'text-grill-gold bg-[#222222]' : 'text-white bg-[#222222] bg-opacity-80'} flex items-center`}
+                className={`font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded ${isActive('/about') ? 'text-grill-gold' : 'text-white'} flex items-center`}
                 onClick={closeMobileMenu}
               >
                 <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
@@ -160,7 +160,7 @@ const Header = () => {
               </Link>
               <Link 
                 to="/menu" 
-                className={`font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded ${isActive('/menu') ? 'text-grill-gold bg-[#222222]' : 'text-white bg-[#222222] bg-opacity-80'} flex items-center`}
+                className={`font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded ${isActive('/menu') ? 'text-grill-gold' : 'text-white'} flex items-center`}
                 onClick={closeMobileMenu}
               >
                 <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
@@ -168,7 +168,7 @@ const Header = () => {
               </Link>
               <Link 
                 to="/order" 
-                className={`font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded ${isActive('/order') ? 'text-grill-gold bg-[#222222]' : 'text-white bg-[#222222] bg-opacity-80'} flex items-center`}
+                className={`font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded ${isActive('/order') ? 'text-grill-gold' : 'text-white'} flex items-center`}
                 onClick={closeMobileMenu}
               >
                 <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
@@ -176,7 +176,7 @@ const Header = () => {
               </Link>
               <Link 
                 to="/blog" 
-                className={`font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded ${isActive('/blog') ? 'text-grill-gold bg-[#222222]' : 'text-white bg-[#222222] bg-opacity-80'} flex items-center`}
+                className={`font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded ${isActive('/blog') ? 'text-grill-gold' : 'text-white'} flex items-center`}
                 onClick={closeMobileMenu}
               >
                 <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
@@ -184,7 +184,7 @@ const Header = () => {
               </Link>
               <Link 
                 to="/contact" 
-                className={`font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded ${isActive('/contact') ? 'text-grill-gold bg-[#222222]' : 'text-white bg-[#222222] bg-opacity-80'} flex items-center`}
+                className={`font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded ${isActive('/contact') ? 'text-grill-gold' : 'text-white'} flex items-center`}
                 onClick={closeMobileMenu}
               >
                 <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
