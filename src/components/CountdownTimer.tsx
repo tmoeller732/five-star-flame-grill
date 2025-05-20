@@ -16,9 +16,6 @@ const CountdownTimer = ({
   });
 
   useEffect(() => {
-    // Only run in browser, not during SSR
-    if (typeof window === 'undefined') return;
-
     // Set end date to 2 weeks from the first visit
     const savedEndDate = localStorage.getItem('countdownEndDate');
     const endDate = savedEndDate ? new Date(parseInt(savedEndDate)) : new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);

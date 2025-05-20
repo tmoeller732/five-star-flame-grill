@@ -12,12 +12,7 @@ const { render } = await import('./dist/server/entry-server.js')
 
 // Define routes to pre-render
 const routesToPrerender = [
-  '/',
-  '/about',
-  '/menu',
-  '/order',
-  '/blog',
-  '/contact'
+  '/'
 ]
 
 ;(async () => {
@@ -25,8 +20,7 @@ const routesToPrerender = [
   for (const url of routesToPrerender) {
     const appHtml = await render(url)
     
-    // Make sure we're replacing the placeholder correctly
-    const html = template.replace(`<!--app-html-->`, appHtml)
+    const html = template.replace(`<div id="root"><!--app-html--></div>`, `<div id="root">${appHtml}</div>`)
 
     // Create the file path
     const filePath = `dist${url === '/' ? '/index' : url}.html`

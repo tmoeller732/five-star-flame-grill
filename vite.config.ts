@@ -11,10 +11,7 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   plugins: [
-    react({
-      // Add support for React 18 hydration
-      jsxImportSource: 'react',
-    }),
+    react(),
     mode === 'development' &&
     componentTagger(),
   ].filter(Boolean),
@@ -25,17 +22,5 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     sourcemap: true,
-    // For SSG support
-    ssrManifest: true,
-  },
-  ssr: {
-    // Prevent issues with external packages during SSR
-    noExternal: [
-      'react-helmet-async', 
-      '@tanstack/react-query', 
-      'sonner', 
-      '@radix-ui/react-toast',
-      /lucide-react/
-    ],
   },
 }));
