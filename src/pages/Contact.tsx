@@ -1,8 +1,8 @@
+
 import { Helmet } from 'react-helmet-async';
 import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import CountdownTimer from '../components/CountdownTimer';
 
 const Contact = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -28,7 +28,6 @@ const Contact = () => {
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Have questions or want to make a reservation? Reach out to us!
             </p>
-            <CountdownTimer className="mb-6" />
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -46,12 +45,8 @@ const Contact = () => {
               <div className="mb-6">
                 <h3 className="text-xl mb-2">Hours</h3>
                 <div className="grid grid-cols-2 gap-2 text-gray-300">
-                  <div>Monday - Friday</div>
-                  <div>7:00 AM - 10:00 PM</div>
-                  <div>Saturday</div>
-                  <div>8:00 AM - 11:00 PM</div>
-                  <div>Sunday</div>
-                  <div>8:00 AM - 9:00 PM</div>
+                  <div>Everyday</div>
+                  <div>6:00 AM - 5:00 PM</div>
                 </div>
               </div>
               

@@ -66,8 +66,7 @@ const Footer = () => {
             </div>
             <div className="mt-4">
               <h4 className="font-bold text-white mb-2">Hours</h4>
-              <p className="text-gray-400">Mon-Fri: 7:00 AM - 10:00 PM</p>
-              <p className="text-gray-400">Sat-Sun: 8:00 AM - 11:00 PM</p>
+              <p className="text-gray-400">Everyday: 6:00 AM - 5:00 PM</p>
             </div>
           </div>
         </div>
