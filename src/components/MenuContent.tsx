@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MENU_ITEMS } from '../data/menuItems';
@@ -13,30 +14,36 @@ const MenuContent = () => {
   
   useEffect(() => {
     const loadMenuImages = async () => {
-      setIsLoading(true);
-      
-      // First try to load cached images from localStorage
-      const cachedItems = loadCachedMenuImages();
-      
-      if (cachedItems) {
-        console.log("Using cached menu images");
-        setMenuItems(cachedItems);
+      try {
+        setIsLoading(true);
+        
+        // First try to load cached images from localStorage
+        const cachedItems = loadCachedMenuImages();
+        
+        if (cachedItems) {
+          console.log("Using cached menu images");
+          setMenuItems(cachedItems);
+          setIsLoading(false);
+          return;
+        }
+        
+        // If no cached images, generate new ones
+        console.log("No cached images found, generating new ones");
+        const updatedItems = await generateMenuImages(menuItems);
+        setMenuItems(updatedItems);
+      } catch (error) {
+        console.error("Error loading menu images:", error);
+      } finally {
         setIsLoading(false);
-        return;
       }
-      
-      // If no cached images, generate new ones
-      console.log("No cached images found, generating new ones");
-      const updatedItems = await generateMenuImages(menuItems);
-      setMenuItems(updatedItems);
-      setIsLoading(false);
     };
 
     loadMenuImages();
   }, []);
   
-  const filteredItems = menuItems.filter(item => item.category === activeTab);
-  const popularItems = menuItems.filter(item => item.popular);
+  // Safely filter items, handling potential undefined values
+  const filteredItems = menuItems.filter(item => item && item.category === activeTab);
+  const popularItems = menuItems.filter(item => item && item.popular);
   
   return (
     <div className="container mx-auto px-4">

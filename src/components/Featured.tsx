@@ -29,7 +29,7 @@ const FeaturedItem = ({
     >
       <div className="h-48 md:h-56 overflow-hidden">
         <img 
-          src={image} 
+          src={image || '/placeholder.svg'} 
           alt={title} 
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
         />
@@ -58,52 +58,79 @@ const Featured = () => {
   const [featuredItems, setFeaturedItems] = useState<MenuItemProps[]>([]);
   
   useEffect(() => {
-    // Try to get cached menu items with images first
-    const cachedItems = loadCachedMenuImages();
-    const itemsToUse = cachedItems || MENU_ITEMS;
-    
-    // Find menu items with images
-    const itemsWithImages = itemsToUse.filter(item => item.imageUrl);
-    
-    // Get random items from different categories with images
-    const getRandomItemWithImage = (category: string) => {
-      const categoryItems = itemsWithImages.filter(item => item.category === category);
-      // If no items with images in this category, fall back to all items in category
-      if (categoryItems.length === 0) {
-        const allCategoryItems = itemsToUse.filter(item => item.category === category);
-        const randomIndex = Math.floor(Math.random() * allCategoryItems.length);
-        return allCategoryItems[randomIndex];
-      }
-      const randomIndex = Math.floor(Math.random() * categoryItems.length);
-      return categoryItems[randomIndex];
-    };
-    
-    const breakfast = getRandomItemWithImage('breakfast');
-    const lunch = getRandomItemWithImage('lunch');
-    const bowls = getRandomItemWithImage('bowls');
-    
-    setFeaturedItems([breakfast, lunch, bowls]);
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('opacity-100');
+    try {
+      // Try to get cached menu items with images first
+      const cachedItems = loadCachedMenuImages();
+      const itemsToUse = cachedItems || MENU_ITEMS;
+      
+      // Find menu items with images
+      const itemsWithImages = itemsToUse.filter(item => item && item.imageUrl);
+      
+      // Get random items from different categories with images
+      const getRandomItemWithImage = (category: string) => {
+        const categoryItems = itemsWithImages.filter(item => item && item.category === category);
+        // If no items with images in this category, fall back to all items in category
+        if (categoryItems.length === 0) {
+          const allCategoryItems = itemsToUse.filter(item => item && item.category === category);
+          if (allCategoryItems.length === 0) {
+            // Return a default item if no items found in this category
+            return {
+              id: 0,
+              name: "Menu Item",
+              description: "Description unavailable",
+              price: 0,
+              category: category as 'breakfast' | 'lunch' | 'bowls',
+              imageUrl: "/placeholder.svg"
+            };
           }
-        });
-      },
-      {
-        threshold: 0.1
+          const randomIndex = Math.floor(Math.random() * allCategoryItems.length);
+          return allCategoryItems[randomIndex];
+        }
+        const randomIndex = Math.floor(Math.random() * categoryItems.length);
+        return categoryItems[randomIndex];
+      };
+      
+      const breakfast = getRandomItemWithImage('breakfast');
+      const lunch = getRandomItemWithImage('lunch');
+      const bowls = getRandomItemWithImage('bowls');
+      
+      if (breakfast && lunch && bowls) {
+        setFeaturedItems([breakfast, lunch, bowls]);
       }
-    );
-    
-    const elements = document.querySelectorAll('.menu-item');
-    elements.forEach(element => observer.observe(element));
-    
-    return () => {
-      elements.forEach(element => observer.unobserve(element));
-    };
+      
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('opacity-100');
+            }
+          });
+        },
+        {
+          threshold: 0.1
+        }
+      );
+      
+      setTimeout(() => {
+        const elements = document.querySelectorAll('.menu-item');
+        elements.forEach(element => observer.observe(element));
+      }, 100);
+      
+      return () => {
+        const elements = document.querySelectorAll('.menu-item');
+        elements.forEach(element => observer.unobserve(element));
+      };
+    } catch (error) {
+      console.error("Error in Featured component:", error);
+      // Set default items in case of error
+      setFeaturedItems([]);
+    }
   }, []);
+
+  // Don't render if no featured items
+  if (featuredItems.length === 0) {
+    return null;
+  }
 
   return (
     <section id="featured" className="py-20 bg-grain bg-grill-black">
@@ -121,7 +148,7 @@ const Featured = () => {
           {featuredItems.map((item, index) => (
             <FeaturedItem 
               key={item.id}
-              image={item.imageUrl}
+              image={item.imageUrl || '/placeholder.svg'}
               title={item.name}
               description={item.description}
               tag={item.category === 'breakfast' ? 'Breakfast' : 

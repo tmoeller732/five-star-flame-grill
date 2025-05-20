@@ -2,7 +2,6 @@
 import React from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Utensils } from "lucide-react";
 
 export interface MenuItemProps {
   id: number;
@@ -15,6 +14,10 @@ export interface MenuItemProps {
 }
 
 const MenuItem = ({ item }: { item: MenuItemProps }) => {
+  if (!item) {
+    return null;
+  }
+  
   return (
     <Card className="overflow-hidden bg-card hover:shadow-lg transition-all duration-300 menu-item">
       <div className="aspect-video overflow-hidden bg-muted">
