@@ -6,6 +6,7 @@ import FeaturedItems from './menu/FeaturedItems';
 import CategoryItems from './menu/CategoryItems';
 import { generateMenuImages, loadCachedMenuImages } from './menu/MenuImageLoader';
 import { MenuItemProps } from './menu/MenuItem';
+import { toast } from "sonner";
 
 const MenuContent = () => {
   const [activeTab, setActiveTab] = useState<string>("breakfast");
@@ -33,6 +34,7 @@ const MenuContent = () => {
         setMenuItems(updatedItems);
       } catch (error) {
         console.error("Error loading menu images:", error);
+        toast.error("Could not load menu images");
       } finally {
         setIsLoading(false);
       }

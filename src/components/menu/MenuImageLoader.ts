@@ -61,6 +61,11 @@ export const generateMenuImages = async (menuItems: MenuItemProps[]) => {
 
 // Function to load cached menu items with images
 export const loadCachedMenuImages = () => {
-  const cachedItems = localStorage.getItem('menuItemsWithImages');
-  return cachedItems ? JSON.parse(cachedItems) : null;
+  try {
+    const cachedItems = localStorage.getItem('menuItemsWithImages');
+    return cachedItems ? JSON.parse(cachedItems) : null;
+  } catch (error) {
+    console.error("Error loading cached menu items:", error);
+    return null;
+  }
 };

@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -80,10 +81,10 @@ const Featured = () => {
       // If we still don't have 3 items, fill in with default items
       while (selectedItems.length < 3) {
         selectedItems.push({
-          id: selectedItems.length,
-          name: "Featured Item",
-          description: "Description unavailable",
-          price: 0,
+          id: 1000 + selectedItems.length,
+          name: "Featured Item " + (selectedItems.length + 1),
+          description: "Delicious specialty prepared fresh on our grill",
+          price: 12.99,
           category: 'lunch',
           imageUrl: "/placeholder.svg"
         });
