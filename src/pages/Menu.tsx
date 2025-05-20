@@ -1,3 +1,4 @@
+
 import { Helmet } from 'react-helmet-async';
 import { useState, useEffect } from 'react';
 import Header from '../components/Header';
@@ -6,14 +7,17 @@ import MenuContent from '../components/MenuContent';
 import FlameEffect from '../components/effects/FlameEffect';
 import useFlameEffect from '../hooks/useFlameEffect';
 import ReviewWidget from '../components/ReviewWidget';
+
 const Menu = () => {
   const [isVisible, setIsVisible] = useState(false);
   const {
     isFlameVisible
   } = useFlameEffect();
+
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
   return <>
       <Helmet>
         <title>Menu | 5 Star Grill | Toms River, NJ</title>
@@ -28,8 +32,10 @@ const Menu = () => {
         <div className={`transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           <div className="container mx-auto px-4 mb-8">
             <div className="text-center">
-              
-              
+              <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">Our Menu</h1>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+                Savor the flame-grilled perfection that has made us famous in Toms River
+              </p>
             </div>
           </div>
           <MenuContent />
@@ -40,4 +46,5 @@ const Menu = () => {
       <Footer />
     </>;
 };
+
 export default Menu;

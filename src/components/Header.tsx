@@ -45,7 +45,17 @@ const Header = () => {
   return (
     <>
       <ScrollingBanner />
-      <header className={`fixed top-10 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-grill-black bg-opacity-95 shadow-lg' : 'bg-transparent'}`}>
+      <header 
+        className={`fixed top-10 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled ? 'bg-grill-black bg-opacity-90 shadow-lg' : 'bg-transparent'
+        }`}
+        style={{
+          backgroundImage: `url('/lovable-uploads/b619f0c4-4d98-480e-b4b8-582c397779b4.png')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center bottom',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
         <div className="container mx-auto px-4 py-6">
           <div className="flex justify-center items-center relative">
             {/* Logo (centered) - hidden on home page until scrolled past hero */}

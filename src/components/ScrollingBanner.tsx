@@ -19,14 +19,18 @@ const ScrollingBanner = () => {
   
   return (
     <div 
-      className={`fixed w-full top-0 z-[60] bg-white transition-all duration-300 ${
+      className={`fixed w-full top-0 z-[60] transition-all duration-300 ${
         scrollPosition > 10 ? 'shadow-md' : ''
       }`}
+      style={{
+        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))',
+        backgroundSize: 'cover'
+      }}
     >
       <div className="overflow-hidden whitespace-nowrap">
         <div className="inline-block animate-marquee py-2">
           <div className="flex items-center justify-center">
-            <span className="text-sm font-medium mx-2 text-grill-black">
+            <span className="text-sm font-medium mx-2 text-white">
               Open 7 Days a Week | Daily Specials
             </span>
             <span className="text-sm font-medium mx-2 text-grill-orange">
@@ -34,7 +38,7 @@ const ScrollingBanner = () => {
             </span>
             <div className="flex items-center">
               <Phone size={16} className="text-grill-orange mr-1" />
-              <span className="text-sm font-medium text-grill-black">
+              <span className="text-sm font-medium text-white">
                 Call (856) 559-4938 to order direct
               </span>
             </div>
