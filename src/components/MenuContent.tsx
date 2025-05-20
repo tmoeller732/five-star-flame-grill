@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { MENU_ITEMS } from '../data/menuItems';
 import FeaturedItems from './menu/FeaturedItems';
 import CategoryItems from './menu/CategoryItems';
-import { generateMenuImages, loadCachedMenuImages, generateImagesWithRunware } from './menu/MenuImageLoader';
+import { generateMenuImages, loadCachedMenuImages, clearCachedMenuImages, generateImagesWithRunware } from './menu/MenuImageLoader';
 import { MenuItemProps } from './menu/MenuItem';
 import { toast } from "sonner";
 
@@ -20,18 +20,11 @@ const MenuContent = () => {
       try {
         setIsLoading(true);
         
-        // First try to load cached images from localStorage
-        const cachedItems = loadCachedMenuImages();
+        // Clear cache to ensure consistent images for all users
+        clearCachedMenuImages();
         
-        if (cachedItems) {
-          console.log("Using cached menu images");
-          setMenuItems(cachedItems);
-          setIsLoading(false);
-          return;
-        }
-        
-        // If no cached images, generate new ones
-        console.log("No cached images found, generating new ones");
+        // Generate static images for all menu items
+        console.log("Generating static images for menu items");
         const updatedItems = await generateMenuImages(menuItems);
         setMenuItems(updatedItems);
       } catch (error) {
@@ -63,6 +56,22 @@ const MenuContent = () => {
     };
   }, [showAdmin]);
   
+  const handleRefreshImages = async () => {
+    try {
+      setIsLoading(true);
+      clearCachedMenuImages();
+      toast.info("Refreshing menu images...");
+      const updatedItems = await generateMenuImages(menuItems);
+      setMenuItems(updatedItems);
+      toast.success("Menu images refreshed");
+    } catch (error) {
+      console.error("Error refreshing images:", error);
+      toast.error("Failed to refresh images");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
   const handleGenerateImages = async () => {
     if (confirm("This will use Runware to generate new images for menu items. Continue?")) {
       try {
@@ -90,6 +99,17 @@ const MenuContent = () => {
           Savor the finest flavors prepared on our signature grill. From hearty breakfasts to authentic Mexican cuisine, 
           each dish is crafted with premium ingredients and expert technique.
         </p>
+        
+        <div className="mt-4">
+          <Button 
+            onClick={handleRefreshImages}
+            disabled={isLoading}
+            variant="outline"
+            className="bg-transparent border border-grill-gold text-grill-gold hover:bg-grill-gold/10"
+          >
+            {isLoading ? "Loading..." : "Refresh Menu Images"}
+          </Button>
+        </div>
         
         {showAdmin && (
           <div className="mt-4 p-4 bg-red-900/20 border border-red-500 rounded-md">

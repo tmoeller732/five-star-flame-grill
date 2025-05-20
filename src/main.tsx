@@ -6,14 +6,14 @@ import './index.css'
 
 // For debugging menu issues:
 // Uncomment this line if you need to reset the menu cache
-// localStorage.removeItem('menuItemsWithImages');
+localStorage.removeItem('menuItemsWithImages');
 
 // Add safeguard to detect deployment environment and handle accordingly
 const isProduction = window.location.hostname !== 'localhost';
 if (isProduction) {
   // Get cached version from localStorage
   const cachedVersion = localStorage.getItem('siteVersion');
-  const currentVersion = '1.0.4'; // Increment this to trigger a cache clear when deploying updates
+  const currentVersion = '1.0.5'; // Increment this to trigger a cache clear when deploying updates
   
   // If version changed or first visit, clear cache
   if (cachedVersion !== currentVersion) {
