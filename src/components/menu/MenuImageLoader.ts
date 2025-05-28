@@ -1,4 +1,3 @@
-
 import { MenuItemProps } from './MenuItem';
 
 // Static menu image URLs using your uploaded images matched by product names
@@ -6,7 +5,7 @@ const STATIC_MENU_IMAGES: Record<number, string> = {
   // Breakfast items
   1: "/lovable-uploads/7d3c07e6-bba7-4f52-bbab-c222ee0abc4a.png", // Classic Egg & Cheese
   2: "/lovable-uploads/8827be8c-ca1e-4166-bde8-82ec8341d368.png", // Egg & Cheese w/Meat
-  3: "/placeholder.svg", // Steak Egg & Cheese - no matching image
+  3: "/lovable-uploads/73b38622-1859-437c-8db8-296794bfdfbf.png", // Steak Egg & Cheese
   4: "/lovable-uploads/343280a0-5555-4dcf-914f-62588a49652e.png", // Western Omelet
   5: "/placeholder.svg", // Classic Breakfast Plate - no matching image
   6: "/placeholder.svg", // Breakfast Plate w/Meat - no matching image
