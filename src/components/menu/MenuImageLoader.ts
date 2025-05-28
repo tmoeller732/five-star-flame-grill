@@ -5,9 +5,24 @@ import runwareService from '../../services/RunwareService';
 
 // Static menu image URLs that are consistent for all users
 // These will be used after being generated once with Runware
-const STATIC_MENU_IMAGES = {
-  // Each menu item will have a consistent image URL added here
-  // after the first generation using Runware
+const STATIC_MENU_IMAGES: Record<number, string> = {
+  // Breakfast items
+  2: "/lovable-uploads/ba333c2d-418a-46d2-90fc-3d2eea29f4e2.png", // #2 EGG & CHEESE W/MEAT
+  5: "/lovable-uploads/b369f913-1a26-4603-80ad-9f5c4b543de7.png", // #5 CLASSIC BREAKFAST PLATE (egg & cheese)
+  
+  // Lunch/Dinner items
+  16: "/lovable-uploads/0bb5bd35-cbe4-45c5-a384-cebda05d5fef.png", // #4 Chorizo Burrito
+  19: "/lovable-uploads/77ef296c-9173-4533-97e1-85cacb65110a.png", // #7 Smash Burger
+  27: "/lovable-uploads/10cee1c0-7c1a-4ef7-adb6-4e67ea383e79.png", // #15 Philly Cheesesteak
+  38: "/lovable-uploads/fdd4faf9-1373-48a9-ba98-36679fbc644d.png", // #26 Onion Rings
+  
+  // Bowls & Salads
+  40: "/lovable-uploads/d47c4ca4-82f4-4f4e-b3c1-dcb268245077.png", // #2 CHORIZO BURRITO BOWL
+  41: "/lovable-uploads/ec42cff8-73a2-4ad9-a63c-94a6e5769dfe.png", // #3 STEAK BURRITO BOWL
+  
+  // Additional items that could match the uploaded images
+  24: "/lovable-uploads/ace242e7-03ef-472d-9227-df6d70a34c5e.png", // #12 Steak Torta
+  14: "/lovable-uploads/14aa238b-6aaf-443a-a340-204a07e411e7.png", // #2 Chicken Tacos (burrito style)
 };
 
 // Generate images for menu items using Runware
