@@ -13,6 +13,8 @@ const STATIC_MENU_IMAGES: Record<number, string> = {
   8: "/lovable-uploads/391b5531-0fc7-4ab1-b8a2-03ddf9c1d951.png", // Bagel with Cream Cheese
   9: "/lovable-uploads/4c45e36b-c3c1-4b89-acc7-ebf5632cf279.png", // Home Fries
   10: "/lovable-uploads/b4dc910e-1e29-48ee-a1d7-86f86394bba1.png", // Hash Brown
+  11: "/lovable-uploads/22006ae6-85f3-4442-93d6-cf7445f90909.png", // Extra Meat
+  12: "/placeholder.svg", // Avocado - no matching image
   
   // Lunch/Dinner items
   13: "/lovable-uploads/a0935d79-0fe9-4b5e-b973-ca5e5b489636.png", // Chorizo Tacos
