@@ -1,59 +1,59 @@
 
 import { MenuItemProps } from './MenuItem';
 
-// Static menu image URLs using your uploaded images
+// Static menu image URLs using your uploaded images matched by product names
 const STATIC_MENU_IMAGES: Record<number, string> = {
   // Breakfast items
-  1: "/lovable-uploads/ec42cff8-73a2-4ad9-a63c-94a6e5769dfe.png", // Classic Egg & Cheese
-  2: "/lovable-uploads/14aa238b-6aaf-443a-a340-204a07e411e7.png", // Egg & Cheese w/Meat
-  3: "/lovable-uploads/0bb5bd35-cbe4-45c5-a384-cebda05d5fef.png", // Steak Egg & Cheese
-  4: "/lovable-uploads/b369f913-1a26-4603-80ad-9f5c4b543de7.png", // Western Omelet
-  5: "/lovable-uploads/ace242e7-03ef-472d-9227-df6d70a34c5e.png", // Classic Breakfast Plate
-  6: "/lovable-uploads/d47c4ca4-82f4-4f4e-b3c1-dcb268245077.png", // Breakfast Plate w/Meat
-  7: "/lovable-uploads/ba333c2d-418a-46d2-90fc-3d2eea29f4e2.png", // Bagel with Butter
-  8: "/lovable-uploads/fdd4faf9-1373-48a9-ba98-36679fbc644d.png", // Bagel with Cream Cheese
-  9: "/lovable-uploads/77ef296c-9173-4533-97e1-85cacb65110a.png", // Home Fries
-  10: "/lovable-uploads/10cee1c0-7c1a-4ef7-adb6-4e67ea383e79.png", // Hash Brown
+  1: "/lovable-uploads/7d3c07e6-bba7-4f52-bbab-c222ee0abc4a.png", // Classic Egg & Cheese
+  2: "/lovable-uploads/8827be8c-ca1e-4166-bde8-82ec8341d368.png", // Egg & Cheese w/Meat
+  3: "/placeholder.svg", // Steak Egg & Cheese - no matching image
+  4: "/placeholder.svg", // Western Omelet - no matching image
+  5: "/placeholder.svg", // Classic Breakfast Plate - no matching image
+  6: "/placeholder.svg", // Breakfast Plate w/Meat - no matching image
+  7: "/placeholder.svg", // Bagel with Butter - no matching image
+  8: "/placeholder.svg", // Bagel with Cream Cheese - no matching image
+  9: "/placeholder.svg", // Home Fries - no matching image
+  10: "/placeholder.svg", // Hash Brown - no matching image
   
-  // Lunch/Dinner items - using your uploaded images where available, fallback to stock
-  13: "/lovable-uploads/ec42cff8-73a2-4ad9-a63c-94a6e5769dfe.png", // Chorizo Tacos
-  14: "/lovable-uploads/14aa238b-6aaf-443a-a340-204a07e411e7.png", // Chicken Tacos
-  15: "/lovable-uploads/0bb5bd35-cbe4-45c5-a384-cebda05d5fef.png", // Steak Tacos
-  16: "/lovable-uploads/b369f913-1a26-4603-80ad-9f5c4b543de7.png", // Chorizo Burrito
-  17: "/lovable-uploads/ace242e7-03ef-472d-9227-df6d70a34c5e.png", // Chicken Burrito
-  18: "/lovable-uploads/d47c4ca4-82f4-4f4e-b3c1-dcb268245077.png", // Steak Burrito
-  19: "/lovable-uploads/ba333c2d-418a-46d2-90fc-3d2eea29f4e2.png", // Smash Burger
-  20: "/lovable-uploads/fdd4faf9-1373-48a9-ba98-36679fbc644d.png", // Beef Burger
-  21: "/lovable-uploads/77ef296c-9173-4533-97e1-85cacb65110a.png", // Chicken Sandwich
-  22: "/lovable-uploads/10cee1c0-7c1a-4ef7-adb6-4e67ea383e79.png", // Steak Quesadilla
-  23: "/lovable-uploads/ec42cff8-73a2-4ad9-a63c-94a6e5769dfe.png", // Chicken Quesadilla
-  24: "/lovable-uploads/14aa238b-6aaf-443a-a340-204a07e411e7.png", // Steak Torta
-  25: "/lovable-uploads/0bb5bd35-cbe4-45c5-a384-cebda05d5fef.png", // Chorizo Torta
-  26: "/lovable-uploads/b369f913-1a26-4603-80ad-9f5c4b543de7.png", // Chicken Torta
-  27: "/lovable-uploads/ace242e7-03ef-472d-9227-df6d70a34c5e.png", // Philly Cheesesteak
-  28: "/lovable-uploads/d47c4ca4-82f4-4f4e-b3c1-dcb268245077.png", // Chicken Cheesesteak
-  29: "/lovable-uploads/ba333c2d-418a-46d2-90fc-3d2eea29f4e2.png", // California Cheesesteak
-  30: "/lovable-uploads/fdd4faf9-1373-48a9-ba98-36679fbc644d.png", // Chicken Wings
-  31: "/lovable-uploads/77ef296c-9173-4533-97e1-85cacb65110a.png", // Chicken Nuggets
-  32: "/lovable-uploads/10cee1c0-7c1a-4ef7-adb6-4e67ea383e79.png", // Chicken Tenders & Fries
-  33: "/lovable-uploads/ec42cff8-73a2-4ad9-a63c-94a6e5769dfe.png", // Turkey & Cheese
-  34: "/lovable-uploads/14aa238b-6aaf-443a-a340-204a07e411e7.png", // Ham & Cheese
-  35: "/lovable-uploads/0bb5bd35-cbe4-45c5-a384-cebda05d5fef.png", // Roast Beef
-  36: "/lovable-uploads/b369f913-1a26-4603-80ad-9f5c4b543de7.png", // French Fries
-  37: "/lovable-uploads/ace242e7-03ef-472d-9227-df6d70a34c5e.png", // Cheese Fries
-  38: "/lovable-uploads/d47c4ca4-82f4-4f4e-b3c1-dcb268245077.png", // Onion Rings
+  // Lunch/Dinner items
+  13: "/lovable-uploads/2a39dd31-a26a-4b20-9634-b93b6b8e7b39.png", // Chorizo Burrito
+  14: "/placeholder.svg", // Chicken Tacos - no matching image
+  15: "/placeholder.svg", // Steak Tacos - no matching image
+  16: "/lovable-uploads/2a39dd31-a26a-4b20-9634-b93b6b8e7b39.png", // Chorizo Burrito
+  17: "/placeholder.svg", // Chicken Burrito - no matching image
+  18: "/placeholder.svg", // Steak Burrito - no matching image
+  19: "/lovable-uploads/b117cf44-c026-48fb-95a4-173f1cdb5dfc.png", // Smash Burger
+  20: "/placeholder.svg", // Beef Burger - no matching image
+  21: "/placeholder.svg", // Chicken Sandwich - no matching image
+  22: "/placeholder.svg", // Steak Quesadilla - no matching image
+  23: "/placeholder.svg", // Chicken Quesadilla - no matching image
+  24: "/lovable-uploads/2418b9e0-1513-4883-ae1b-f835ac0707ec.png", // Steak Torta
+  25: "/lovable-uploads/fe7e1054-b826-4f82-bf6d-39bdd926b73e.png", // Chorizo Torta
+  26: "/placeholder.svg", // Chicken Torta - no matching image
+  27: "/lovable-uploads/46218ea0-2d66-45c3-b931-42fbaa354636.png", // Philly Cheesesteak
+  28: "/placeholder.svg", // Chicken Cheesesteak - no matching image
+  29: "/placeholder.svg", // California Cheesesteak - no matching image
+  30: "/placeholder.svg", // Chicken Wings - no matching image
+  31: "/placeholder.svg", // Chicken Nuggets - no matching image
+  32: "/placeholder.svg", // Chicken Tenders & Fries - no matching image
+  33: "/placeholder.svg", // Turkey & Cheese - no matching image
+  34: "/placeholder.svg", // Ham & Cheese - no matching image
+  35: "/placeholder.svg", // Roast Beef - no matching image
+  36: "/placeholder.svg", // French Fries - no matching image
+  37: "/placeholder.svg", // Cheese Fries - no matching image
+  38: "/lovable-uploads/8e958574-1ee0-464d-84a6-722c15c49192.png", // Onion Rings
 
   // Bowls & Salads
-  39: "/lovable-uploads/ba333c2d-418a-46d2-90fc-3d2eea29f4e2.png", // Chicken Burrito Bowl
-  40: "/lovable-uploads/fdd4faf9-1373-48a9-ba98-36679fbc644d.png", // Chorizo Burrito Bowl
-  41: "/lovable-uploads/77ef296c-9173-4533-97e1-85cacb65110a.png", // Steak Burrito Bowl
-  42: "/lovable-uploads/10cee1c0-7c1a-4ef7-adb6-4e67ea383e79.png", // Iceberg Salad
-  43: "/lovable-uploads/ec42cff8-73a2-4ad9-a63c-94a6e5769dfe.png", // Romaine Salad
-  44: "/lovable-uploads/14aa238b-6aaf-443a-a340-204a07e411e7.png", // Garden Salad
-  45: "/lovable-uploads/0bb5bd35-cbe4-45c5-a384-cebda05d5fef.png", // Caesar Salad
-  46: "/lovable-uploads/b369f913-1a26-4603-80ad-9f5c4b543de7.png", // Chicken Taco Salad
-  47: "/lovable-uploads/ace242e7-03ef-472d-9227-df6d70a34c5e.png", // Chorizo Taco Salad
-  48: "/lovable-uploads/d47c4ca4-82f4-4f4e-b3c1-dcb268245077.png", // Steak Taco Salad
+  39: "/lovable-uploads/290d10fc-b8f7-4c28-a607-360fbce2bf4e.png", // Chicken Burrito Bowl
+  40: "/placeholder.svg", // Chorizo Burrito Bowl - no matching image
+  41: "/lovable-uploads/ec3cfe56-abe0-4897-b7fe-9c334494a8ba.png", // Steak Burrito Bowl
+  42: "/placeholder.svg", // Iceberg Salad - no matching image
+  43: "/placeholder.svg", // Romaine Salad - no matching image
+  44: "/placeholder.svg", // Garden Salad - no matching image
+  45: "/placeholder.svg", // Caesar Salad - no matching image
+  46: "/placeholder.svg", // Chicken Taco Salad - no matching image
+  47: "/placeholder.svg", // Chorizo Taco Salad - no matching image
+  48: "/placeholder.svg", // Steak Taco Salad - no matching image
 };
 
 // Load static menu images
@@ -61,14 +61,14 @@ export const loadCachedMenuImages = () => {
   return null; // Always return null to trigger static image assignment
 };
 
-// Generate menu images - now just assigns your uploaded images
+// Generate menu images - now uses your uploaded images where available
 export const generateMenuImages = async (menuItems: MenuItemProps[]) => {
   try {
-    console.log("Assigning your uploaded images to menu items");
+    console.log("Assigning your uploaded images to matching menu items");
     
     const updatedItems = menuItems.map(item => ({
       ...item,
-      imageUrl: STATIC_MENU_IMAGES[item.id] || "/lovable-uploads/ec42cff8-73a2-4ad9-a63c-94a6e5769dfe.png"
+      imageUrl: STATIC_MENU_IMAGES[item.id] || "/placeholder.svg"
     }));
     
     return updatedItems;
