@@ -16,11 +16,11 @@ const STATIC_MENU_IMAGES: Record<number, string> = {
   10: "/placeholder.svg", // Hash Brown - no matching image
   
   // Lunch/Dinner items
-  13: "/lovable-uploads/2a39dd31-a26a-4b20-9634-b93b6b8e7b39.png", // Chorizo Burrito
+  13: "/placeholder.svg", // Chorizo Tacos - no matching image
   14: "/placeholder.svg", // Chicken Tacos - no matching image
   15: "/placeholder.svg", // Steak Tacos - no matching image
-  16: "/lovable-uploads/2a39dd31-a26a-4b20-9634-b93b6b8e7b39.png", // Chorizo Burrito
-  17: "/placeholder.svg", // Chicken Burrito - no matching image
+  16: "/lovable-uploads/66818be7-aa88-4356-b8de-36e6f9bee28a.png", // Chorizo Burrito
+  17: "/lovable-uploads/2a39dd31-a26a-4b20-9634-b93b6b8e7b39.png", // Chicken Burrito
   18: "/placeholder.svg", // Steak Burrito - no matching image
   19: "/lovable-uploads/b117cf44-c026-48fb-95a4-173f1cdb5dfc.png", // Smash Burger
   20: "/placeholder.svg", // Beef Burger - no matching image
@@ -49,10 +49,10 @@ const STATIC_MENU_IMAGES: Record<number, string> = {
   41: "/lovable-uploads/ec3cfe56-abe0-4897-b7fe-9c334494a8ba.png", // Steak Burrito Bowl
   42: "/placeholder.svg", // Iceberg Salad - no matching image
   43: "/placeholder.svg", // Romaine Salad - no matching image
-  44: "/placeholder.svg", // Garden Salad - no matching image
-  45: "/placeholder.svg", // Caesar Salad - no matching image
-  46: "/placeholder.svg", // Chicken Taco Salad - no matching image
-  47: "/placeholder.svg", // Chorizo Taco Salad - no matching image
+  44: "/lovable-uploads/5a5c0d03-5982-42b7-9a0c-2bcc68841cc8.png", // Garden Salad
+  45: "/lovable-uploads/be41d6fb-2859-4320-bd9d-914853df202f.png", // Caesar Salad
+  46: "/lovable-uploads/fde690f2-1316-48ce-888b-8fc66e7c5b52.png", // Chicken Taco Salad
+  47: "/lovable-uploads/31649a8e-dec8-40e7-8b31-45c2349354c5.png", // Chorizo Taco Salad
   48: "/placeholder.svg", // Steak Taco Salad - no matching image
 };
 
