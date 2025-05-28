@@ -9,7 +9,7 @@ const STATIC_MENU_IMAGES: Record<number, string> = {
   4: "/lovable-uploads/343280a0-5555-4dcf-914f-62588a49652e.png", // Western Omelet
   5: "/lovable-uploads/90c63af3-f433-495a-840c-1b3259cb76c0.png", // Classic Breakfast Plate
   6: "/lovable-uploads/3c6b206f-2590-49b4-a4c3-be6247dbae49.png", // Breakfast Plate w/Meat
-  7: "/placeholder.svg", // Bagel with Butter - no matching image
+  7: "/lovable-uploads/d1748119-a22b-43d0-82fc-537b4be9622c.png", // Bagel with Butter
   8: "/placeholder.svg", // Bagel with Cream Cheese - no matching image
   9: "/placeholder.svg", // Home Fries - no matching image
   10: "/placeholder.svg", // Hash Brown - no matching image
@@ -41,7 +41,7 @@ const STATIC_MENU_IMAGES: Record<number, string> = {
   36: "/placeholder.svg", // French Fries - no matching image
   37: "/placeholder.svg", // Cheese Fries - no matching image
   38: "/lovable-uploads/8e958574-1ee0-464d-84a6-722c15c49192.png", // Onion Rings
-
+  
   // Bowls & Salads
   39: "/lovable-uploads/290d10fc-b8f7-4c28-a607-360fbce2bf4e.png", // Chicken Burrito Bowl
   40: "/placeholder.svg", // Chorizo Burrito Bowl - no matching image
