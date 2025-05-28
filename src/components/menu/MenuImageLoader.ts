@@ -20,7 +20,7 @@ const STATIC_MENU_IMAGES: Record<number, string> = {
   // Lunch/Dinner items
   13: "/lovable-uploads/a0935d79-0fe9-4b5e-b973-ca5e5b489636.png", // Chorizo Tacos
   14: "/lovable-uploads/fc484edd-6493-4f48-a6e9-bdf6b0372a25.png", // Chicken Tacos
-  15: "/placeholder.svg", // Steak Tacos - no matching image
+  15: "/lovable-uploads/40feca39-22a1-451e-9a21-7c80a2112ca1.png", // Steak Tacos
   16: "/lovable-uploads/66818be7-aa88-4356-b8de-36e6f9bee28a.png", // Chorizo Burrito
   17: "/lovable-uploads/2a39dd31-a26a-4b20-9634-b93b6b8e7b39.png", // Chicken Burrito
   18: "/lovable-uploads/c7e46825-73ef-40bd-8cb0-fa6e4b8a772d.png", // Steak Burrito
