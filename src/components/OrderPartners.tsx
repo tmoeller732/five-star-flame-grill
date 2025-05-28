@@ -1,13 +1,10 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import runwareService from '../services/RunwareService';
 import { Button } from '@/components/ui/button';
 
 const OrderPartners = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [directLogoUrl, setDirectLogoUrl] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -29,11 +26,6 @@ const OrderPartners = () => {
         observer.unobserve(section);
       }
     };
-  }, []);
-
-  useEffect(() => {
-    // Using site logo for the Direct option instead of generating one
-    setIsLoading(false);
   }, []);
 
   return (
@@ -94,15 +86,11 @@ const OrderPartners = () => {
           {/* 5 Star Direct */}
           <div className="bg-card p-6 rounded-lg shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
             <div className="h-32 flex items-center justify-center mb-6 relative">
-              {isLoading ? (
-                <div className="animate-pulse bg-gray-300 h-24 w-full rounded"></div>
-              ) : (
-                <img 
-                  src="/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
-                  alt="5 Star Direct" 
-                  className="h-24 object-contain hover:scale-110 transition-transform duration-300"
-                />
-              )}
+              <img 
+                src="/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
+                alt="5 Star Direct" 
+                className="h-24 object-contain hover:scale-110 transition-transform duration-300"
+              />
             </div>
             <Button 
               asChild
