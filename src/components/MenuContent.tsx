@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MENU_ITEMS } from '../data/menuItems';
@@ -6,7 +5,6 @@ import FeaturedItems from './menu/FeaturedItems';
 import CategoryItems from './menu/CategoryItems';
 import { generateMenuImages } from './menu/MenuImageLoader';
 import { MenuItemProps } from './menu/MenuItem';
-import { toast } from "sonner";
 
 const MenuContent = () => {
   const [activeTab, setActiveTab] = useState<string>("breakfast");
@@ -17,14 +15,13 @@ const MenuContent = () => {
     const loadMenuImages = async () => {
       try {
         setIsLoading(true);
-        console.log("Loading menu images...");
+        console.log("Loading static menu images...");
         
-        // Generate images for all menu items
+        // Assign static images to all menu items
         const updatedItems = await generateMenuImages(menuItems);
         setMenuItems(updatedItems);
       } catch (error) {
         console.error("Error loading menu images:", error);
-        toast.error("Could not load menu images");
       } finally {
         setIsLoading(false);
       }
