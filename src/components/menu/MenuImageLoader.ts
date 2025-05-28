@@ -16,7 +16,7 @@ const STATIC_MENU_IMAGES: Record<number, string> = {
   10: "/placeholder.svg", // Hash Brown - no matching image
   
   // Lunch/Dinner items
-  13: "/placeholder.svg", // Chorizo Tacos - no matching image
+  13: "/lovable-uploads/a0935d79-0fe9-4b5e-b973-ca5e5b489636.png", // Chorizo Tacos
   14: "/placeholder.svg", // Chicken Tacos - no matching image
   15: "/placeholder.svg", // Steak Tacos - no matching image
   16: "/lovable-uploads/66818be7-aa88-4356-b8de-36e6f9bee28a.png", // Chorizo Burrito
