@@ -1,59 +1,59 @@
 
 import { MenuItemProps } from './MenuItem';
 
-// Static menu image URLs using stock images from the internet
+// Static menu image URLs using your uploaded images
 const STATIC_MENU_IMAGES: Record<number, string> = {
   // Breakfast items
-  1: "https://images.unsplash.com/photo-1506084868230-bb9d95c24759?w=400", // Classic Egg & Cheese
-  2: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400", // Egg & Cheese w/Meat
-  3: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400", // Steak Egg & Cheese
-  4: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400", // Western Omelet
-  5: "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=400", // Classic Breakfast Plate
-  6: "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400", // Breakfast Plate w/Meat
-  7: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400", // Bagel with Butter
-  8: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400", // Bagel with Cream Cheese
-  9: "https://images.unsplash.com/photo-1518013431117-eb1465fa5752?w=400", // Home Fries
-  10: "https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400", // Hash Brown
+  1: "/lovable-uploads/ec42cff8-73a2-4ad9-a63c-94a6e5769dfe.png", // Classic Egg & Cheese
+  2: "/lovable-uploads/14aa238b-6aaf-443a-a340-204a07e411e7.png", // Egg & Cheese w/Meat
+  3: "/lovable-uploads/0bb5bd35-cbe4-45c5-a384-cebda05d5fef.png", // Steak Egg & Cheese
+  4: "/lovable-uploads/b369f913-1a26-4603-80ad-9f5c4b543de7.png", // Western Omelet
+  5: "/lovable-uploads/ace242e7-03ef-472d-9227-df6d70a34c5e.png", // Classic Breakfast Plate
+  6: "/lovable-uploads/d47c4ca4-82f4-4f4e-b3c1-dcb268245077.png", // Breakfast Plate w/Meat
+  7: "/lovable-uploads/ba333c2d-418a-46d2-90fc-3d2eea29f4e2.png", // Bagel with Butter
+  8: "/lovable-uploads/fdd4faf9-1373-48a9-ba98-36679fbc644d.png", // Bagel with Cream Cheese
+  9: "/lovable-uploads/77ef296c-9173-4533-97e1-85cacb65110a.png", // Home Fries
+  10: "/lovable-uploads/10cee1c0-7c1a-4ef7-adb6-4e67ea383e79.png", // Hash Brown
   
-  // Lunch/Dinner items
-  13: "https://images.unsplash.com/photo-1565299585323-38174c4a6471?w=400", // Chorizo Tacos
-  14: "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=400", // Chicken Tacos
-  15: "https://images.unsplash.com/photo-1551782450-17144efb5c50?w=400", // Steak Tacos
-  16: "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400", // Chorizo Burrito
-  17: "https://images.unsplash.com/photo-1566740933430-b5e70b06d2d5?w=400", // Chicken Burrito
-  18: "https://images.unsplash.com/photo-1623653387945-2fd25214f8fc?w=400", // Steak Burrito
-  19: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", // Smash Burger
-  20: "https://images.unsplash.com/photo-1553979459-d2229ba7433a?w=400", // Beef Burger
-  21: "https://images.unsplash.com/photo-1562967914-608f82629710?w=400", // Chicken Sandwich
-  22: "https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=400", // Steak Quesadilla
-  23: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400", // Chicken Quesadilla
-  24: "https://images.unsplash.com/photo-1619740455993-8c4c03c0bb57?w=400", // Steak Torta
-  25: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400", // Chorizo Torta
-  26: "https://images.unsplash.com/photo-1619740455993-8c4c03c0bb57?w=400", // Chicken Torta
-  27: "https://images.unsplash.com/photo-1553979459-d2229ba7433a?w=400", // Philly Cheesesteak
-  28: "https://images.unsplash.com/photo-1562967914-608f82629710?w=400", // Chicken Cheesesteak
-  29: "https://images.unsplash.com/photo-1553979459-d2229ba7433a?w=400", // California Cheesesteak
-  30: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400", // Chicken Wings
-  31: "https://images.unsplash.com/photo-1562967916-eb82221dfb92?w=400", // Chicken Nuggets
-  32: "https://images.unsplash.com/photo-1594221708779-94832f4320d1?w=400", // Chicken Tenders & Fries
-  33: "https://images.unsplash.com/photo-1539252554453-80ab65ce3586?w=400", // Turkey & Cheese
-  34: "https://images.unsplash.com/photo-1539252554453-80ab65ce3586?w=400", // Ham & Cheese
-  35: "https://images.unsplash.com/photo-1539252554453-80ab65ce3586?w=400", // Roast Beef
-  36: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400", // French Fries
-  37: "https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=400", // Cheese Fries
-  38: "https://images.unsplash.com/photo-1639744211787-9cb99ce9bbe1?w=400", // Onion Rings
+  // Lunch/Dinner items - using your uploaded images where available, fallback to stock
+  13: "/lovable-uploads/ec42cff8-73a2-4ad9-a63c-94a6e5769dfe.png", // Chorizo Tacos
+  14: "/lovable-uploads/14aa238b-6aaf-443a-a340-204a07e411e7.png", // Chicken Tacos
+  15: "/lovable-uploads/0bb5bd35-cbe4-45c5-a384-cebda05d5fef.png", // Steak Tacos
+  16: "/lovable-uploads/b369f913-1a26-4603-80ad-9f5c4b543de7.png", // Chorizo Burrito
+  17: "/lovable-uploads/ace242e7-03ef-472d-9227-df6d70a34c5e.png", // Chicken Burrito
+  18: "/lovable-uploads/d47c4ca4-82f4-4f4e-b3c1-dcb268245077.png", // Steak Burrito
+  19: "/lovable-uploads/ba333c2d-418a-46d2-90fc-3d2eea29f4e2.png", // Smash Burger
+  20: "/lovable-uploads/fdd4faf9-1373-48a9-ba98-36679fbc644d.png", // Beef Burger
+  21: "/lovable-uploads/77ef296c-9173-4533-97e1-85cacb65110a.png", // Chicken Sandwich
+  22: "/lovable-uploads/10cee1c0-7c1a-4ef7-adb6-4e67ea383e79.png", // Steak Quesadilla
+  23: "/lovable-uploads/ec42cff8-73a2-4ad9-a63c-94a6e5769dfe.png", // Chicken Quesadilla
+  24: "/lovable-uploads/14aa238b-6aaf-443a-a340-204a07e411e7.png", // Steak Torta
+  25: "/lovable-uploads/0bb5bd35-cbe4-45c5-a384-cebda05d5fef.png", // Chorizo Torta
+  26: "/lovable-uploads/b369f913-1a26-4603-80ad-9f5c4b543de7.png", // Chicken Torta
+  27: "/lovable-uploads/ace242e7-03ef-472d-9227-df6d70a34c5e.png", // Philly Cheesesteak
+  28: "/lovable-uploads/d47c4ca4-82f4-4f4e-b3c1-dcb268245077.png", // Chicken Cheesesteak
+  29: "/lovable-uploads/ba333c2d-418a-46d2-90fc-3d2eea29f4e2.png", // California Cheesesteak
+  30: "/lovable-uploads/fdd4faf9-1373-48a9-ba98-36679fbc644d.png", // Chicken Wings
+  31: "/lovable-uploads/77ef296c-9173-4533-97e1-85cacb65110a.png", // Chicken Nuggets
+  32: "/lovable-uploads/10cee1c0-7c1a-4ef7-adb6-4e67ea383e79.png", // Chicken Tenders & Fries
+  33: "/lovable-uploads/ec42cff8-73a2-4ad9-a63c-94a6e5769dfe.png", // Turkey & Cheese
+  34: "/lovable-uploads/14aa238b-6aaf-443a-a340-204a07e411e7.png", // Ham & Cheese
+  35: "/lovable-uploads/0bb5bd35-cbe4-45c5-a384-cebda05d5fef.png", // Roast Beef
+  36: "/lovable-uploads/b369f913-1a26-4603-80ad-9f5c4b543de7.png", // French Fries
+  37: "/lovable-uploads/ace242e7-03ef-472d-9227-df6d70a34c5e.png", // Cheese Fries
+  38: "/lovable-uploads/d47c4ca4-82f4-4f4e-b3c1-dcb268245077.png", // Onion Rings
 
   // Bowls & Salads
-  39: "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400", // Chicken Burrito Bowl
-  40: "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400", // Chorizo Burrito Bowl
-  41: "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400", // Steak Burrito Bowl
-  42: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400", // Iceberg Salad
-  43: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400", // Romaine Salad
-  44: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400", // Garden Salad
-  45: "https://images.unsplash.com/photo-1551248429-40975aa4de74?w=400", // Caesar Salad
-  46: "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400", // Chicken Taco Salad
-  47: "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400", // Chorizo Taco Salad
-  48: "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400", // Steak Taco Salad
+  39: "/lovable-uploads/ba333c2d-418a-46d2-90fc-3d2eea29f4e2.png", // Chicken Burrito Bowl
+  40: "/lovable-uploads/fdd4faf9-1373-48a9-ba98-36679fbc644d.png", // Chorizo Burrito Bowl
+  41: "/lovable-uploads/77ef296c-9173-4533-97e1-85cacb65110a.png", // Steak Burrito Bowl
+  42: "/lovable-uploads/10cee1c0-7c1a-4ef7-adb6-4e67ea383e79.png", // Iceberg Salad
+  43: "/lovable-uploads/ec42cff8-73a2-4ad9-a63c-94a6e5769dfe.png", // Romaine Salad
+  44: "/lovable-uploads/14aa238b-6aaf-443a-a340-204a07e411e7.png", // Garden Salad
+  45: "/lovable-uploads/0bb5bd35-cbe4-45c5-a384-cebda05d5fef.png", // Caesar Salad
+  46: "/lovable-uploads/b369f913-1a26-4603-80ad-9f5c4b543de7.png", // Chicken Taco Salad
+  47: "/lovable-uploads/ace242e7-03ef-472d-9227-df6d70a34c5e.png", // Chorizo Taco Salad
+  48: "/lovable-uploads/d47c4ca4-82f4-4f4e-b3c1-dcb268245077.png", // Steak Taco Salad
 };
 
 // Load static menu images
@@ -61,19 +61,19 @@ export const loadCachedMenuImages = () => {
   return null; // Always return null to trigger static image assignment
 };
 
-// Generate menu images - now just assigns static images
+// Generate menu images - now just assigns your uploaded images
 export const generateMenuImages = async (menuItems: MenuItemProps[]) => {
   try {
-    console.log("Assigning static images to menu items");
+    console.log("Assigning your uploaded images to menu items");
     
     const updatedItems = menuItems.map(item => ({
       ...item,
-      imageUrl: STATIC_MENU_IMAGES[item.id] || "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=400"
+      imageUrl: STATIC_MENU_IMAGES[item.id] || "/lovable-uploads/ec42cff8-73a2-4ad9-a63c-94a6e5769dfe.png"
     }));
     
     return updatedItems;
   } catch (error) {
-    console.error("Error assigning static images:", error);
+    console.error("Error assigning uploaded images:", error);
     return menuItems;
   }
 };
