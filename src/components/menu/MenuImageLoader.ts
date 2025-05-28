@@ -21,7 +21,7 @@ const STATIC_MENU_IMAGES: Record<number, string> = {
   15: "/placeholder.svg", // Steak Tacos - no matching image
   16: "/lovable-uploads/66818be7-aa88-4356-b8de-36e6f9bee28a.png", // Chorizo Burrito
   17: "/lovable-uploads/2a39dd31-a26a-4b20-9634-b93b6b8e7b39.png", // Chicken Burrito
-  18: "/placeholder.svg", // Steak Burrito - no matching image
+  18: "/lovable-uploads/c7e46825-73ef-40bd-8cb0-fa6e4b8a772d.png", // Steak Burrito
   19: "/lovable-uploads/b117cf44-c026-48fb-95a4-173f1cdb5dfc.png", // Smash Burger
   20: "/placeholder.svg", // Beef Burger - no matching image
   21: "/placeholder.svg", // Chicken Sandwich - no matching image
@@ -50,9 +50,9 @@ const STATIC_MENU_IMAGES: Record<number, string> = {
   42: "/placeholder.svg", // Iceberg Salad - no matching image
   43: "/placeholder.svg", // Romaine Salad - no matching image
   44: "/lovable-uploads/5a5c0d03-5982-42b7-9a0c-2bcc68841cc8.png", // Garden Salad
-  45: "/lovable-uploads/be41d6fb-2859-4320-bd9d-914853df202f.png", // Caesar Salad
+  45: "/lovable-uploads/1e539b2f-7778-4b53-908c-534d935e243c.png", // Caesar Salad
   46: "/lovable-uploads/fde690f2-1316-48ce-888b-8fc66e7c5b52.png", // Chicken Taco Salad
-  47: "/lovable-uploads/31649a8e-dec8-40e7-8b31-45c2349354c5.png", // Chorizo Taco Salad
+  47: "/lovable-uploads/859c1e67-5d3e-44f3-9bba-729751aec974.png", // Chorizo Taco Salad
   48: "/placeholder.svg", // Steak Taco Salad - no matching image
 };
 
