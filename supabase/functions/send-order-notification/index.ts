@@ -1,4 +1,5 @@
 
+
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
@@ -39,10 +40,20 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Processing order notification for order:", order.id);
 
-    // Format order items for email
-    const itemsList = order.items.map((item: any) => 
-      `- ${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`
-    ).join('\n');
+    // Format order items for email with customizations
+    const itemsList = order.items.map((item: any) => {
+      let itemText = `- ${item.name} x${item.quantity} - $${item.totalPrice.toFixed(2)}`;
+      
+      // Add customizations if they exist
+      if (item.customizations && item.customizations.length > 0) {
+        const customizationText = item.customizations.map((custom: any) => 
+          custom.price > 0 ? `${custom.name} (+$${custom.price.toFixed(2)})` : custom.name
+        ).join(', ');
+        itemText += `\n    Customizations: ${customizationText}`;
+      }
+      
+      return itemText;
+    }).join('\n');
 
     // Format pickup time
     const pickupTime = new Date(order.pickup_time).toLocaleString('en-US', {
@@ -137,3 +148,4 @@ const handler = async (req: Request): Promise<Response> => {
 };
 
 serve(handler);
+
