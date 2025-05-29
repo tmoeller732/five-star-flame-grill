@@ -1,7 +1,9 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Flame, ShoppingCart, User } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
+import { useAuth } from '../contexts/AuthContext';
 import OrderDropdown from './OrderDropdown';
 import ScrollingBanner from './ScrollingBanner';
 import CartDialog from './cart/CartDialog';
@@ -12,6 +14,7 @@ const Header = () => {
   const [isHeroVisible, setIsHeroVisible] = useState(true);
   const location = useLocation();
   const { getItemCount } = useCart();
+  const { user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -143,12 +146,12 @@ const Header = () => {
               </CartDialog>
 
               {/* Account Icon */}
-              <button className="nav-item group p-2">
+              <Link to={user ? "/account" : "/auth"} className="nav-item group p-2">
                 <div className="relative">
                   <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
                   <User size={24} className="text-white hover:text-grill-gold transition-colors" />
                 </div>
-              </button>
+              </Link>
             </nav>
 
             {/* Mobile menu button */}
@@ -164,7 +167,7 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile menu - update mobile menu items as well */}
+        {/* Mobile menu */}
         {mobileMenuOpen && (
           <div className="md:hidden bg-grill-black bg-opacity-95 p-4 relative z-10">
             <nav className="flex flex-col space-y-4">
@@ -229,13 +232,14 @@ const Header = () => {
               </CartDialog>
               
               {/* Mobile Account */}
-              <button 
+              <Link 
+                to={user ? "/account" : "/auth"}
                 className="font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded text-white flex items-center"
                 onClick={closeMobileMenu}
               >
                 <User size={18} className="mr-2 text-grill-gold" />
-                Account
-              </button>
+                {user ? 'Account' : 'Sign In'}
+              </Link>
             </nav>
           </div>
         )}

@@ -4,14 +4,16 @@ import { useLocation, Navigate, Link } from 'react-router-dom';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Clock, Phone } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 const OrderConfirmation = () => {
   const location = useLocation();
+  const { user } = useAuth();
   const order = location.state?.order;
 
-  if (!order) {
+  if (!user || !order) {
     return <Navigate to="/menu" replace />;
   }
 
@@ -36,9 +38,11 @@ const OrderConfirmation = () => {
               
               <div className="text-left space-y-2">
                 <p><strong>Order ID:</strong> {order.id}</p>
-                <p><strong>Customer:</strong> {order.customerInfo.firstName} {order.customerInfo.lastName}</p>
-                <p><strong>Phone:</strong> {order.customerInfo.phone}</p>
-                <p><strong>Total:</strong> ${(order.total * 1.085).toFixed(2)}</p>
+                <p><strong>Total:</strong> ${order.grand_total.toFixed(2)}</p>
+                <p><strong>Status:</strong> {order.status.charAt(0).toUpperCase() + order.status.slice(1)}</p>
+                {order.special_instructions && (
+                  <p><strong>Special Instructions:</strong> {order.special_instructions}</p>
+                )}
               </div>
             </div>
 
@@ -69,6 +73,14 @@ const OrderConfirmation = () => {
                 className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black"
               >
                 <Link to="/menu">Order More Items</Link>
+              </Button>
+              
+              <Button 
+                asChild 
+                variant="outline" 
+                className="w-full border-gray-600 text-white hover:bg-gray-800"
+              >
+                <Link to="/account">View Order History</Link>
               </Button>
               
               <Button 

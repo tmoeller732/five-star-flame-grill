@@ -6,47 +6,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCart } from '../../contexts/CartContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from 'react-router-dom';
-
-interface CustomerInfo {
-  firstName: string;
-  lastName: string;
-  phone: string;
-  email: string;
-  specialInstructions: string;
-}
+import { supabase } from '@/integrations/supabase/client';
 
 const CheckoutForm = () => {
   const { state, clearCart } = useCart();
+  const { user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   
-  const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
-    firstName: '',
-    lastName: '',
-    phone: '',
-    email: '',
-    specialInstructions: ''
-  });
-
+  const [specialInstructions, setSpecialInstructions] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleInputChange = (field: keyof CustomerInfo, value: string) => {
-    setCustomerInfo(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Basic validation
-    if (!customerInfo.firstName || !customerInfo.lastName || !customerInfo.phone) {
+    if (!user) {
       toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields.",
+        title: "Authentication Required",
+        description: "Please log in to place an order.",
         variant: "destructive"
       });
       return;
@@ -54,20 +34,26 @@ const CheckoutForm = () => {
 
     setIsSubmitting(true);
 
-    // Simulate order processing
-    setTimeout(() => {
-      // Create order object
-      const order = {
-        id: `ORDER_${Date.now()}`,
-        items: state.items,
-        total: state.total,
-        customerInfo,
-        orderDate: new Date().toISOString(),
-        status: 'confirmed'
-      };
+    try {
+      const taxAmount = state.total * 0.085;
+      const grandTotal = state.total + taxAmount;
 
-      // In a real app, you would send this to your backend
-      console.log('Order placed:', order);
+      // Create order in database
+      const { data: orderData, error } = await supabase
+        .from('orders')
+        .insert({
+          user_id: user.id,
+          items: state.items,
+          total: state.total,
+          tax_amount: taxAmount,
+          grand_total: grandTotal,
+          special_instructions: specialInstructions || null,
+          status: 'confirmed'
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
 
       // Clear cart
       clearCart();
@@ -81,86 +67,45 @@ const CheckoutForm = () => {
 
       // Navigate to confirmation page
       navigate('/order-confirmation', { 
-        state: { order },
+        state: { order: orderData },
         replace: true 
       });
 
-      setIsSubmitting(false);
-    }, 2000);
+    } catch (error) {
+      console.error('Error placing order:', error);
+      toast({
+        title: "Order Failed",
+        description: "There was an error placing your order. Please try again.",
+        variant: "destructive"
+      });
+    }
+
+    setIsSubmitting(false);
   };
 
   return (
     <Card className="p-6 bg-card border-gray-700">
-      <h2 className="text-2xl font-bold text-grill-gold mb-6">Customer Information</h2>
+      <h2 className="text-2xl font-bold text-grill-gold mb-6">Order Details</h2>
+      
+      <div className="mb-6 p-4 bg-gray-800 rounded-lg border border-gray-600">
+        <h3 className="font-semibold text-grill-gold mb-2">Ordering as:</h3>
+        <p className="text-white">{user?.email}</p>
+        <p className="text-sm text-gray-400">
+          Update your profile information in your account settings if needed.
+        </p>
+      </div>
       
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="firstName" className="text-white">
-              First Name *
-            </Label>
-            <Input
-              id="firstName"
-              value={customerInfo.firstName}
-              onChange={(e) => handleInputChange('firstName', e.target.value)}
-              required
-              className="bg-gray-800 border-gray-600 text-white"
-            />
-          </div>
-          
-          <div>
-            <Label htmlFor="lastName" className="text-white">
-              Last Name *
-            </Label>
-            <Input
-              id="lastName"
-              value={customerInfo.lastName}
-              onChange={(e) => handleInputChange('lastName', e.target.value)}
-              required
-              className="bg-gray-800 border-gray-600 text-white"
-            />
-          </div>
-        </div>
-
-        <div>
-          <Label htmlFor="phone" className="text-white">
-            Phone Number *
-          </Label>
-          <Input
-            id="phone"
-            type="tel"
-            value={customerInfo.phone}
-            onChange={(e) => handleInputChange('phone', e.target.value)}
-            required
-            className="bg-gray-800 border-gray-600 text-white"
-            placeholder="(555) 123-4567"
-          />
-        </div>
-
-        <div>
-          <Label htmlFor="email" className="text-white">
-            Email Address
-          </Label>
-          <Input
-            id="email"
-            type="email"
-            value={customerInfo.email}
-            onChange={(e) => handleInputChange('email', e.target.value)}
-            className="bg-gray-800 border-gray-600 text-white"
-            placeholder="your.email@example.com"
-          />
-        </div>
-
         <div>
           <Label htmlFor="specialInstructions" className="text-white">
-            Special Instructions
+            Special Instructions (Optional)
           </Label>
           <Textarea
             id="specialInstructions"
-            value={customerInfo.specialInstructions}
-            onChange={(e) => handleInputChange('specialInstructions', e.target.value)}
+            value={specialInstructions}
+            onChange={(e) => setSpecialInstructions(e.target.value)}
             className="bg-gray-800 border-gray-600 text-white"
-            placeholder="Any special requests or dietary restrictions..."
+            placeholder="Any special requests, dietary restrictions, or cooking preferences..."
             rows={3}
           />
         </div>
