@@ -1,114 +1,108 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from '../contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
-import { Eye, EyeOff } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet-async';
+import { validatePassword } from '../utils/security';
 
 const Auth = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
   
-  const { signIn, signUp, user } = useAuth();
+  const { signUp, signIn, user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
-  const location = useLocation();
 
-  // Check if user is admin and redirect accordingly
-  const checkAdminAndRedirect = async (userId: string) => {
-    try {
-      const { data, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', userId)
-        .eq('role', 'admin')
-        .single();
-
-      if (data && !error) {
-        // User is admin, redirect to admin panel
-        navigate('/admin', { replace: true });
-      } else {
-        // Regular user, redirect to original destination or home
-        const from = location.state?.from?.pathname || '/';
-        navigate(from, { replace: true });
-      }
-    } catch (error) {
-      console.error('Error checking admin role:', error);
-      // Fallback to regular redirect
-      const from = location.state?.from?.pathname || '/';
-      navigate(from, { replace: true });
-    }
-  };
-
-  // Redirect authenticated users
   useEffect(() => {
     if (user) {
-      checkAdminAndRedirect(user.id);
+      navigate('/');
     }
-  }, [user, navigate, location.state]);
+  }, [user, navigate]);
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    
+    if (isSignUp && newPassword) {
+      const validation = validatePassword(newPassword);
+      setPasswordErrors(validation.errors);
+    } else {
+      setPasswordErrors([]);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      if (isLogin) {
-        const { error } = await signIn(email, password);
-        if (error) {
+      if (isSignUp) {
+        // Validate password strength for sign up
+        const passwordValidation = validatePassword(password);
+        if (!passwordValidation.isValid) {
           toast({
-            title: "Login Failed",
-            description: error.message,
-            variant: "destructive"
-          });
-        } else {
-          toast({
-            title: "Welcome back!",
-            description: "You have been successfully logged in.",
-          });
-          // Note: Redirect will be handled by the useEffect above when user state updates
-        }
-      } else {
-        if (!firstName || !lastName || !phone) {
-          toast({
-            title: "Missing Information",
-            description: "Please fill in all required fields.",
+            title: "Password Requirements Not Met",
+            description: passwordValidation.errors.join('. '),
             variant: "destructive"
           });
           setLoading(false);
           return;
         }
 
-        const { error } = await signUp(email, password, { firstName, lastName, phone });
+        const { data, error } = await signUp(email, password, {
+          firstName,
+          lastName,
+          phone
+        });
+
         if (error) {
           toast({
-            title: "Registration Failed",
-            description: error.message,
+            title: "Sign Up Failed",
+            description: error.message || "An error occurred during sign up.",
             variant: "destructive"
           });
         } else {
           toast({
             title: "Account Created!",
-            description: "Please check your email to verify your account.",
+            description: "Your account has been created successfully. Please check your email to verify your account.",
+            duration: 5000
           });
+          setIsSignUp(false);
+        }
+      } else {
+        const { data, error } = await signIn(email, password);
+
+        if (error) {
+          toast({
+            title: "Sign In Failed",
+            description: error.message || "Invalid email or password.",
+            variant: "destructive"
+          });
+        } else {
+          toast({
+            title: "Welcome back!",
+            description: "You have been signed in successfully.",
+          });
+          navigate('/');
         }
       }
     } catch (error) {
+      console.error('Auth error:', error);
       toast({
-        title: "Error",
+        title: "Authentication Error",
         description: "An unexpected error occurred. Please try again.",
         variant: "destructive"
       });
@@ -117,44 +111,21 @@ const Auth = () => {
     setLoading(false);
   };
 
-  const handleForgotPassword = async () => {
-    if (!email) {
-      toast({
-        title: "Email Required",
-        description: "Please enter your email address first.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email);
-      if (error) {
-        toast({
-          title: "Error",
-          description: error.message,
-          variant: "destructive"
-        });
-      } else {
-        toast({
-          title: "Reset Email Sent",
-          description: "Check your email for password reset instructions.",
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "An unexpected error occurred. Please try again.",
-        variant: "destructive"
-      });
-    }
+  const toggleMode = () => {
+    setIsSignUp(!isSignUp);
+    setEmail('');
+    setPassword('');
+    setFirstName('');
+    setLastName('');
+    setPhone('');
+    setPasswordErrors([]);
   };
 
   return (
     <>
       <Helmet>
-        <title>{isLogin ? 'Login' : 'Sign Up'} | 5 Star Grill</title>
-        <meta name="description" content={`${isLogin ? 'Login to your account' : 'Create an account'} at 5 Star Grill to place orders and view your order history.`} />
+        <title>{isSignUp ? 'Sign Up' : 'Sign In'} | 5 Star Grill</title>
+        <meta name="description" content={`${isSignUp ? 'Create an account' : 'Sign in'} to order from 5 Star Grill`} />
       </Helmet>
       
       <Header />
@@ -163,137 +134,107 @@ const Auth = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-md mx-auto">
             <Card className="p-8 bg-card border-gray-700">
-              <div className="text-center mb-8">
-                <h1 className="text-3xl font-bold text-grill-gold mb-2">
-                  {isLogin ? 'Welcome Back' : 'Create Account'}
-                </h1>
-                <p className="text-gray-300">
-                  {isLogin ? 'Sign in to your account' : 'Join 5 Star Grill today'}
-                </p>
-              </div>
-
+              <h1 className="text-2xl font-bold text-grill-gold mb-6 text-center">
+                {isSignUp ? 'Create Account' : 'Sign In'}
+              </h1>
+              
               <form onSubmit={handleSubmit} className="space-y-4">
-                {!isLogin && (
-                  <div className="grid grid-cols-2 gap-4">
+                {isSignUp && (
+                  <>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="firstName" className="text-white">First Name</Label>
+                        <Input
+                          id="firstName"
+                          type="text"
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
+                          className="bg-gray-800 border-gray-600 text-white"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="lastName" className="text-white">Last Name</Label>
+                        <Input
+                          id="lastName"
+                          type="text"
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
+                          className="bg-gray-800 border-gray-600 text-white"
+                          required
+                        />
+                      </div>
+                    </div>
+                    
                     <div>
-                      <Label htmlFor="firstName" className="text-white">
-                        First Name *
-                      </Label>
+                      <Label htmlFor="phone" className="text-white">Phone Number</Label>
                       <Input
-                        id="firstName"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                        required={!isLogin}
+                        id="phone"
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
                         className="bg-gray-800 border-gray-600 text-white"
+                        placeholder="(555) 123-4567"
+                        required
                       />
                     </div>
-                    <div>
-                      <Label htmlFor="lastName" className="text-white">
-                        Last Name *
-                      </Label>
-                      <Input
-                        id="lastName"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                        required={!isLogin}
-                        className="bg-gray-800 border-gray-600 text-white"
-                      />
-                    </div>
-                  </div>
+                  </>
                 )}
-
-                {!isLogin && (
-                  <div>
-                    <Label htmlFor="phone" className="text-white">
-                      Phone Number *
-                    </Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      required={!isLogin}
-                      className="bg-gray-800 border-gray-600 text-white"
-                      placeholder="(555) 123-4567"
-                    />
-                  </div>
-                )}
-
+                
                 <div>
-                  <Label htmlFor="email" className="text-white">
-                    Email Address *
-                  </Label>
+                  <Label htmlFor="email" className="text-white">Email</Label>
                   <Input
                     id="email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    required
                     className="bg-gray-800 border-gray-600 text-white"
+                    required
                   />
                 </div>
-
+                
                 <div>
-                  <Label htmlFor="password" className="text-white">
-                    Password *
-                  </Label>
-                  <div className="relative">
-                    <Input
-                      id="password"
-                      type={showPassword ? "text" : "password"}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      className="bg-gray-800 border-gray-600 text-white pr-10"
-                      minLength={6}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-                    >
-                      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                    </button>
-                  </div>
+                  <Label htmlFor="password" className="text-white">Password</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    className="bg-gray-800 border-gray-600 text-white"
+                    required
+                  />
+                  {isSignUp && passwordErrors.length > 0 && (
+                    <div className="mt-2 text-sm text-red-400">
+                      <p className="font-semibold">Password requirements:</p>
+                      <ul className="list-disc list-inside space-y-1">
+                        {passwordErrors.map((error, index) => (
+                          <li key={index}>{error}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
-
-                {isLogin && (
-                  <div className="text-right">
-                    <button
-                      type="button"
-                      onClick={handleForgotPassword}
-                      className="text-grill-gold hover:text-grill-orange transition-colors text-sm"
-                    >
-                      Forgot password?
-                    </button>
-                  </div>
-                )}
-
+                
                 <Button
                   type="submit"
-                  disabled={loading}
-                  className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black font-semibold py-3"
+                  disabled={loading || (isSignUp && passwordErrors.length > 0)}
+                  className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black font-semibold"
                 >
-                  {loading ? 'Please wait...' : (isLogin ? 'Sign In' : 'Create Account')}
+                  {loading ? 'Processing...' : (isSignUp ? 'Create Account' : 'Sign In')}
                 </Button>
               </form>
-
+              
               <div className="mt-6 text-center">
-                <button
-                  onClick={() => setIsLogin(!isLogin)}
-                  className="text-grill-gold hover:text-grill-orange transition-colors"
+                <p className="text-gray-400">
+                  {isSignUp ? 'Already have an account?' : "Don't have an account?"}
+                </p>
+                <Button
+                  variant="link"
+                  onClick={toggleMode}
+                  className="text-grill-gold hover:text-grill-orange"
                 >
-                  {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
-                </button>
-              </div>
-
-              <div className="mt-4 text-center">
-                <Link
-                  to="/"
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
-                >
-                  ← Back to Home
-                </Link>
+                  {isSignUp ? 'Sign In' : 'Create Account'}
+                </Button>
               </div>
             </Card>
           </div>

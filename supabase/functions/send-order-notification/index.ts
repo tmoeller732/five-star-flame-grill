@@ -1,151 +1,161 @@
 
-
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "npm:resend@2.0.0";
-
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
-};
-
-interface OrderNotificationRequest {
-  order: {
-    id: string;
-    user_id: string;
-    items: any[];
-    total: number;
-    tax_amount: number;
-    grand_total: number;
-    special_instructions?: string;
-    status: string;
-    pickup_time: string;
-    estimated_wait_minutes: number;
-    created_at: string;
-    customer_phone?: string;
-  };
-  customerEmail: string;
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'X-XSS-Protection': '1; mode=block',
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
 }
 
-const handler = async (req: Request): Promise<Response> => {
+serve(async (req) => {
   // Handle CORS preflight requests
-  if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders })
   }
 
   try {
-    const { order, customerEmail }: OrderNotificationRequest = await req.json();
+    // Validate request method
+    if (req.method !== 'POST') {
+      return new Response(
+        JSON.stringify({ error: 'Method not allowed' }),
+        { 
+          status: 405, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
+    }
 
-    console.log("Processing order notification for order:", order.id);
+    const { order, customerEmail } = await req.json()
 
-    // Format order items for email with customizations
-    const itemsList = order.items.map((item: any) => {
-      let itemText = `- ${item.name} x${item.quantity} - $${item.totalPrice.toFixed(2)}`;
-      
-      // Add customizations if they exist
-      if (item.customizations && item.customizations.length > 0) {
-        const customizationText = item.customizations.map((custom: any) => 
-          custom.price > 0 ? `${custom.name} (+$${custom.price.toFixed(2)})` : custom.name
-        ).join(', ');
-        itemText += `\n    Customizations: ${customizationText}`;
-      }
-      
-      return itemText;
-    }).join('\n');
+    // Input validation
+    if (!order || !customerEmail) {
+      return new Response(
+        JSON.stringify({ error: 'Missing required fields: order and customerEmail' }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
+    }
 
-    // Format pickup time
-    const pickupTime = new Date(order.pickup_time).toLocaleString('en-US', {
-      timeZone: 'America/New_York',
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true
-    });
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(customerEmail)) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid email format' }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
+    }
 
+    console.log('Processing order notification:', { orderId: order.id, customerEmail })
+
+    // Initialize Supabase client
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    const supabase = createClient(supabaseUrl, supabaseServiceKey)
+
+    // Get the Resend API key
+    const resendApiKey = Deno.env.get('RESEND_API_KEY')
+    
+    if (!resendApiKey) {
+      console.error('RESEND_API_KEY not found')
+      return new Response(
+        JSON.stringify({ error: 'Email service not configured' }),
+        { 
+          status: 500, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
+    }
+
+    // Sanitize order data for email
+    const sanitizeText = (text: string) => {
+      return text.replace(/[<>&"']/g, (char) => {
+        const entities: { [key: string]: string } = {
+          '<': '&lt;',
+          '>': '&gt;',
+          '&': '&amp;',
+          '"': '&quot;',
+          "'": '&#x27;'
+        }
+        return entities[char] || char
+      })
+    }
+
+    // Prepare email content with sanitized data
     const emailHtml = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h1 style="color: #d4af37; border-bottom: 2px solid #d4af37; padding-bottom: 10px;">
-          New Order Received!
-        </h1>
-        
-        <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
-          <h2 style="color: #333; margin-top: 0;">Order Details</h2>
-          <p><strong>Order ID:</strong> #${order.id.slice(0, 8)}</p>
-          <p><strong>Customer Email:</strong> ${customerEmail}</p>
-          ${order.customer_phone ? `<p><strong>Customer Phone:</strong> ${order.customer_phone}</p>` : ''}
-          <p><strong>Status:</strong> ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</p>
-          <p><strong>Estimated Pickup Time:</strong> ${pickupTime}</p>
-          <p><strong>Estimated Wait:</strong> ${order.estimated_wait_minutes} minutes</p>
-        </div>
+      <h2>New Order Received - 5 Star Grill</h2>
+      <p><strong>Order ID:</strong> ${sanitizeText(order.id.slice(0, 8))}</p>
+      <p><strong>Customer Email:</strong> ${sanitizeText(customerEmail)}</p>
+      <p><strong>Total:</strong> $${order.grand_total.toFixed(2)}</p>
+      <p><strong>Status:</strong> ${sanitizeText(order.status)}</p>
+      <p><strong>Order Date:</strong> ${new Date(order.created_at).toLocaleString()}</p>
+      
+      <h3>Items:</h3>
+      <ul>
+        ${order.items.map((item: any) => `
+          <li>${sanitizeText(item.name)} (${item.quantity}) - $${item.totalPrice.toFixed(2)}</li>
+        `).join('')}
+      </ul>
+      
+      ${order.special_instructions ? `<p><strong>Special Instructions:</strong> ${sanitizeText(order.special_instructions)}</p>` : ''}
+      
+      <p>Please prepare this order for pickup.</p>
+    `
 
-        <div style="background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #333; margin-top: 0;">Items Ordered:</h3>
-          <pre style="font-family: Arial, sans-serif; white-space: pre-wrap; background: #f9f9f9; padding: 15px; border-radius: 4px;">${itemsList}</pre>
-        </div>
-
-        <div style="background: #e8f5e8; border: 1px solid #4caf50; padding: 15px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #2e7d32; margin-top: 0;">Order Total</h3>
-          <p style="margin: 5px 0;"><strong>Subtotal:</strong> $${order.total.toFixed(2)}</p>
-          <p style="margin: 5px 0;"><strong>Tax:</strong> $${order.tax_amount.toFixed(2)}</p>
-          <p style="margin: 5px 0; font-size: 18px; color: #2e7d32;"><strong>Grand Total: $${order.grand_total.toFixed(2)}</strong></p>
-        </div>
-
-        ${order.special_instructions ? `
-        <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #856404; margin-top: 0;">Special Instructions</h3>
-          <p style="color: #856404;">${order.special_instructions}</p>
-        </div>
-        ` : ''}
-
-        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 20px 0; text-align: center;">
-          <p style="margin: 0; color: #6c757d; font-size: 14px;">
-            Order placed on ${new Date(order.created_at).toLocaleString('en-US', {
-              timeZone: 'America/New_York',
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-              hour: 'numeric',
-              minute: '2-digit',
-              hour12: true
-            })}
-          </p>
-        </div>
-      </div>
-    `;
-
-    // Send email notification to restaurant
-    const emailResponse = await resend.emails.send({
-      from: "Order Notifications <onboarding@resend.dev>",
-      to: ["5stargrillorders@gmail.com"],
-      subject: `New Order #${order.id.slice(0, 8)} - $${order.grand_total.toFixed(2)}`,
-      html: emailHtml,
-    });
-
-    console.log("Email sent successfully:", emailResponse);
-
-    return new Response(JSON.stringify({ success: true, emailId: emailResponse.id }), {
-      status: 200,
+    // Send email using Resend
+    const emailResponse = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        ...corsHeaders,
+        'Authorization': `Bearer ${resendApiKey}`,
+        'Content-Type': 'application/json',
       },
-    });
-  } catch (error: any) {
-    console.error("Error in send-order-notification function:", error);
+      body: JSON.stringify({
+        from: 'orders@5stargrill.com',
+        to: ['restaurant@5stargrill.com'], // Replace with actual restaurant email
+        subject: `New Order #${order.id.slice(0, 8)} - 5 Star Grill`,
+        html: emailHtml,
+      }),
+    })
+
+    const emailResult = await emailResponse.json()
+
+    if (!emailResponse.ok) {
+      console.error('Failed to send email:', emailResult)
+      return new Response(
+        JSON.stringify({ error: 'Failed to send email notification', details: emailResult }),
+        { 
+          status: 500, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
+    }
+
+    console.log('Email sent successfully:', emailResult)
+
     return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
+      JSON.stringify({ success: true, emailId: emailResult.id }),
+      { 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
       }
-    );
+    )
+
+  } catch (error) {
+    console.error('Error in send-order-notification function:', error)
+    return new Response(
+      JSON.stringify({ error: 'Internal server error' }),
+      { 
+        status: 500, 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      }
+    )
   }
-};
-
-serve(handler);
-
+})

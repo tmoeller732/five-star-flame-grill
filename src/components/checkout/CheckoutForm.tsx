@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,6 +9,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { validateSpecialInstructions } from '../../utils/security';
 
 const CheckoutForm = () => {
   const { state, clearCart } = useCart();
@@ -24,6 +24,11 @@ const CheckoutForm = () => {
     if (total <= 40) return 15;
     if (total <= 70) return 20;
     return 40;
+  };
+
+  const handleSpecialInstructionsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const sanitized = validateSpecialInstructions(e.target.value);
+    setSpecialInstructions(sanitized);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,6 +58,9 @@ const CheckoutForm = () => {
         .eq('id', user.id)
         .single();
 
+      // Sanitize special instructions before saving
+      const sanitizedInstructions = validateSpecialInstructions(specialInstructions);
+
       // Create order in database with pickup time, wait minutes, and customer phone
       const { data: orderData, error } = await supabase
         .from('orders')
@@ -62,7 +70,7 @@ const CheckoutForm = () => {
           total: state.total,
           tax_amount: taxAmount,
           grand_total: grandTotal,
-          special_instructions: specialInstructions || null,
+          special_instructions: sanitizedInstructions || null,
           status: 'confirmed',
           pickup_time: pickupTime.toISOString(),
           estimated_wait_minutes: waitMinutes,
@@ -148,11 +156,15 @@ const CheckoutForm = () => {
           <Textarea
             id="specialInstructions"
             value={specialInstructions}
-            onChange={(e) => setSpecialInstructions(e.target.value)}
+            onChange={handleSpecialInstructionsChange}
             className="bg-gray-800 border-gray-600 text-white"
-            placeholder="Any special requests, dietary restrictions, or cooking preferences..."
+            placeholder="Any special requests, dietary restrictions, or cooking preferences... (max 500 characters)"
             rows={3}
+            maxLength={500}
           />
+          <p className="text-xs text-gray-400 mt-1">
+            {specialInstructions.length}/500 characters
+          </p>
         </div>
 
         <div className="bg-gray-800 p-4 rounded-lg border border-gray-600">
