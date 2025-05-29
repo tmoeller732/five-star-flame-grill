@@ -12,6 +12,7 @@ import { supabase } from '@/integrations/supabase/client';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet-async';
+import type { Database } from '@/integrations/supabase/types';
 
 interface Profile {
   first_name: string;
@@ -20,9 +21,12 @@ interface Profile {
   phone: string;
 }
 
+// Use the database type for orders
+type DatabaseOrder = Database['public']['Tables']['orders']['Row'];
+
 interface Order {
   id: string;
-  items: any[];
+  items: any[]; // Convert from Json to any[] for UI usage
   total: number;
   grand_total: number;
   status: string;
@@ -83,7 +87,19 @@ const Account = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setOrders(data || []);
+      
+      // Convert database orders to UI orders format
+      const convertedOrders: Order[] = (data || []).map((dbOrder: DatabaseOrder) => ({
+        id: dbOrder.id,
+        items: Array.isArray(dbOrder.items) ? dbOrder.items : [],
+        total: dbOrder.total,
+        grand_total: dbOrder.grand_total,
+        status: dbOrder.status || 'pending',
+        created_at: dbOrder.created_at || '',
+        special_instructions: dbOrder.special_instructions || undefined
+      }));
+      
+      setOrders(convertedOrders);
     } catch (error) {
       console.error('Error fetching orders:', error);
     }

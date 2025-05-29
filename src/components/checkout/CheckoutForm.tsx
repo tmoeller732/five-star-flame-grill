@@ -38,12 +38,12 @@ const CheckoutForm = () => {
       const taxAmount = state.total * 0.085;
       const grandTotal = state.total + taxAmount;
 
-      // Create order in database
+      // Create order in database - convert CartItem[] to Json
       const { data: orderData, error } = await supabase
         .from('orders')
         .insert({
           user_id: user.id,
-          items: state.items,
+          items: state.items as any, // Cast to any for Json compatibility
           total: state.total,
           tax_amount: taxAmount,
           grand_total: grandTotal,
