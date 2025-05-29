@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCart } from '../../contexts/CartContext';
-import { useOrders } from '../../contexts/OrderContext';
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from 'react-router-dom';
 
@@ -20,7 +19,6 @@ interface CustomerInfo {
 
 const CheckoutForm = () => {
   const { state, clearCart } = useCart();
-  const { addOrder } = useOrders();
   const { toast } = useToast();
   const navigate = useNavigate();
   
@@ -59,21 +57,14 @@ const CheckoutForm = () => {
     // Simulate order processing
     setTimeout(() => {
       // Create order object
-      const now = new Date();
-      const pickupTime = new Date(now.getTime() + 20 * 60000); // 20 minutes from now
-      
       const order = {
         id: `ORDER_${Date.now()}`,
         items: state.items,
         total: state.total,
         customerInfo,
-        orderDate: now.toISOString(),
-        status: 'confirmed' as const,
-        estimatedPickupTime: pickupTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        orderDate: new Date().toISOString(),
+        status: 'confirmed'
       };
-
-      // Add order to order management
-      addOrder(order);
 
       // In a real app, you would send this to your backend
       console.log('Order placed:', order);

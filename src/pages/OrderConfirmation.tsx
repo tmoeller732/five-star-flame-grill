@@ -3,7 +3,7 @@ import React from 'react';
 import { useLocation, Navigate, Link } from 'react-router-dom';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Clock, Phone, Search } from 'lucide-react';
+import { CheckCircle, Clock, Phone } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -39,7 +39,6 @@ const OrderConfirmation = () => {
                 <p><strong>Customer:</strong> {order.customerInfo.firstName} {order.customerInfo.lastName}</p>
                 <p><strong>Phone:</strong> {order.customerInfo.phone}</p>
                 <p><strong>Total:</strong> ${(order.total * 1.085).toFixed(2)}</p>
-                <p><strong>Estimated Pickup:</strong> {order.estimatedPickupTime}</p>
               </div>
             </div>
 
@@ -47,7 +46,7 @@ const OrderConfirmation = () => {
               <div className="bg-gray-800 p-4 rounded-lg border border-gray-600">
                 <Clock size={24} className="text-grill-gold mx-auto mb-2" />
                 <h3 className="font-semibold text-grill-gold mb-1">Pickup Time</h3>
-                <p className="text-sm text-gray-300">{order.estimatedPickupTime}</p>
+                <p className="text-sm text-gray-300">15-20 minutes</p>
               </div>
               
               <div className="bg-gray-800 p-4 rounded-lg border border-gray-600">
@@ -69,16 +68,6 @@ const OrderConfirmation = () => {
                 asChild 
                 className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black"
               >
-                <Link to={`/order-tracking?id=${order.id}`}>
-                  <Search className="mr-2" size={16} />
-                  Track This Order
-                </Link>
-              </Button>
-              
-              <Button 
-                asChild 
-                className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black"
-              >
                 <Link to="/menu">Order More Items</Link>
               </Button>
               
@@ -87,7 +76,7 @@ const OrderConfirmation = () => {
                 variant="outline" 
                 className="w-full border-gray-600 text-white hover:bg-gray-800"
               >
-                <Link to="/order-history">View Order History</Link>
+                <Link to="/">Return to Home</Link>
               </Button>
             </div>
           </Card>
