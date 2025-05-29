@@ -54,7 +54,7 @@ const STATIC_MENU_IMAGES: Record<number, string> = {
   45: "/lovable-uploads/1e539b2f-7778-4b53-908c-534d935e243c.png", // Caesar Salad
   46: "/lovable-uploads/fde690f2-1316-48ce-888b-8fc66e7c5b52.png", // Chicken Taco Salad
   47: "/lovable-uploads/859c1e67-5d3e-44f3-9bba-729751aec974.png", // Chorizo Taco Salad
-  48: "/placeholder.svg", // Steak Taco Salad - no matching image
+  48: "/lovable-uploads/a43ad802-f88b-4a11-82e7-4fe8675b0bbe.png", // Steak Taco Salad
 };
 
 // Load static menu images
