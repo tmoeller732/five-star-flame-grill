@@ -70,6 +70,71 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
         ]
       };
     }
+
+    // #4 WESTERN OMELET SANDWICH
+    if (item.id === 4) {
+      return {
+        'Bread Choice': [
+          { id: 'hard-roll', name: 'Hard Roll', price: 0, category: 'Bread Choice' },
+          { id: 'croissant', name: 'Croissant', price: 0, category: 'Bread Choice' },
+          { id: 'bagel', name: 'Bagel', price: 0, category: 'Bread Choice' },
+        ]
+      };
+    }
+
+    // #5 CLASSIC BREAKFAST PLATE - no options
+    if (item.id === 5) {
+      return {};
+    }
+
+    // #6 BREAKFAST PLATE W/MEAT
+    if (item.id === 6) {
+      return {
+        'Meat Choice': [
+          { id: 'bacon', name: 'Bacon', price: 0, category: 'Meat Choice' },
+          { id: 'sausage', name: 'Sausage', price: 0, category: 'Meat Choice' },
+          { id: 'chorizo', name: 'Chorizo', price: 0, category: 'Meat Choice' },
+          { id: 'pork-roll', name: 'Pork Roll', price: 0, category: 'Meat Choice' },
+        ]
+      };
+    }
+
+    // #7 BAGEL WITH BUTTER - no options
+    if (item.id === 7) {
+      return {};
+    }
+
+    // #8 BAGEL WITH CREAM CHEESE - no options
+    if (item.id === 8) {
+      return {};
+    }
+
+    // #9 HOME FRIES - no options
+    if (item.id === 9) {
+      return {};
+    }
+
+    // #10 HASH BROWN - no options
+    if (item.id === 10) {
+      return {};
+    }
+
+    // #11 EXTRA MEAT
+    if (item.id === 11) {
+      return {
+        'Meat Choice': [
+          { id: 'bacon', name: 'Bacon', price: 0, category: 'Meat Choice' },
+          { id: 'sausage', name: 'Sausage', price: 0, category: 'Meat Choice' },
+          { id: 'chorizo', name: 'Chorizo', price: 0, category: 'Meat Choice' },
+          { id: 'pork-roll', name: 'Pork Roll', price: 0, category: 'Meat Choice' },
+        ]
+      };
+    }
+
+    // #12 AVOCADO - no options
+    if (item.id === 12) {
+      return {};
+    }
   }
 
   // Default options for other items
