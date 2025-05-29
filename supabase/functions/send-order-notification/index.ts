@@ -104,10 +104,10 @@ const handler = async (req: Request): Promise<Response> => {
       </div>
     `;
 
-    // Send email notification to restaurant (using your Resend account email temporarily)
+    // Send email notification to restaurant
     const emailResponse = await resend.emails.send({
       from: "Order Notifications <onboarding@resend.dev>",
-      to: ["moesenterprises732@gmail.com"], // Using your verified Resend email temporarily
+      to: ["5stargrillorders@gmail.com"],
       subject: `New Order #${order.id.slice(0, 8)} - $${order.grand_total.toFixed(2)}`,
       html: emailHtml,
     });
