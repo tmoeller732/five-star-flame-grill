@@ -12,6 +12,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { ShoppingCart, Plus, Minus, X } from 'lucide-react';
 import { useCart } from '../../contexts/CartContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from 'react-router-dom';
 
@@ -21,6 +22,7 @@ interface CartDialogProps {
 
 const CartDialog = ({ children }: CartDialogProps) => {
   const { state, updateQuantity, removeItem, clearCart, getCartTotal } = useCart();
+  const { user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -56,6 +58,15 @@ const CartDialog = ({ children }: CartDialogProps) => {
   };
 
   const handleCheckout = () => {
+    if (!user) {
+      toast({
+        title: "Sign In Required",
+        description: "Please sign in to place your order.",
+        variant: "default"
+      });
+      navigate('/auth');
+      return;
+    }
     navigate('/checkout');
   };
 
@@ -148,6 +159,14 @@ const CartDialog = ({ children }: CartDialogProps) => {
                 <span className="font-bold text-lg">${getCartTotal().toFixed(2)}</span>
               </div>
               
+              {!user && (
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                  <p className="text-sm text-yellow-800">
+                    Sign in to place your order and enjoy 5 Star Grill!
+                  </p>
+                </div>
+              )}
+              
               <div className="flex gap-2">
                 <Button
                   variant="outline"
@@ -160,7 +179,7 @@ const CartDialog = ({ children }: CartDialogProps) => {
                   onClick={handleCheckout}
                   className="flex-1 bg-grill-gold hover:bg-grill-orange text-grill-black"
                 >
-                  Checkout
+                  {user ? 'Checkout' : 'Sign In to Order'}
                 </Button>
               </div>
             </div>
