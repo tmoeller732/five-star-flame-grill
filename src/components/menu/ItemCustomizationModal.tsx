@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   Dialog,
@@ -141,8 +140,8 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
 
   // Check if this is one of the specific lunch items
   if (item.category === 'lunch') {
-    // #1 Chorizo Tacos, #2 Chicken Tacos, #3 Steak Tacos
-    if (item.id === 1 || item.id === 2 || item.id === 3) {
+    // #1 Chorizo Tacos, #2 Chicken Tacos, #3 Steak Tacos (IDs 13, 14, 15)
+    if (item.id === 13 || item.id === 14 || item.id === 15) {
       return {
         'Remove Items': [
           { id: 'no-onions', name: 'NO Onions', price: 0, category: 'Remove Items', type: 'checkbox' },
@@ -151,8 +150,8 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
       };
     }
 
-    // #4 Chorizo Burrito, #5 Chicken Burrito, #6 Steak Burrito
-    if (item.id === 4 || item.id === 5 || item.id === 6) {
+    // #4 Chorizo Burrito, #5 Chicken Burrito, #6 Steak Burrito (IDs 16, 17, 18)
+    if (item.id === 16 || item.id === 17 || item.id === 18) {
       return {
         'Remove Items': [
           { id: 'no-lettuce', name: 'NO Lettuce', price: 0, category: 'Remove Items', type: 'checkbox' },
@@ -161,8 +160,8 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
       };
     }
 
-    // #7 Smash Burger, #8 Beef Burger
-    if (item.id === 7 || item.id === 8) {
+    // #7 Smash Burger, #8 Beef Burger (IDs 19, 20)
+    if (item.id === 19 || item.id === 20) {
       return {
         'Remove Items': [
           { id: 'no-lettuce', name: 'NO Lettuce', price: 0, category: 'Remove Items', type: 'checkbox' },
@@ -172,8 +171,8 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
       };
     }
 
-    // #9 Chicken Sandwich
-    if (item.id === 9) {
+    // #9 Chicken Sandwich (ID 21)
+    if (item.id === 21) {
       return {
         'Remove Items': [
           { id: 'no-lettuce', name: 'NO Lettuce', price: 0, category: 'Remove Items', type: 'checkbox' },
@@ -183,8 +182,8 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
       };
     }
 
-    // #10 Steak Quesadilla, #11 Chicken Quesadilla, #12 Steak Torta, #13 Chorizo Torta, #14 Chicken Torta
-    if (item.id === 10 || item.id === 11 || item.id === 12 || item.id === 13 || item.id === 14) {
+    // #10 Steak Quesadilla, #11 Chicken Quesadilla, #12 Steak Torta, #13 Chorizo Torta, #14 Chicken Torta (IDs 22, 23, 24, 25, 26)
+    if (item.id === 22 || item.id === 23 || item.id === 24 || item.id === 25 || item.id === 26) {
       return {
         'Remove Items': [
           { id: 'no-lettuce', name: 'NO Lettuce', price: 0, category: 'Remove Items', type: 'checkbox' },
@@ -195,8 +194,8 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
       };
     }
 
-    // #15 Philly Cheesesteak, #16 Chicken Cheesesteak, #17 California Cheesesteak
-    if (item.id === 15 || item.id === 16 || item.id === 17) {
+    // #15 Philly Cheesesteak, #16 Chicken Cheesesteak, #17 California Cheesesteak (IDs 27, 28, 29)
+    if (item.id === 27 || item.id === 28 || item.id === 29) {
       return {
         'Remove Items': [
           { id: 'no-onions', name: 'NO Onions', price: 0, category: 'Remove Items', type: 'checkbox' },
@@ -206,13 +205,13 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
       };
     }
 
-    // #18 Chicken Wings, #19 Chicken Nuggets, #20 Chicken Fingers - no options
-    if (item.id === 18 || item.id === 19 || item.id === 20) {
+    // #18 Chicken Wings, #19 Chicken Nuggets, #20 Chicken Fingers (IDs 30, 31, 32) - no options
+    if (item.id === 30 || item.id === 31 || item.id === 32) {
       return {};
     }
 
-    // #21 Turkey & Cheese, #22 Ham & Cheese
-    if (item.id === 21 || item.id === 22) {
+    // #21 Turkey & Cheese, #22 Ham & Cheese (IDs 33, 34)
+    if (item.id === 33 || item.id === 34) {
       return {
         'Remove Items': [
           { id: 'no-lettuce', name: 'NO Lettuce', price: 0, category: 'Remove Items', type: 'checkbox' },
@@ -222,8 +221,8 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
       };
     }
 
-    // #23 Roast Beef
-    if (item.id === 23) {
+    // #23 Roast Beef (ID 35)
+    if (item.id === 35) {
       return {
         'Remove Items': [
           { id: 'no-lettuce', name: 'NO Lettuce', price: 0, category: 'Remove Items', type: 'checkbox' },
@@ -232,8 +231,8 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
       };
     }
 
-    // #24 French Fries, #25 Cheese Fries, #26 Onion Rings - no options
-    if (item.id === 24 || item.id === 25 || item.id === 26) {
+    // #24 French Fries, #25 Cheese Fries, #26 Onion Rings (IDs 36, 37, 38) - no options
+    if (item.id === 36 || item.id === 37 || item.id === 38) {
       return {};
     }
   }
