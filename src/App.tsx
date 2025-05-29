@@ -16,6 +16,7 @@ import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import Account from "./pages/Account";
+import Admin from "./pages/Admin";
 import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import NotFound from "./pages/NotFound";
