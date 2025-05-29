@@ -86,7 +86,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (!user) return { error: 'No user logged in' };
 
     try {
-      const { data, error } = await supabase
+      // First, update the profiles table
+      const { data: profileData, error: profileError } = await supabase
         .from('profiles')
         .update({
           first_name: updateData.firstName,
@@ -96,8 +97,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         })
         .eq('id', user.id);
 
-      return { data, error };
+      if (profileError) {
+        console.error('Profile update error:', profileError);
+        return { data: null, error: profileError };
+      }
+
+      // Also update the auth user metadata to keep it in sync
+      const { data: authData, error: authError } = await supabase.auth.updateUser({
+        data: {
+          first_name: updateData.firstName,
+          last_name: updateData.lastName,
+          phone: updateData.phone,
+        }
+      });
+
+      if (authError) {
+        console.error('Auth metadata update error:', authError);
+        return { data: profileData, error: authError };
+      }
+
+      return { data: profileData, error: null };
     } catch (error) {
+      console.error('Update profile error:', error);
       return { data: null, error };
     }
   };
