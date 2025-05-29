@@ -1,3 +1,4 @@
+
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
@@ -22,6 +23,7 @@ interface OrderNotificationRequest {
     pickup_time: string;
     estimated_wait_minutes: number;
     created_at: string;
+    customer_phone?: string;
   };
   customerEmail: string;
 }
@@ -64,6 +66,7 @@ const handler = async (req: Request): Promise<Response> => {
           <h2 style="color: #333; margin-top: 0;">Order Details</h2>
           <p><strong>Order ID:</strong> #${order.id.slice(0, 8)}</p>
           <p><strong>Customer Email:</strong> ${customerEmail}</p>
+          ${order.customer_phone ? `<p><strong>Customer Phone:</strong> ${order.customer_phone}</p>` : ''}
           <p><strong>Status:</strong> ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</p>
           <p><strong>Estimated Pickup Time:</strong> ${pickupTime}</p>
           <p><strong>Estimated Wait:</strong> ${order.estimated_wait_minutes} minutes</p>
