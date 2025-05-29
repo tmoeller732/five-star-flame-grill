@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import {
   Dialog,
@@ -27,8 +28,51 @@ interface ItemCustomizationModalProps {
   children: React.ReactNode;
 }
 
-// Sample customization options - in a real app, this would come from your menu data
-const getCustomizationOptions = (category: 'breakfast' | 'lunch' | 'bowls'): Record<string, CustomizationOption[]> => {
+// Updated customization options for specific breakfast items
+const getCustomizationOptions = (item: MenuItemProps): Record<string, CustomizationOption[]> => {
+  // Check if this is one of the specific breakfast items
+  if (item.category === 'breakfast') {
+    // #1 'CLASSIC' EGG & CHEESE
+    if (item.id === 1) {
+      return {
+        'Bread Choice': [
+          { id: 'hard-roll', name: 'Hard Roll', price: 0, category: 'Bread Choice' },
+          { id: 'croissant', name: 'Croissant', price: 0, category: 'Bread Choice' },
+          { id: 'bagel', name: 'Bagel', price: 0, category: 'Bread Choice' },
+        ]
+      };
+    }
+    
+    // #2 EGG & CHEESE W/MEAT
+    if (item.id === 2) {
+      return {
+        'Meat Choice': [
+          { id: 'bacon', name: 'Bacon', price: 0, category: 'Meat Choice' },
+          { id: 'sausage', name: 'Sausage', price: 0, category: 'Meat Choice' },
+          { id: 'chorizo', name: 'Chorizo', price: 0, category: 'Meat Choice' },
+          { id: 'pork-roll', name: 'Pork Roll', price: 0, category: 'Meat Choice' },
+        ],
+        'Bread Choice': [
+          { id: 'hard-roll', name: 'Hard Roll', price: 0, category: 'Bread Choice' },
+          { id: 'croissant', name: 'Croissant', price: 0, category: 'Bread Choice' },
+          { id: 'bagel', name: 'Bagel', price: 0, category: 'Bread Choice' },
+        ]
+      };
+    }
+    
+    // #3 STEAK EGG & CHEESE
+    if (item.id === 3) {
+      return {
+        'Bread Choice': [
+          { id: 'hard-roll', name: 'Hard Roll', price: 0, category: 'Bread Choice' },
+          { id: 'croissant', name: 'Croissant', price: 0, category: 'Bread Choice' },
+          { id: 'bagel', name: 'Bagel', price: 0, category: 'Bread Choice' },
+        ]
+      };
+    }
+  }
+
+  // Default options for other items
   const baseOptions = {
     'Cooking Style': [
       { id: 'rare', name: 'Rare', price: 0, category: 'Cooking Style' },
@@ -43,17 +87,6 @@ const getCustomizationOptions = (category: 'breakfast' | 'lunch' | 'bowls'): Rec
     ]
   };
 
-  if (category === 'breakfast') {
-    return {
-      ...baseOptions,
-      'Toast Type': [
-        { id: 'white', name: 'White Toast', price: 0, category: 'Toast Type' },
-        { id: 'wheat', name: 'Wheat Toast', price: 0, category: 'Toast Type' },
-        { id: 'sourdough', name: 'Sourdough', price: 0.50, category: 'Toast Type' },
-      ]
-    };
-  }
-
   return baseOptions;
 };
 
@@ -64,7 +97,7 @@ const ItemCustomizationModal = ({ item, children }: ItemCustomizationModalProps)
   const [isDecisionModalOpen, setIsDecisionModalOpen] = useState(false);
   const { addItem } = useCart();
 
-  const customizationOptions = getCustomizationOptions(item.category);
+  const customizationOptions = getCustomizationOptions(item);
 
   const handleCustomizationChange = (category: string, option: CustomizationOption) => {
     setSelectedCustomizations(prev => ({
