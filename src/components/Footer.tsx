@@ -1,16 +1,26 @@
+
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail } from 'lucide-react';
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  return <footer className="bg-grill-black border-t border-grill-brown">
+
+  return (
+    <footer className="bg-grill-black border-t border-grill-brown">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Logo and About */}
           <div className="flex flex-col items-center md:items-start">
             <Link to="/">
-              <img src="/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" alt="5 Star Grill" className="h-20 mb-4 transition-transform duration-500 hover:rotate-360" />
+              <img 
+                src="/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
+                alt="5 Star Grill" 
+                className="h-20 mb-4 transition-transform duration-500 hover:rotate-360"
+              />
             </Link>
-            <p className="text-gray-400 text-sm text-center md:text-left">Serving delicious breakfast, lunch, and dinner in Toms River since 2025. Our passion is grilling to perfection.</p>
+            <p className="text-gray-400 text-sm text-center md:text-left">
+              Serving delicious breakfast, lunch, and dinner in Toms River since 2015. Our passion is grilling to perfection.
+            </p>
             <div className="flex space-x-4 mt-4">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-gray-400 hover:text-grill-gold transition-colors">
                 <Facebook size={20} />
@@ -71,6 +81,8 @@ const Footer = () => {
           </p>
         </div>
       </div>
-    </footer>;
+    </footer>
+  );
 };
+
 export default Footer;
