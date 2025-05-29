@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useCart } from "../../../contexts/CartContext";
+import { useCart } from "../../contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
 
 export interface MenuItemProps {

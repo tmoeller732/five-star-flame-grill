@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useReducer } from 'react';
 import { CartState, CartAction, CartContextType, CartItem } from '../types/cart';
 import { useCartPersistence } from '../hooks/useCartPersistence';
@@ -9,7 +8,7 @@ const initialState: CartState = {
   itemCount: 0,
 };
 
-const calculateItemTotal = (item: Omit<CartItem, 'totalPrice'>): number => {
+const calculateItemTotal = (item: Omit<CartItem, 'id' | 'totalPrice'>): number => {
   const customizationsTotal = item.customizations.reduce((sum, customization) => sum + customization.price, 0);
   return (item.basePrice + customizationsTotal) * item.quantity;
 };
