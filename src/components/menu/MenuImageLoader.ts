@@ -1,4 +1,3 @@
-
 import { MenuItemProps } from './MenuItem';
 
 // Static menu image URLs using your uploaded images matched by product names
@@ -41,7 +40,7 @@ const STATIC_MENU_IMAGES: Record<number, string> = {
   33: "/lovable-uploads/1d5950ff-f5f9-408a-813b-67fcda786a9f.png", // Turkey & Cheese
   34: "/lovable-uploads/af396862-acc0-48c8-98ec-39fe5f8e3e8e.png", // Ham & Cheese
   35: "/lovable-uploads/e013a387-db8b-4f72-a653-b566f3e3255c.png", // Roast Beef
-  36: "/placeholder.svg", // French Fries - no matching image
+  36: "/lovable-uploads/b962bdf4-dda1-464d-9a2c-592a7ca7a7f1.png", // French Fries
   37: "/placeholder.svg", // Cheese Fries - no matching image
   38: "/lovable-uploads/8e958574-1ee0-464d-84a6-722c15c49192.png", // Onion Rings
   
