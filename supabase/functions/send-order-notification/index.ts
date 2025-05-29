@@ -261,6 +261,11 @@ serve(async (req) => {
               <span class="info-label">Customer Email:</span>
               <span class="info-value">${sanitizeText(customerEmail)}</span>
               
+              ${order.customer_phone ? `
+                <span class="info-label">Customer Phone:</span>
+                <span class="info-value">${sanitizeText(order.customer_phone)}</span>
+              ` : ''}
+              
               <span class="info-label">Status:</span>
               <span class="info-value">${sanitizeText(order.status.charAt(0).toUpperCase() + order.status.slice(1))}</span>
               

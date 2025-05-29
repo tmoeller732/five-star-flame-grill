@@ -55,7 +55,7 @@ const Hero = () => {
                 className="border-grill-gold text-grill-gold hover:bg-grill-gold/10 text-lg px-6 py-6"
               >
                 <Link to="/order">
-                  Order Online <ArrowRight className="ml-2" size={18} />
+                  Order Delivery <ArrowRight className="ml-2" size={18} />
                 </Link>
               </Button>
             </div>
