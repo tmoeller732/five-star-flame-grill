@@ -11,11 +11,11 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const { user, logout } = useAuth();
-  const { items } = useCart();
+  const { user, signOut } = useAuth();
+  const { state } = useCart();
   const location = useLocation();
 
-  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = state.items.reduce((sum, item) => sum + item.quantity, 0);
 
   useEffect(() => {
     if (user) {
@@ -48,7 +48,7 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      await logout();
+      await signOut();
       setIsMenuOpen(false);
     } catch (error) {
       console.error('Error signing out:', error);
@@ -124,18 +124,19 @@ const Header = () => {
             {/* Right side actions */}
             <div className="flex items-center space-x-4">
               {/* Cart Icon */}
-              <button
-                onClick={() => setIsCartOpen(true)}
-                className="relative text-white hover:text-grill-gold transition-colors"
-                aria-label="Shopping cart"
-              >
-                <ShoppingCart size={24} />
-                {totalItems > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-grill-gold text-grill-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                    {totalItems}
-                  </span>
-                )}
-              </button>
+              <CartDialog>
+                <button
+                  className="relative text-white hover:text-grill-gold transition-colors"
+                  aria-label="Shopping cart"
+                >
+                  <ShoppingCart size={24} />
+                  {totalItems > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-grill-gold text-grill-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                      {totalItems}
+                    </span>
+                  )}
+                </button>
+              </CartDialog>
 
               {/* User Menu */}
               {user ? (
@@ -272,11 +273,6 @@ const Header = () => {
           </div>
         )}
       </header>
-
-      <CartDialog 
-        isOpen={isCartOpen} 
-        onClose={() => setIsCartOpen(false)} 
-      />
     </>
   );
 };
