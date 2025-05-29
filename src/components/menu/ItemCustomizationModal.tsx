@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { MenuItemProps } from './MenuItem';
@@ -21,6 +22,7 @@ interface CustomizationOption {
   name: string;
   price: number;
   category: string;
+  type?: 'radio' | 'checkbox';
 }
 
 interface ItemCustomizationModalProps {
@@ -28,7 +30,7 @@ interface ItemCustomizationModalProps {
   children: React.ReactNode;
 }
 
-// Updated customization options for specific breakfast items
+// Updated customization options for specific breakfast and lunch items
 const getCustomizationOptions = (item: MenuItemProps): Record<string, CustomizationOption[]> => {
   // Check if this is one of the specific breakfast items
   if (item.category === 'breakfast') {
@@ -137,6 +139,105 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
     }
   }
 
+  // Check if this is one of the specific lunch items
+  if (item.category === 'lunch') {
+    // #1 Chorizo Tacos, #2 Chicken Tacos, #3 Steak Tacos
+    if (item.id === 1 || item.id === 2 || item.id === 3) {
+      return {
+        'Remove Items': [
+          { id: 'no-onions', name: 'NO Onions', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-cilantro', name: 'NO Cilantro', price: 0, category: 'Remove Items', type: 'checkbox' },
+        ]
+      };
+    }
+
+    // #4 Chorizo Burrito, #5 Chicken Burrito, #6 Steak Burrito
+    if (item.id === 4 || item.id === 5 || item.id === 6) {
+      return {
+        'Remove Items': [
+          { id: 'no-lettuce', name: 'NO Lettuce', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-tomato', name: 'NO Tomato', price: 0, category: 'Remove Items', type: 'checkbox' },
+        ]
+      };
+    }
+
+    // #7 Smash Burger, #8 Beef Burger
+    if (item.id === 7 || item.id === 8) {
+      return {
+        'Remove Items': [
+          { id: 'no-lettuce', name: 'NO Lettuce', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-onions', name: 'NO Onions', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-tomato', name: 'NO Tomato', price: 0, category: 'Remove Items', type: 'checkbox' },
+        ]
+      };
+    }
+
+    // #9 Chicken Sandwich
+    if (item.id === 9) {
+      return {
+        'Remove Items': [
+          { id: 'no-lettuce', name: 'NO Lettuce', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-tomato', name: 'NO Tomato', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-mayo', name: 'NO Mayo', price: 0, category: 'Remove Items', type: 'checkbox' },
+        ]
+      };
+    }
+
+    // #10 Steak Quesadilla, #11 Chicken Quesadilla, #12 Steak Torta, #13 Chorizo Torta, #14 Chicken Torta
+    if (item.id === 10 || item.id === 11 || item.id === 12 || item.id === 13 || item.id === 14) {
+      return {
+        'Remove Items': [
+          { id: 'no-lettuce', name: 'NO Lettuce', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-tomato', name: 'NO Tomato', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-pico', name: 'NO Pico', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-sour-cream', name: 'NO Sour Cream', price: 0, category: 'Remove Items', type: 'checkbox' },
+        ]
+      };
+    }
+
+    // #15 Philly Cheesesteak, #16 Chicken Cheesesteak, #17 California Cheesesteak
+    if (item.id === 15 || item.id === 16 || item.id === 17) {
+      return {
+        'Remove Items': [
+          { id: 'no-onions', name: 'NO Onions', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-peppers', name: 'NO Peppers', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-mushrooms', name: 'NO Mushrooms', price: 0, category: 'Remove Items', type: 'checkbox' },
+        ]
+      };
+    }
+
+    // #18 Chicken Wings, #19 Chicken Nuggets, #20 Chicken Fingers - no options
+    if (item.id === 18 || item.id === 19 || item.id === 20) {
+      return {};
+    }
+
+    // #21 Turkey & Cheese, #22 Ham & Cheese
+    if (item.id === 21 || item.id === 22) {
+      return {
+        'Remove Items': [
+          { id: 'no-lettuce', name: 'NO Lettuce', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-tomato', name: 'NO Tomato', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-mayo', name: 'NO Mayo', price: 0, category: 'Remove Items', type: 'checkbox' },
+        ]
+      };
+    }
+
+    // #23 Roast Beef
+    if (item.id === 23) {
+      return {
+        'Remove Items': [
+          { id: 'no-lettuce', name: 'NO Lettuce', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-tomato', name: 'NO Tomato', price: 0, category: 'Remove Items', type: 'checkbox' },
+        ]
+      };
+    }
+
+    // #24 French Fries, #25 Cheese Fries, #26 Onion Rings - no options
+    if (item.id === 24 || item.id === 25 || item.id === 26) {
+      return {};
+    }
+  }
+
   // Default options for other items
   const baseOptions = {
     'Cooking Style': [
@@ -157,6 +258,7 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
 
 const ItemCustomizationModal = ({ item, children }: ItemCustomizationModalProps) => {
   const [selectedCustomizations, setSelectedCustomizations] = useState<Record<string, CustomizationOption>>({});
+  const [selectedCheckboxes, setSelectedCheckboxes] = useState<Record<string, boolean>>({});
   const [quantity, setQuantity] = useState(1);
   const [isCustomizationOpen, setIsCustomizationOpen] = useState(false);
   const [isDecisionModalOpen, setIsDecisionModalOpen] = useState(false);
@@ -171,18 +273,55 @@ const ItemCustomizationModal = ({ item, children }: ItemCustomizationModalProps)
     }));
   };
 
+  const handleCheckboxChange = (optionId: string, option: CustomizationOption, checked: boolean) => {
+    setSelectedCheckboxes(prev => ({
+      ...prev,
+      [optionId]: checked
+    }));
+  };
+
   const calculateTotalPrice = () => {
     const customizationsPrice = Object.values(selectedCustomizations).reduce((sum, option) => sum + option.price, 0);
-    return (item.price + customizationsPrice) * quantity;
+    const checkboxPrice = Object.entries(selectedCheckboxes)
+      .filter(([_, checked]) => checked)
+      .reduce((sum, [optionId]) => {
+        // Find the option in customizationOptions to get its price
+        for (const options of Object.values(customizationOptions)) {
+          const option = options.find(opt => opt.id === optionId);
+          if (option) return sum + option.price;
+        }
+        return sum;
+      }, 0);
+    return (item.price + customizationsPrice + checkboxPrice) * quantity;
   };
 
   const handleAddToCart = () => {
-    const customizations: CartCustomization[] = Object.values(selectedCustomizations).map(option => ({
+    const radioCustomizations: CartCustomization[] = Object.values(selectedCustomizations).map(option => ({
       id: option.id,
       name: option.name,
       price: option.price,
       category: option.category,
     }));
+
+    const checkboxCustomizations: CartCustomization[] = Object.entries(selectedCheckboxes)
+      .filter(([_, checked]) => checked)
+      .map(([optionId]) => {
+        for (const options of Object.values(customizationOptions)) {
+          const option = options.find(opt => opt.id === optionId);
+          if (option) {
+            return {
+              id: option.id,
+              name: option.name,
+              price: option.price,
+              category: option.category,
+            };
+          }
+        }
+        return null;
+      })
+      .filter(Boolean) as CartCustomization[];
+
+    const allCustomizations = [...radioCustomizations, ...checkboxCustomizations];
 
     addItem({
       menuItemId: item.id,
@@ -190,12 +329,13 @@ const ItemCustomizationModal = ({ item, children }: ItemCustomizationModalProps)
       description: item.description,
       basePrice: item.price,
       quantity,
-      customizations,
+      customizations: allCustomizations,
       category: item.category,
     });
 
     // Reset form
     setSelectedCustomizations({});
+    setSelectedCheckboxes({});
     setQuantity(1);
     
     // Close customization modal and open decision modal
@@ -223,29 +363,53 @@ const ItemCustomizationModal = ({ item, children }: ItemCustomizationModalProps)
             {Object.entries(customizationOptions).map(([categoryName, options]) => (
               <div key={categoryName}>
                 <h4 className="font-medium mb-3">{categoryName}</h4>
-                <RadioGroup
-                  value={selectedCustomizations[categoryName]?.id || ''}
-                  onValueChange={(value) => {
-                    const option = options.find(opt => opt.id === value);
-                    if (option) {
-                      handleCustomizationChange(categoryName, option);
-                    }
-                  }}
-                >
-                  {options.map((option) => (
-                    <div key={option.id} className="flex items-center space-x-2">
-                      <RadioGroupItem value={option.id} id={option.id} />
-                      <Label htmlFor={option.id} className="flex-1 cursor-pointer">
-                        <div className="flex justify-between">
-                          <span>{option.name}</span>
-                          {option.price > 0 && (
-                            <span className="text-sm text-gray-500">+${option.price.toFixed(2)}</span>
-                          )}
-                        </div>
-                      </Label>
-                    </div>
-                  ))}
-                </RadioGroup>
+                
+                {/* Check if this category should use checkboxes */}
+                {options.some(opt => opt.type === 'checkbox') ? (
+                  <div className="space-y-2">
+                    {options.map((option) => (
+                      <div key={option.id} className="flex items-center space-x-2">
+                        <Checkbox
+                          id={option.id}
+                          checked={selectedCheckboxes[option.id] || false}
+                          onCheckedChange={(checked) => handleCheckboxChange(option.id, option, checked as boolean)}
+                        />
+                        <Label htmlFor={option.id} className="flex-1 cursor-pointer">
+                          <div className="flex justify-between">
+                            <span>{option.name}</span>
+                            {option.price > 0 && (
+                              <span className="text-sm text-gray-500">+${option.price.toFixed(2)}</span>
+                            )}
+                          </div>
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <RadioGroup
+                    value={selectedCustomizations[categoryName]?.id || ''}
+                    onValueChange={(value) => {
+                      const option = options.find(opt => opt.id === value);
+                      if (option) {
+                        handleCustomizationChange(categoryName, option);
+                      }
+                    }}
+                  >
+                    {options.map((option) => (
+                      <div key={option.id} className="flex items-center space-x-2">
+                        <RadioGroupItem value={option.id} id={option.id} />
+                        <Label htmlFor={option.id} className="flex-1 cursor-pointer">
+                          <div className="flex justify-between">
+                            <span>{option.name}</span>
+                            {option.price > 0 && (
+                              <span className="text-sm text-gray-500">+${option.price.toFixed(2)}</span>
+                            )}
+                          </div>
+                        </Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
+                )}
               </div>
             ))}
 
