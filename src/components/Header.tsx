@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ShoppingCart, User, LogOut, Settings } from 'lucide-react';
@@ -124,19 +123,18 @@ const Header = () => {
             {/* Right side actions */}
             <div className="flex items-center space-x-4">
               {/* Cart Icon */}
-              <CartDialog>
-                <button
-                  className="relative text-white hover:text-grill-gold transition-colors"
-                  aria-label="Shopping cart"
-                >
-                  <ShoppingCart size={24} />
-                  {totalItems > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-grill-gold text-grill-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                      {totalItems}
-                    </span>
-                  )}
-                </button>
-              </CartDialog>
+              <button
+                onClick={() => setIsCartOpen(true)}
+                className="relative text-white hover:text-grill-gold transition-colors"
+                aria-label="Shopping cart"
+              >
+                <ShoppingCart size={24} />
+                {totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-grill-gold text-grill-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                    {totalItems}
+                  </span>
+                )}
+              </button>
 
               {/* User Menu */}
               {user ? (
@@ -273,6 +271,11 @@ const Header = () => {
           </div>
         )}
       </header>
+
+      <CartDialog 
+        isOpen={isCartOpen} 
+        onClose={() => setIsCartOpen(false)} 
+      />
     </>
   );
 };
