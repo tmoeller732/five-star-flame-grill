@@ -111,7 +111,7 @@ serve(async (req) => {
       <p>Please prepare this order for pickup.</p>
     `
 
-    // Send email using Resend
+    // Send email using Resend with verified domain
     const emailResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -119,7 +119,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'orders@5stargrill.com',
+        from: 'onboarding@resend.dev', // Using Resend's verified domain
         to: ['restaurant@5stargrill.com'], // Replace with actual restaurant email
         subject: `New Order #${order.id.slice(0, 8)} - 5 Star Grill`,
         html: emailHtml,
