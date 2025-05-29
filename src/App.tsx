@@ -45,6 +45,11 @@ const App = () => (
                   <Account />
                 </ProtectedRoute>
               } />
+              <Route path="/admin" element={
+                <ProtectedRoute>
+                  <Admin />
+                </ProtectedRoute>
+              } />
               <Route path="/checkout" element={
                 <ProtectedRoute>
                   <Checkout />
