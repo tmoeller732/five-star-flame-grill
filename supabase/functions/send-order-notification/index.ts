@@ -90,25 +90,79 @@ serve(async (req) => {
       })
     }
 
-    // Prepare email content with sanitized data
+    // Format for thermal 4x6 printer - optimized layout
+    const orderDate = new Date(order.created_at).toLocaleString()
+    const pickupTime = order.pickup_time ? new Date(order.pickup_time).toLocaleString() : 'TBD'
+    
     const emailHtml = `
-      <h2>New Order Received - 5 Star Grill</h2>
-      <p><strong>Order ID:</strong> ${sanitizeText(order.id.slice(0, 8))}</p>
-      <p><strong>Customer Email:</strong> ${sanitizeText(customerEmail)}</p>
-      <p><strong>Total:</strong> $${order.grand_total.toFixed(2)}</p>
-      <p><strong>Status:</strong> ${sanitizeText(order.status)}</p>
-      <p><strong>Order Date:</strong> ${new Date(order.created_at).toLocaleString()}</p>
-      
-      <h3>Items:</h3>
-      <ul>
-        ${order.items.map((item: any) => `
-          <li>${sanitizeText(item.name)} (${item.quantity}) - $${item.totalPrice.toFixed(2)}</li>
-        `).join('')}
-      </ul>
-      
-      ${order.special_instructions ? `<p><strong>Special Instructions:</strong> ${sanitizeText(order.special_instructions)}</p>` : ''}
-      
-      <p>Please prepare this order for pickup.</p>
+      <div style="font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.2; max-width: 288px; margin: 0; padding: 8px;">
+        <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 8px;">
+          <h1 style="margin: 0; font-size: 18px; font-weight: bold;">5 STAR GRILL</h1>
+          <p style="margin: 2px 0; font-size: 12px;">NEW ORDER</p>
+        </div>
+        
+        <div style="margin-bottom: 8px;">
+          <p style="margin: 2px 0;"><strong>ORDER #:</strong> ${sanitizeText(order.id.slice(0, 8).toUpperCase())}</p>
+          <p style="margin: 2px 0;"><strong>DATE:</strong> ${orderDate}</p>
+          <p style="margin: 2px 0;"><strong>STATUS:</strong> ${sanitizeText(order.status.toUpperCase())}</p>
+        </div>
+        
+        <div style="border-top: 1px dashed #000; border-bottom: 1px dashed #000; padding: 8px 0; margin: 8px 0;">
+          <p style="margin: 2px 0; font-weight: bold;">CUSTOMER INFO:</p>
+          <p style="margin: 2px 0;">Email: ${sanitizeText(customerEmail)}</p>
+          ${order.customer_phone ? `<p style="margin: 2px 0;">Phone: ${sanitizeText(order.customer_phone)}</p>` : ''}
+        </div>
+        
+        <div style="margin: 8px 0;">
+          <p style="margin: 2px 0; font-weight: bold;">ORDER ITEMS:</p>
+          ${order.items.map((item: any) => `
+            <div style="margin: 4px 0; display: flex; justify-content: space-between;">
+              <div style="flex: 1;">
+                <p style="margin: 0; font-weight: bold;">${sanitizeText(item.name)}</p>
+                <p style="margin: 0; font-size: 12px;">Qty: ${item.quantity}</p>
+              </div>
+              <div style="text-align: right;">
+                <p style="margin: 0;">$${item.totalPrice.toFixed(2)}</p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        
+        <div style="border-top: 1px dashed #000; padding-top: 8px; margin-top: 8px;">
+          <div style="display: flex; justify-content: space-between; margin: 2px 0;">
+            <span>Subtotal:</span>
+            <span>$${order.total.toFixed(2)}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin: 2px 0;">
+            <span>Tax:</span>
+            <span>$${order.tax_amount.toFixed(2)}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin: 2px 0; font-weight: bold; font-size: 16px; border-top: 1px solid #000; padding-top: 4px;">
+            <span>TOTAL:</span>
+            <span>$${order.grand_total.toFixed(2)}</span>
+          </div>
+        </div>
+        
+        ${order.estimated_wait_minutes ? `
+          <div style="text-align: center; margin: 8px 0; padding: 4px; border: 1px solid #000;">
+            <p style="margin: 0; font-weight: bold;">EST. WAIT TIME</p>
+            <p style="margin: 0; font-size: 16px;">${order.estimated_wait_minutes} MINUTES</p>
+            <p style="margin: 0; font-size: 12px;">Pickup: ${pickupTime}</p>
+          </div>
+        ` : ''}
+        
+        ${order.special_instructions ? `
+          <div style="border-top: 1px dashed #000; padding-top: 8px; margin-top: 8px;">
+            <p style="margin: 2px 0; font-weight: bold;">SPECIAL INSTRUCTIONS:</p>
+            <p style="margin: 2px 0; font-size: 12px; word-wrap: break-word;">${sanitizeText(order.special_instructions)}</p>
+          </div>
+        ` : ''}
+        
+        <div style="text-align: center; margin-top: 12px; border-top: 2px solid #000; padding-top: 8px;">
+          <p style="margin: 2px 0; font-size: 12px;">PAYMENT ON PICKUP</p>
+          <p style="margin: 2px 0; font-size: 12px;">CASH & CARDS ACCEPTED</p>
+        </div>
+      </div>
     `
 
     // Send email using Resend with verified domain
@@ -121,7 +175,7 @@ serve(async (req) => {
       body: JSON.stringify({
         from: 'onboarding@resend.dev', // Using Resend's verified domain
         to: ['5stargrillorders@gmail.com'], // Using the verified email from Resend account
-        subject: `New Order #${order.id.slice(0, 8)} - 5 Star Grill`,
+        subject: `Order #${order.id.slice(0, 8)} - 5 Star Grill`,
         html: emailHtml,
       }),
     })
