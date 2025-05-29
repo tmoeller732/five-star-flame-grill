@@ -4,6 +4,7 @@ import { Menu, X, Flame, ShoppingCart, User } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import OrderDropdown from './OrderDropdown';
 import ScrollingBanner from './ScrollingBanner';
+import CartDialog from './cart/CartDialog';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -127,17 +128,19 @@ const Header = () => {
               </Link>
               
               {/* Cart Icon */}
-              <button className="nav-item group relative p-2">
-                <div className="relative">
-                  <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
-                  <ShoppingCart size={24} className="text-white hover:text-grill-gold transition-colors" />
-                  {cartItemCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-grill-gold text-grill-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                      {cartItemCount}
-                    </span>
-                  )}
-                </div>
-              </button>
+              <CartDialog>
+                <button className="nav-item group relative p-2">
+                  <div className="relative">
+                    <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
+                    <ShoppingCart size={24} className="text-white hover:text-grill-gold transition-colors" />
+                    {cartItemCount > 0 && (
+                      <span className="absolute -top-2 -right-2 bg-grill-gold text-grill-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                        {cartItemCount}
+                      </span>
+                    )}
+                  </div>
+                </button>
+              </CartDialog>
 
               {/* Account Icon */}
               <button className="nav-item group p-2">
@@ -215,13 +218,15 @@ const Header = () => {
               </Link>
               
               {/* Mobile Cart */}
-              <button 
-                className="font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded text-white flex items-center"
-                onClick={closeMobileMenu}
-              >
-                <ShoppingCart size={18} className="mr-2 text-grill-gold" />
-                Cart {cartItemCount > 0 && `(${cartItemCount})`}
-              </button>
+              <CartDialog>
+                <button 
+                  className="font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded text-white flex items-center"
+                  onClick={closeMobileMenu}
+                >
+                  <ShoppingCart size={18} className="mr-2 text-grill-gold" />
+                  Cart {cartItemCount > 0 && `(${cartItemCount})`}
+                </button>
+              </CartDialog>
               
               {/* Mobile Account */}
               <button 
