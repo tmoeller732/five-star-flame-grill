@@ -32,7 +32,7 @@ const Hero = () => {
             </div>
 
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 font-playfair">
-              Toms River's <span className="text-grill-gold">Culinary Gem</span>
+              Best New <span className="text-grill-gold">Grill in Toms River, NJ</span>
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-200 mb-8">
@@ -45,7 +45,7 @@ const Hero = () => {
                 className="bg-grill-gold hover:bg-grill-orange text-grill-black text-lg px-6 py-6"
               >
                 <Link to="/menu">
-                  View Our Menu <ArrowRight className="ml-2" size={18} />
+                  Order Pickup <ArrowRight className="ml-2" size={18} />
                 </Link>
               </Button>
               
