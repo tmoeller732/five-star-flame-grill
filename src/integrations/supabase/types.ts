@@ -12,6 +12,7 @@ export type Database = {
       orders: {
         Row: {
           created_at: string | null
+          customer_phone: string | null
           estimated_wait_minutes: number | null
           grand_total: number
           id: string
@@ -26,6 +27,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string | null
+          customer_phone?: string | null
           estimated_wait_minutes?: number | null
           grand_total: number
           id?: string
@@ -40,6 +42,7 @@ export type Database = {
         }
         Update: {
           created_at?: string | null
+          customer_phone?: string | null
           estimated_wait_minutes?: number | null
           grand_total?: number
           id?: string

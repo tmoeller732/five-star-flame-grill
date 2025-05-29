@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -45,7 +46,14 @@ const CheckoutForm = () => {
       const waitMinutes = calculateWaitTime(grandTotal);
       const pickupTime = new Date(Date.now() + waitMinutes * 60000);
 
-      // Create order in database with pickup time and wait minutes
+      // Get user's profile to include phone number
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('phone')
+        .eq('id', user.id)
+        .single();
+
+      // Create order in database with pickup time, wait minutes, and customer phone
       const { data: orderData, error } = await supabase
         .from('orders')
         .insert({
@@ -57,7 +65,8 @@ const CheckoutForm = () => {
           special_instructions: specialInstructions || null,
           status: 'confirmed',
           pickup_time: pickupTime.toISOString(),
-          estimated_wait_minutes: waitMinutes
+          estimated_wait_minutes: waitMinutes,
+          customer_phone: profile?.phone || null
         })
         .select()
         .single();

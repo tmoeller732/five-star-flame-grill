@@ -19,6 +19,7 @@ const Auth = () => {
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   
@@ -81,7 +82,7 @@ const Auth = () => {
           // Note: Redirect will be handled by the useEffect above when user state updates
         }
       } else {
-        if (!firstName || !lastName) {
+        if (!firstName || !lastName || !phone) {
           toast({
             title: "Missing Information",
             description: "Please fill in all required fields.",
@@ -91,7 +92,7 @@ const Auth = () => {
           return;
         }
 
-        const { error } = await signUp(email, password, { firstName, lastName });
+        const { error } = await signUp(email, password, { firstName, lastName, phone });
         if (error) {
           toast({
             title: "Registration Failed",
@@ -198,6 +199,23 @@ const Auth = () => {
                         className="bg-gray-800 border-gray-600 text-white"
                       />
                     </div>
+                  </div>
+                )}
+
+                {!isLogin && (
+                  <div>
+                    <Label htmlFor="phone" className="text-white">
+                      Phone Number *
+                    </Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      required={!isLogin}
+                      className="bg-gray-800 border-gray-600 text-white"
+                      placeholder="(555) 123-4567"
+                    />
                   </div>
                 )}
 
