@@ -47,7 +47,7 @@ const STATIC_MENU_IMAGES: Record<number, string> = {
   
   // Bowls & Salads
   39: "/lovable-uploads/290d10fc-b8f7-4c28-a607-360fbce2bf4e.png", // Chicken Burrito Bowl
-  40: "/placeholder.svg", // Chorizo Burrito Bowl - no matching image
+  40: "/lovable-uploads/4889753a-7939-4c28-885e-2ece522173fd.png", // Chorizo Burrito Bowl
   41: "/lovable-uploads/ec3cfe56-abe0-4897-b7fe-9c334494a8ba.png", // Steak Burrito Bowl
   42: "/placeholder.svg", // Iceberg Salad - no matching image
   43: "/placeholder.svg", // Romaine Salad - no matching image
