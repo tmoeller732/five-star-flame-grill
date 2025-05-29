@@ -237,6 +237,42 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
     }
   }
 
+  // Check if this is one of the specific bowls & salads items
+  if (item.category === 'bowls') {
+    // #1 CHICKEN BURRITO BOWL, #2 CHORIZO BURRITO BOWL, #3 STEAK BURRITO BOWL (IDs 39, 40, 41)
+    if (item.id === 39 || item.id === 40 || item.id === 41) {
+      return {
+        'Remove Items': [
+          { id: 'no-beans', name: 'NO Beans', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-lettuce', name: 'NO Lettuce', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-tomato', name: 'NO Tomato', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-pico', name: 'NO Pico de Gallo', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-sour-cream', name: 'NO Sour Cream', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-cheese', name: 'NO Cheese', price: 0, category: 'Remove Items', type: 'checkbox' },
+        ]
+      };
+    }
+
+    // #4 ICEBERG SALAD, #5 ROMAINE SALAD, #6 GARDEN SALAD, #7 CAESAR SALAD (IDs 42, 43, 44, 45) - no options
+    if (item.id === 42 || item.id === 43 || item.id === 44 || item.id === 45) {
+      return {};
+    }
+
+    // #8 CHICKEN TACO SALAD, #9 CHORIZO TACO SALAD, #10 STEAK TACO SALAD (IDs 46, 47, 48)
+    if (item.id === 46 || item.id === 47 || item.id === 48) {
+      return {
+        'Remove Items': [
+          { id: 'no-beans', name: 'NO Beans', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-lettuce', name: 'NO Lettuce', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-tomato', name: 'NO Tomato', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-pico', name: 'NO Pico de Gallo', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-sour-cream', name: 'NO Sour Cream', price: 0, category: 'Remove Items', type: 'checkbox' },
+          { id: 'no-cheese', name: 'NO Cheese', price: 0, category: 'Remove Items', type: 'checkbox' },
+        ]
+      };
+    }
+  }
+
   // Default options for other items
   const baseOptions = {
     'Cooking Style': [
