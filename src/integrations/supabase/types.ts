@@ -12,9 +12,11 @@ export type Database = {
       orders: {
         Row: {
           created_at: string | null
+          estimated_wait_minutes: number | null
           grand_total: number
           id: string
           items: Json
+          pickup_time: string | null
           special_instructions: string | null
           status: string | null
           tax_amount: number
@@ -24,9 +26,11 @@ export type Database = {
         }
         Insert: {
           created_at?: string | null
+          estimated_wait_minutes?: number | null
           grand_total: number
           id?: string
           items: Json
+          pickup_time?: string | null
           special_instructions?: string | null
           status?: string | null
           tax_amount: number
@@ -36,9 +40,11 @@ export type Database = {
         }
         Update: {
           created_at?: string | null
+          estimated_wait_minutes?: number | null
           grand_total?: number
           id?: string
           items?: Json
+          pickup_time?: string | null
           special_instructions?: string | null
           status?: string | null
           tax_amount?: number

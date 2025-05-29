@@ -20,6 +20,12 @@ const CheckoutForm = () => {
   const [specialInstructions, setSpecialInstructions] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const calculateWaitTime = (total: number) => {
+    if (total <= 40) return 15;
+    if (total <= 70) return 20;
+    return 40;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -37,18 +43,22 @@ const CheckoutForm = () => {
     try {
       const taxAmount = state.total * 0.085;
       const grandTotal = state.total + taxAmount;
+      const waitMinutes = calculateWaitTime(grandTotal);
+      const pickupTime = new Date(Date.now() + waitMinutes * 60000);
 
-      // Create order in database - convert CartItem[] to Json
+      // Create order in database with pickup time and wait minutes
       const { data: orderData, error } = await supabase
         .from('orders')
         .insert({
           user_id: user.id,
-          items: state.items as any, // Cast to any for Json compatibility
+          items: state.items as any,
           total: state.total,
           tax_amount: taxAmount,
           grand_total: grandTotal,
           special_instructions: specialInstructions || null,
-          status: 'confirmed'
+          status: 'confirmed',
+          pickup_time: pickupTime.toISOString(),
+          estimated_wait_minutes: waitMinutes
         })
         .select()
         .single();
@@ -108,6 +118,16 @@ const CheckoutForm = () => {
             placeholder="Any special requests, dietary restrictions, or cooking preferences..."
             rows={3}
           />
+        </div>
+
+        <div className="bg-gray-800 p-4 rounded-lg border border-gray-600">
+          <h3 className="font-semibold text-grill-gold mb-2">Estimated Wait Time</h3>
+          <p className="text-grill-gold text-lg font-semibold">
+            {calculateWaitTime(state.total + (state.total * 0.085))} minutes
+          </p>
+          <p className="text-gray-300 text-sm mt-1">
+            Based on your order total of ${(state.total + (state.total * 0.085)).toFixed(2)}
+          </p>
         </div>
 
         <div className="bg-gray-800 p-4 rounded-lg border border-gray-600">
