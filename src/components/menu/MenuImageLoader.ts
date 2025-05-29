@@ -1,4 +1,3 @@
-
 import { MenuItemProps } from './MenuItem';
 
 // Static menu image URLs using your uploaded images matched by product names
@@ -50,7 +49,7 @@ const STATIC_MENU_IMAGES: Record<number, string> = {
   40: "/lovable-uploads/4889753a-7939-4c28-885e-2ece522173fd.png", // Chorizo Burrito Bowl
   41: "/lovable-uploads/ec3cfe56-abe0-4897-b7fe-9c334494a8ba.png", // Steak Burrito Bowl
   42: "/lovable-uploads/dd9df0d5-96b5-4048-9fc7-84e1d66679e5.png", // Iceberg Salad
-  43: "/placeholder.svg", // Romaine Salad - no matching image
+  43: "/lovable-uploads/07edd3ca-3375-40d5-b5e1-50ed23e4ed6f.png", // Romaine Salad
   44: "/lovable-uploads/5a5c0d03-5982-42b7-9a0c-2bcc68841cc8.png", // Garden Salad
   45: "/lovable-uploads/1e539b2f-7778-4b53-908c-534d935e243c.png", // Caesar Salad
   46: "/lovable-uploads/fde690f2-1316-48ce-888b-8fc66e7c5b52.png", // Chicken Taco Salad
