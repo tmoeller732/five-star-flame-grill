@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -34,6 +35,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
+        
+        // If user just signed in and doesn't have a profile, create one
+        if (event === 'SIGNED_IN' && session?.user) {
+          setTimeout(async () => {
+            const { data: profile } = await supabase
+              .from('profiles')
+              .select('id')
+              .eq('id', session.user.id)
+              .single();
+            
+            if (!profile) {
+              console.log('Creating missing profile for user:', session.user.id);
+              await supabase
+                .from('profiles')
+                .insert({
+                  id: session.user.id,
+                  first_name: session.user.user_metadata?.first_name || '',
+                  last_name: session.user.user_metadata?.last_name || '',
+                  email: session.user.email || '',
+                  phone: session.user.user_metadata?.phone || ''
+                });
+            }
+          }, 0);
+        }
       }
     );
 
@@ -86,7 +111,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (!user) return { error: 'No user logged in' };
 
     try {
-      // First, update the profiles table
+      // First, try to update the existing profile
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
         .update({
@@ -95,7 +120,41 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           phone: updateData.phone,
           updated_at: new Date().toISOString(),
         })
-        .eq('id', user.id);
+        .eq('id', user.id)
+        .select()
+        .single();
+
+      // If profile doesn't exist, create it
+      if (profileError && profileError.code === 'PGRST116') {
+        console.log('Profile not found, creating new one');
+        const { data: newProfileData, error: createError } = await supabase
+          .from('profiles')
+          .insert({
+            id: user.id,
+            first_name: updateData.firstName,
+            last_name: updateData.lastName,
+            email: user.email,
+            phone: updateData.phone,
+          })
+          .select()
+          .single();
+        
+        if (createError) {
+          console.error('Profile creation error:', createError);
+          return { data: null, error: createError };
+        }
+        
+        // Update auth metadata
+        await supabase.auth.updateUser({
+          data: {
+            first_name: updateData.firstName,
+            last_name: updateData.lastName,
+            phone: updateData.phone,
+          }
+        });
+        
+        return { data: newProfileData, error: null };
+      }
 
       if (profileError) {
         console.error('Profile update error:', profileError);

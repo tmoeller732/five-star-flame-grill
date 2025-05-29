@@ -61,18 +61,38 @@ const Account = () => {
         .from('profiles')
         .select('*')
         .eq('id', user?.id)
-        .single();
+        .maybeSingle();
 
-      if (error) throw error;
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error fetching profile:', error);
+      }
 
-      setProfile({
-        first_name: data.first_name || '',
-        last_name: data.last_name || '',
-        email: data.email || user?.email || '',
-        phone: data.phone || ''
-      });
+      if (data) {
+        setProfile({
+          first_name: data.first_name || '',
+          last_name: data.last_name || '',
+          email: data.email || user?.email || '',
+          phone: data.phone || ''
+        });
+      } else {
+        // No profile found, use user metadata as fallback
+        console.log('No profile found, using user metadata');
+        setProfile({
+          first_name: user?.user_metadata?.first_name || '',
+          last_name: user?.user_metadata?.last_name || '',
+          email: user?.email || '',
+          phone: user?.user_metadata?.phone || ''
+        });
+      }
     } catch (error) {
       console.error('Error fetching profile:', error);
+      // Fallback to user metadata
+      setProfile({
+        first_name: user?.user_metadata?.first_name || '',
+        last_name: user?.user_metadata?.last_name || '',
+        email: user?.email || '',
+        phone: user?.user_metadata?.phone || ''
+      });
     } finally {
       setLoading(false);
     }
@@ -127,6 +147,8 @@ const Account = () => {
           title: "Profile Updated",
           description: "Your profile has been successfully updated.",
         });
+        // Refresh the profile data to show the latest changes
+        await fetchProfile();
       }
     } catch (error) {
       toast({
@@ -219,6 +241,7 @@ const Account = () => {
                       value={profile.phone}
                       onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
                       className="bg-gray-800 border-gray-600 text-white"
+                      placeholder="(555) 123-4567"
                     />
                   </div>
                   
