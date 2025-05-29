@@ -67,6 +67,8 @@ const OrdersManagement = () => {
         status: order.status || 'pending',
         created_at: order.created_at || '',
         special_instructions: order.special_instructions || undefined,
+        customer_phone: order.customer_phone || undefined,
+        pickup_time: order.pickup_time || undefined,
         profiles: order.profiles
       }));
 
@@ -215,52 +217,6 @@ const OrdersManagement = () => {
       title: "Order Printed",
       description: `Order #${order.id.slice(0, 8)} sent to printer.`,
     });
-  };
-
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
-  useEffect(() => {
-    filterOrders();
-  }, [orders, searchTerm, statusFilter, dateFilter]);
-
-  const fetchOrders = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('orders')
-        .select(`
-          *,
-          profiles!inner(first_name, last_name, email, phone)
-        `)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-
-      const convertedOrders: OrderWithCustomer[] = (data || []).map((order) => ({
-        id: order.id,
-        items: Array.isArray(order.items) ? order.items : [],
-        total: order.total,
-        grand_total: order.grand_total,
-        status: order.status || 'pending',
-        created_at: order.created_at || '',
-        special_instructions: order.special_instructions || undefined,
-        customer_phone: order.customer_phone || undefined,
-        pickup_time: order.pickup_time || undefined,
-        profiles: order.profiles
-      }));
-
-      setOrders(convertedOrders);
-    } catch (error) {
-      console.error('Error fetching orders:', error);
-      toast({
-        title: "Error",
-        description: "Failed to fetch orders. Please try again.",
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
-    }
   };
 
   if (loading) {
