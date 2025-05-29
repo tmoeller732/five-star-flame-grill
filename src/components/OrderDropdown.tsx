@@ -24,7 +24,28 @@ const OrderDropdown = () => {
               <h3 className="text-xl font-playfair text-grill-gold text-center mb-2">Choose how to order</h3>
               
               <div className="grid grid-cols-3 gap-6">
-                {/* GrubHub */}
+                {/* Order Pickup - First Position */}
+                <div className="flex flex-col items-center">
+                  <div className="h-24 w-24 flex items-center justify-center mb-4">
+                    <img 
+                      src="/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
+                      alt="5 Star Direct" 
+                      className="h-20 object-contain"
+                    />
+                  </div>
+                  <NavigationMenuLink asChild>
+                    <Button 
+                      asChild
+                      className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black"
+                    >
+                      <Link to="/menu">
+                        Order Pickup
+                      </Link>
+                    </Button>
+                  </NavigationMenuLink>
+                </div>
+
+                {/* GrubHub - Second Position */}
                 <div className="flex flex-col items-center">
                   <div className="h-24 w-24 flex items-center justify-center mb-4">
                     <img 
@@ -43,7 +64,7 @@ const OrderDropdown = () => {
                   </Button>
                 </div>
 
-                {/* DoorDash */}
+                {/* DoorDash - Third Position */}
                 <div className="flex flex-col items-center">
                   <div className="h-24 w-24 flex items-center justify-center mb-4">
                     <img 
@@ -60,27 +81,6 @@ const OrderDropdown = () => {
                       Order on DoorDash
                     </a>
                   </Button>
-                </div>
-
-                {/* 5 Star Direct */}
-                <div className="flex flex-col items-center">
-                  <div className="h-24 w-24 flex items-center justify-center mb-4">
-                    <img 
-                      src="/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
-                      alt="5 Star Direct" 
-                      className="h-20 object-contain"
-                    />
-                  </div>
-                  <NavigationMenuLink asChild>
-                    <Button 
-                      asChild
-                      className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black"
-                    >
-                      <Link to="/order">
-                        Order Direct
-                      </Link>
-                    </Button>
-                  </NavigationMenuLink>
                 </div>
               </div>
             </div>

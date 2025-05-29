@@ -9,44 +9,22 @@ const CountdownTimer = ({
   className = ''
 }: CountdownTimerProps) => {
   const [timeLeft, setTimeLeft] = useState({
-    days: 0,
+    days: 7,
     hours: 0,
     minutes: 0,
     seconds: 0
   });
 
   useEffect(() => {
-    // Set end date to 2 weeks from the first visit
-    const savedEndDate = localStorage.getItem('countdownEndDate');
-    const endDate = savedEndDate ? new Date(parseInt(savedEndDate)) : new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
-
-    // Save the end date if it's not already saved
-    if (!savedEndDate) {
-      localStorage.setItem('countdownEndDate', endDate.getTime().toString());
-    }
-
-    const calculateTimeLeft = () => {
-      const difference = endDate.getTime() - new Date().getTime();
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor(difference / (1000 * 60 * 60) % 24),
-          minutes: Math.floor(difference / 1000 / 60 % 60),
-          seconds: Math.floor(difference / 1000 % 60)
-        });
-      } else {
-        setTimeLeft({
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0
-        });
-      }
+    // Static 7-day countdown that never changes
+    const staticTime = {
+      days: 7,
+      hours: 0,
+      minutes: 0,
+      seconds: 0
     };
 
-    calculateTimeLeft();
-    const timer = setInterval(calculateTimeLeft, 1000);
-    return () => clearInterval(timer);
+    setTimeLeft(staticTime);
   }, []);
 
   // For small screens or non-banner displays

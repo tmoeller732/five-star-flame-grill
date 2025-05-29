@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Button } from '@/components/ui/button';
+import CountdownTimer from '../components/CountdownTimer';
 
 const Order = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -44,7 +45,32 @@ const Order = () => {
           
           <div className={`max-w-4xl mx-auto mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '200ms' }}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* GrubHub Option */}
+              {/* Order Pickup - First Position */}
+              <div 
+                className={`bg-card p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 ${activeOption === 'pickup' ? 'scale-105 border-2 border-grill-gold' : 'hover:-translate-y-1'}`}
+                onMouseEnter={() => handleOptionHover('pickup')}
+                onMouseLeave={() => setActiveOption(null)}
+              >
+                <div className="h-32 flex items-center justify-center mb-6 relative">
+                  <img 
+                    src="/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
+                    alt="5 Star Direct" 
+                    className={`h-24 object-contain transition-all duration-300 ${activeOption === 'pickup' ? 'scale-110' : ''}`}
+                  />
+                </div>
+                <h3 className="text-xl text-center font-bold mb-3 text-grill-gold">Order Pickup</h3>
+                <p className="text-gray-300 text-sm mb-4 text-center">Order directly from us for the best experience and savings.</p>
+                <Button 
+                  asChild
+                  className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black"
+                >
+                  <Link to="/menu" className="flex items-center justify-center">
+                    Continue to Menu
+                  </Link>
+                </Button>
+              </div>
+
+              {/* GrubHub Option - Second Position */}
               <div 
                 className={`bg-card p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 ${activeOption === 'grubhub' ? 'scale-105 border-2 border-grill-gold' : 'hover:-translate-y-1'}`}
                 onMouseEnter={() => handleOptionHover('grubhub')}
@@ -67,9 +93,12 @@ const Order = () => {
                     Continue to GrubHub
                   </a>
                 </Button>
+                <div className="mt-4">
+                  <CountdownTimer className="inline-flex justify-center w-full" />
+                </div>
               </div>
 
-              {/* DoorDash Option */}
+              {/* DoorDash Option - Third Position */}
               <div 
                 className={`bg-card p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 ${activeOption === 'doordash' ? 'scale-105 border-2 border-grill-gold' : 'hover:-translate-y-1'}`}
                 onMouseEnter={() => handleOptionHover('doordash')}
@@ -92,33 +121,9 @@ const Order = () => {
                     Continue to DoorDash
                   </a>
                 </Button>
-              </div>
-
-              {/* 5 Star Direct Option */}
-              <div 
-                className={`bg-card p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 ${activeOption === 'direct' ? 'scale-105 border-2 border-grill-gold' : 'hover:-translate-y-1'}`}
-                onMouseEnter={() => handleOptionHover('direct')}
-                onMouseLeave={() => setActiveOption(null)}
-              >
-                <div className="h-32 flex items-center justify-center mb-6 relative">
-                  <img 
-                    src="/lovable-uploads/1769fc8b-f400-416e-ad38-c763a0dfa09a.png" 
-                    alt="5 Star Direct" 
-                    className={`h-24 object-contain transition-all duration-300 ${activeOption === 'direct' ? 'scale-110' : ''}`}
-                  />
+                <div className="mt-4">
+                  <CountdownTimer className="inline-flex justify-center w-full" />
                 </div>
-                <h3 className="text-xl text-center font-bold mb-3 text-grill-gold">Order Direct</h3>
-                <p className="text-gray-300 text-sm mb-4 text-center">Order directly from us for the best experience and savings.</p>
-                <Button 
-                  className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black"
-                  onClick={() => {
-                    document.getElementById('direct-ordering')?.scrollIntoView({ 
-                      behavior: 'smooth' 
-                    });
-                  }}
-                >
-                  Order Direct
-                </Button>
               </div>
             </div>
           </div>
