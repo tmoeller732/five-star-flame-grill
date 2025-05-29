@@ -1,7 +1,7 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Flame } from 'lucide-react';
+import { Menu, X, Flame, ShoppingCart, User } from 'lucide-react';
+import { useCart } from '../contexts/CartContext';
 import OrderDropdown from './OrderDropdown';
 import ScrollingBanner from './ScrollingBanner';
 
@@ -10,6 +10,7 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isHeroVisible, setIsHeroVisible] = useState(true);
   const location = useLocation();
+  const { getItemCount } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,6 +42,7 @@ const Header = () => {
   };
 
   const showLogo = !isHeroVisible || location.pathname !== '/';
+  const cartItemCount = getItemCount();
 
   return (
     <>
@@ -103,7 +105,7 @@ const Header = () => {
             </nav>
 
             {/* Right navigation items - spaced wider apart */}
-            <nav className="hidden md:flex space-x-10 ml-36 items-center">
+            <nav className="hidden md:flex space-x-6 ml-36 items-center">
               <div className="nav-item group">
                 <OrderDropdown />
               </div>
@@ -123,6 +125,27 @@ const Header = () => {
                   </span>
                 </div>
               </Link>
+              
+              {/* Cart Icon */}
+              <button className="nav-item group relative p-2">
+                <div className="relative">
+                  <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
+                  <ShoppingCart size={24} className="text-white hover:text-grill-gold transition-colors" />
+                  {cartItemCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-grill-gold text-grill-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                      {cartItemCount}
+                    </span>
+                  )}
+                </div>
+              </button>
+
+              {/* Account Icon */}
+              <button className="nav-item group p-2">
+                <div className="relative">
+                  <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
+                  <User size={24} className="text-white hover:text-grill-gold transition-colors" />
+                </div>
+              </button>
             </nav>
 
             {/* Mobile menu button */}
@@ -190,6 +213,24 @@ const Header = () => {
                 <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
                 Contact
               </Link>
+              
+              {/* Mobile Cart */}
+              <button 
+                className="font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded text-white flex items-center"
+                onClick={closeMobileMenu}
+              >
+                <ShoppingCart size={18} className="mr-2 text-grill-gold" />
+                Cart {cartItemCount > 0 && `(${cartItemCount})`}
+              </button>
+              
+              {/* Mobile Account */}
+              <button 
+                className="font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded text-white flex items-center"
+                onClick={closeMobileMenu}
+              >
+                <User size={18} className="mr-2 text-grill-gold" />
+                Account
+              </button>
             </nav>
           </div>
         )}
