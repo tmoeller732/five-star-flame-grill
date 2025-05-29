@@ -7,6 +7,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -15,6 +22,7 @@ import { useCart } from '../../contexts/CartContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from 'react-router-dom';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface CartDialogProps {
   children: React.ReactNode;
@@ -25,6 +33,7 @@ const CartDialog = ({ children }: CartDialogProps) => {
   const { user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   const handleQuantityChange = (itemId: string, newQuantity: number) => {
     if (newQuantity <= 0) {
@@ -70,6 +79,134 @@ const CartDialog = ({ children }: CartDialogProps) => {
     navigate('/checkout');
   };
 
+  const CartContent = () => (
+    <>
+      {state.items.length === 0 ? (
+        <div className="text-center py-8">
+          <ShoppingCart size={48} className="mx-auto text-gray-400 mb-4" />
+          <p className="text-gray-500">Your cart is empty</p>
+          <p className="text-sm text-gray-400 mt-2">Add some delicious items to get started!</p>
+        </div>
+      ) : (
+        <>
+          <ScrollArea className="max-h-96">
+            <div className="space-y-4">
+              {state.items.map((item) => (
+                <div key={item.id} className="flex items-start gap-3 p-3 border rounded-lg">
+                  <div className="flex-1">
+                    <h4 className="font-medium text-sm">{item.name}</h4>
+                    <p className="text-xs text-gray-500 mt-1">{item.description}</p>
+                    
+                    {/* Customizations */}
+                    {item.customizations.length > 0 && (
+                      <div className="mt-2">
+                        <p className="text-xs font-medium text-gray-600">Customizations:</p>
+                        <ul className="text-xs text-gray-500 ml-2">
+                          {item.customizations.map((customization, index) => (
+                            <li key={index}>
+                              • {customization.name} (+${customization.price.toFixed(2)})
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    
+                    <div className="flex items-center justify-between mt-3">
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                          className="h-8 w-8 p-0"
+                        >
+                          <Minus size={12} />
+                        </Button>
+                        <span className="text-sm font-medium w-8 text-center">{item.quantity}</span>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                          className="h-8 w-8 p-0"
+                        >
+                          <Plus size={12} />
+                        </Button>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-medium">${item.totalPrice.toFixed(2)}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleRemoveItem(item.id, item.name)}
+                    className="h-8 w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
+                  >
+                    <X size={14} />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </ScrollArea>
+          
+          <Separator />
+          
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <span className="font-medium">Total:</span>
+              <span className="font-bold text-lg">${getCartTotal().toFixed(2)}</span>
+            </div>
+            
+            {!user && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                <p className="text-sm text-yellow-800">
+                  Sign in to place your order and enjoy 5 Star Grill!
+                </p>
+              </div>
+            )}
+            
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={handleClearCart}
+                className="flex-1"
+              >
+                Clear Cart
+              </Button>
+              <Button 
+                onClick={handleCheckout}
+                className="flex-1 bg-grill-gold hover:bg-grill-orange text-grill-black"
+              >
+                {user ? 'Checkout' : 'Sign In to Order'}
+              </Button>
+            </div>
+          </div>
+        </>
+      )}
+    </>
+  );
+
+  if (isMobile) {
+    return (
+      <Sheet>
+        <SheetTrigger asChild>
+          {children}
+        </SheetTrigger>
+        <SheetContent side="right" className="w-full max-w-sm">
+          <SheetHeader>
+            <SheetTitle className="flex items-center gap-2">
+              <ShoppingCart size={20} />
+              Your Cart ({state.itemCount} items)
+            </SheetTitle>
+          </SheetHeader>
+          <div className="mt-4">
+            <CartContent />
+          </div>
+        </SheetContent>
+      </Sheet>
+    );
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -82,109 +219,7 @@ const CartDialog = ({ children }: CartDialogProps) => {
             Your Cart ({state.itemCount} items)
           </DialogTitle>
         </DialogHeader>
-        
-        {state.items.length === 0 ? (
-          <div className="text-center py-8">
-            <ShoppingCart size={48} className="mx-auto text-gray-400 mb-4" />
-            <p className="text-gray-500">Your cart is empty</p>
-            <p className="text-sm text-gray-400 mt-2">Add some delicious items to get started!</p>
-          </div>
-        ) : (
-          <>
-            <ScrollArea className="max-h-96">
-              <div className="space-y-4">
-                {state.items.map((item) => (
-                  <div key={item.id} className="flex items-start gap-3 p-3 border rounded-lg">
-                    <div className="flex-1">
-                      <h4 className="font-medium text-sm">{item.name}</h4>
-                      <p className="text-xs text-gray-500 mt-1">{item.description}</p>
-                      
-                      {/* Customizations */}
-                      {item.customizations.length > 0 && (
-                        <div className="mt-2">
-                          <p className="text-xs font-medium text-gray-600">Customizations:</p>
-                          <ul className="text-xs text-gray-500 ml-2">
-                            {item.customizations.map((customization, index) => (
-                              <li key={index}>
-                                • {customization.name} (+${customization.price.toFixed(2)})
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      
-                      <div className="flex items-center justify-between mt-3">
-                        <div className="flex items-center gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                            className="h-8 w-8 p-0"
-                          >
-                            <Minus size={12} />
-                          </Button>
-                          <span className="text-sm font-medium w-8 text-center">{item.quantity}</span>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                            className="h-8 w-8 p-0"
-                          >
-                            <Plus size={12} />
-                          </Button>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-sm font-medium">${item.totalPrice.toFixed(2)}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleRemoveItem(item.id, item.name)}
-                      className="h-8 w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
-                    >
-                      <X size={14} />
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            </ScrollArea>
-            
-            <Separator />
-            
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="font-medium">Total:</span>
-                <span className="font-bold text-lg">${getCartTotal().toFixed(2)}</span>
-              </div>
-              
-              {!user && (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                  <p className="text-sm text-yellow-800">
-                    Sign in to place your order and enjoy 5 Star Grill!
-                  </p>
-                </div>
-              )}
-              
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  onClick={handleClearCart}
-                  className="flex-1"
-                >
-                  Clear Cart
-                </Button>
-                <Button 
-                  onClick={handleCheckout}
-                  className="flex-1 bg-grill-gold hover:bg-grill-orange text-grill-black"
-                >
-                  {user ? 'Checkout' : 'Sign In to Order'}
-                </Button>
-              </div>
-            </div>
-          </>
-        )}
+        <CartContent />
       </DialogContent>
     </Dialog>
   );
