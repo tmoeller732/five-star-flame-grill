@@ -35,6 +35,8 @@ const CartDialog = ({ children }: CartDialogProps) => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
 
+  console.log('CartDialog - isMobile:', isMobile, 'cartItems:', state.items.length);
+
   const handleQuantityChange = (itemId: string, newQuantity: number) => {
     if (newQuantity <= 0) {
       removeItem(itemId);
@@ -80,7 +82,7 @@ const CartDialog = ({ children }: CartDialogProps) => {
   };
 
   const CartContent = () => (
-    <>
+    <div className="space-y-4">
       {state.items.length === 0 ? (
         <div className="text-center py-8">
           <ShoppingCart size={48} className="mx-auto text-gray-400 mb-4" />
@@ -183,10 +185,15 @@ const CartDialog = ({ children }: CartDialogProps) => {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 
-  if (isMobile) {
+  // Force mobile view to use Sheet for better debugging
+  const shouldUseMobileView = window.innerWidth < 768;
+
+  console.log('CartDialog - shouldUseMobileView:', shouldUseMobileView);
+
+  if (shouldUseMobileView) {
     return (
       <Sheet>
         <SheetTrigger asChild>
