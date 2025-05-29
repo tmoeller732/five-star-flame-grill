@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from '../contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet-async';
@@ -24,11 +25,36 @@ const Auth = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Check if user is admin and redirect accordingly
+  const checkAdminAndRedirect = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId)
+        .eq('role', 'admin')
+        .single();
+
+      if (data && !error) {
+        // User is admin, redirect to admin panel
+        navigate('/admin', { replace: true });
+      } else {
+        // Regular user, redirect to original destination or home
+        const from = location.state?.from?.pathname || '/';
+        navigate(from, { replace: true });
+      }
+    } catch (error) {
+      console.error('Error checking admin role:', error);
+      // Fallback to regular redirect
+      const from = location.state?.from?.pathname || '/';
+      navigate(from, { replace: true });
+    }
+  };
+
   // Redirect authenticated users
   useEffect(() => {
     if (user) {
-      const from = location.state?.from?.pathname || '/';
-      navigate(from, { replace: true });
+      checkAdminAndRedirect(user.id);
     }
   }, [user, navigate, location.state]);
 
@@ -50,6 +76,7 @@ const Auth = () => {
             title: "Welcome back!",
             description: "You have been successfully logged in.",
           });
+          // Note: Redirect will be handled by the useEffect above when user state updates
         }
       } else {
         if (!firstName || !lastName) {

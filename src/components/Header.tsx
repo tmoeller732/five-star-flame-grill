@@ -1,9 +1,10 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Flame, ShoppingCart, User } from 'lucide-react';
+import { Menu, X, Flame, ShoppingCart, User, Shield } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import OrderDropdown from './OrderDropdown';
 import ScrollingBanner from './ScrollingBanner';
 import CartDialog from './cart/CartDialog';
@@ -12,9 +13,38 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isHeroVisible, setIsHeroVisible] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const location = useLocation();
   const { getItemCount } = useCart();
   const { user } = useAuth();
+
+  // Check if user is admin
+  useEffect(() => {
+    if (user) {
+      checkAdminRole();
+    } else {
+      setIsAdmin(false);
+    }
+  }, [user]);
+
+  const checkAdminRole = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', user?.id)
+        .eq('role', 'admin')
+        .single();
+
+      if (data && !error) {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
+      }
+    } catch (error) {
+      setIsAdmin(false);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -130,6 +160,18 @@ const Header = () => {
                 </div>
               </Link>
               
+              {/* Admin Panel Link - only show for admin users */}
+              {isAdmin && (
+                <Link to="/admin" className="nav-item group">
+                  <div className="relative">
+                    <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
+                    <span className={`font-medium font-bold text-lg px-4 py-2 rounded transition-all duration-300 hover:text-grill-gold ${isActive('/admin') ? 'text-grill-gold' : 'text-white'}`}>
+                      Admin
+                    </span>
+                  </div>
+                </Link>
+              )}
+              
               {/* Cart Icon */}
               <CartDialog>
                 <button className="nav-item group relative p-2">
@@ -219,6 +261,18 @@ const Header = () => {
                 <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
                 Contact
               </Link>
+              
+              {/* Mobile Admin Link - only show for admin users */}
+              {isAdmin && (
+                <Link 
+                  to="/admin" 
+                  className={`font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded ${isActive('/admin') ? 'text-grill-gold' : 'text-white'} flex items-center`}
+                  onClick={closeMobileMenu}
+                >
+                  <Shield size={18} className="mr-2 text-grill-gold" />
+                  Admin Panel
+                </Link>
+              )}
               
               {/* Mobile Cart */}
               <CartDialog>
