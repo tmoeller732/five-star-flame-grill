@@ -28,7 +28,6 @@ const CartDialog = ({ children }: CartDialogProps) => {
   const isMobile = useIsMobile();
 
   console.log('CartDialog - isMobile:', isMobile, 'cartItems:', state.items.length);
-  console.log('CartDialog - rendering, isMobile:', isMobile);
 
   if (isMobile) {
     return (
@@ -36,14 +35,14 @@ const CartDialog = ({ children }: CartDialogProps) => {
         <SheetTrigger asChild>
           {children}
         </SheetTrigger>
-        <SheetContent side="right" className="w-full max-w-sm">
-          <SheetHeader>
+        <SheetContent side="right" className="w-full max-w-sm flex flex-col h-full">
+          <SheetHeader className="flex-shrink-0">
             <SheetTitle className="flex items-center gap-2">
               <ShoppingCart size={20} />
               Your Cart ({state.itemCount} items)
             </SheetTitle>
           </SheetHeader>
-          <div className="mt-4">
+          <div className="flex-1 min-h-0 mt-4">
             <CartContent />
           </div>
         </SheetContent>
@@ -56,14 +55,16 @@ const CartDialog = ({ children }: CartDialogProps) => {
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent className="max-w-md">
-        <DialogHeader>
+      <DialogContent className="max-w-md max-h-[80vh] flex flex-col">
+        <DialogHeader className="flex-shrink-0">
           <DialogTitle className="flex items-center gap-2">
             <ShoppingCart size={20} />
             Your Cart ({state.itemCount} items)
           </DialogTitle>
         </DialogHeader>
-        <CartContent />
+        <div className="flex-1 min-h-0">
+          <CartContent />
+        </div>
       </DialogContent>
     </Dialog>
   );

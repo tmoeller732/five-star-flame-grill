@@ -65,23 +65,25 @@ const CartContent = () => {
   }
 
   return (
-    <div className="space-y-4">
-      <ScrollArea className="max-h-96">
-        <div className="space-y-4">
-          {state.items.map((item) => (
-            <CartItem
-              key={item.id}
-              item={item}
-              onQuantityChange={handleQuantityChange}
-              onRemoveItem={handleRemoveItem}
-            />
-          ))}
-        </div>
-      </ScrollArea>
+    <div className="space-y-4 h-full flex flex-col">
+      <div className="flex-1 min-h-0">
+        <ScrollArea className="h-full max-h-[60vh] md:max-h-96">
+          <div className="space-y-4 pr-4">
+            {state.items.map((item) => (
+              <CartItem
+                key={item.id}
+                item={item}
+                onQuantityChange={handleQuantityChange}
+                onRemoveItem={handleRemoveItem}
+              />
+            ))}
+          </div>
+        </ScrollArea>
+      </div>
       
       <Separator />
       
-      <div className="space-y-4">
+      <div className="space-y-4 flex-shrink-0">
         <div className="flex justify-between items-center">
           <span className="font-medium">Total:</span>
           <span className="font-bold text-lg">${getCartTotal().toFixed(2)}</span>
