@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Flame, ShoppingCart, User, Shield } from 'lucide-react';
@@ -274,11 +273,10 @@ const Header = () => {
                 </Link>
               )}
               
-              {/* Mobile Cart */}
+              {/* Mobile Cart - Remove the onClick={closeMobileMenu} to prevent interference */}
               <CartDialog>
                 <button 
                   className="font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded text-white flex items-center"
-                  onClick={closeMobileMenu}
                 >
                   <ShoppingCart size={18} className="mr-2 text-grill-gold" />
                   Cart {cartItemCount > 0 && `(${cartItemCount})`}

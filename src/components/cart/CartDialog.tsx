@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   Dialog,
@@ -188,12 +187,9 @@ const CartDialog = ({ children }: CartDialogProps) => {
     </div>
   );
 
-  // Force mobile view to use Sheet for better debugging
-  const shouldUseMobileView = window.innerWidth < 768;
+  console.log('CartDialog - rendering, isMobile:', isMobile);
 
-  console.log('CartDialog - shouldUseMobileView:', shouldUseMobileView);
-
-  if (shouldUseMobileView) {
+  if (isMobile) {
     return (
       <Sheet>
         <SheetTrigger asChild>
