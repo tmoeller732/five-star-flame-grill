@@ -2,12 +2,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { Menu, X, Search, Clock } from 'lucide-react';
+import { Menu, X, Search, Clock, ShoppingCart } from 'lucide-react';
 import CartDialog from './cart/CartDialog';
 import OrderDropdown from './OrderDropdown';
+import { useCart } from '../contexts/CartContext';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { state } = useCart();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -55,7 +57,20 @@ const Header = () => {
 
           {/* Cart and Mobile Menu Button */}
           <div className="flex items-center space-x-4">
-            <CartDialog />
+            <CartDialog>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="relative text-white hover:text-grill-gold"
+              >
+                <ShoppingCart size={20} />
+                {state.itemCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-grill-gold text-grill-black text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {state.itemCount}
+                  </span>
+                )}
+              </Button>
+            </CartDialog>
             <Button
               variant="ghost"
               size="sm"
