@@ -13,6 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { ShoppingCart, Plus, Minus, X } from 'lucide-react';
 import { useCart } from '../../contexts/CartContext';
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from 'react-router-dom';
 
 interface CartDialogProps {
   children: React.ReactNode;
@@ -21,6 +22,7 @@ interface CartDialogProps {
 const CartDialog = ({ children }: CartDialogProps) => {
   const { state, updateQuantity, removeItem, clearCart, getCartTotal } = useCart();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleQuantityChange = (itemId: string, newQuantity: number) => {
     if (newQuantity <= 0) {
@@ -51,6 +53,10 @@ const CartDialog = ({ children }: CartDialogProps) => {
       description: "All items have been removed from your cart.",
       duration: 2000,
     });
+  };
+
+  const handleCheckout = () => {
+    navigate('/checkout');
   };
 
   return (
@@ -150,7 +156,10 @@ const CartDialog = ({ children }: CartDialogProps) => {
                 >
                   Clear Cart
                 </Button>
-                <Button className="flex-1 bg-grill-gold hover:bg-grill-orange text-grill-black">
+                <Button 
+                  onClick={handleCheckout}
+                  className="flex-1 bg-grill-gold hover:bg-grill-orange text-grill-black"
+                >
                   Checkout
                 </Button>
               </div>
