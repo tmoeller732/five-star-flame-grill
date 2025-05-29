@@ -7,7 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from '@/integrations/supabase/client';
-import { Search, Calendar, Filter } from 'lucide-react';
+import { Search, Calendar, Filter, Eye, Printer } from 'lucide-react';
+import OrderDetailsModal from './OrderDetailsModal';
 
 interface OrderWithCustomer {
   id: string;
@@ -17,6 +18,8 @@ interface OrderWithCustomer {
   status: string;
   created_at: string;
   special_instructions?: string;
+  customer_phone?: string;
+  pickup_time?: string;
   profiles: {
     first_name: string;
     last_name: string;
@@ -32,6 +35,8 @@ const OrdersManagement = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('all');
+  const [selectedOrder, setSelectedOrder] = useState<OrderWithCustomer | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -150,6 +155,111 @@ const OrdersManagement = () => {
         description: "Failed to update order status.",
         variant: "destructive"
       });
+    }
+  };
+
+  const handleViewOrder = (order: OrderWithCustomer) => {
+    setSelectedOrder(order);
+    setIsModalOpen(true);
+  };
+
+  const handleQuickPrint = (order: OrderWithCustomer) => {
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) return;
+
+    const printContent = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Order #${order.id.slice(0, 8)} - 5 Star Grill</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 20px; font-size: 12px; }
+            .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 15px; }
+            .section { margin-bottom: 15px; }
+            .item { border-bottom: 1px solid #eee; padding: 5px 0; }
+            .total { border-top: 2px solid #000; padding-top: 10px; font-weight: bold; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h2>5 Star Grill</h2>
+            <p>Order #${order.id.slice(0, 8)} - ${new Date(order.created_at).toLocaleString()}</p>
+          </div>
+          <div class="section">
+            <strong>Customer:</strong> ${order.profiles.first_name} ${order.profiles.last_name}<br>
+            <strong>Status:</strong> ${order.status.toUpperCase()}
+          </div>
+          <div class="section">
+            ${order.items.map(item => `
+              <div class="item">
+                ${item.name} (${item.quantity}) - $${item.totalPrice.toFixed(2)}
+                ${item.customizations && item.customizations.length > 0 ? `<br><small>+ ${item.customizations.join(', ')}</small>` : ''}
+              </div>
+            `).join('')}
+          </div>
+          <div class="total">
+            Total: $${order.grand_total.toFixed(2)}
+          </div>
+          ${order.special_instructions ? `<div class="section"><strong>Instructions:</strong> ${order.special_instructions}</div>` : ''}
+        </body>
+      </html>
+    `;
+
+    printWindow.document.write(printContent);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+
+    toast({
+      title: "Order Printed",
+      description: `Order #${order.id.slice(0, 8)} sent to printer.`,
+    });
+  };
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  useEffect(() => {
+    filterOrders();
+  }, [orders, searchTerm, statusFilter, dateFilter]);
+
+  const fetchOrders = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('orders')
+        .select(`
+          *,
+          profiles!inner(first_name, last_name, email, phone)
+        `)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      const convertedOrders: OrderWithCustomer[] = (data || []).map((order) => ({
+        id: order.id,
+        items: Array.isArray(order.items) ? order.items : [],
+        total: order.total,
+        grand_total: order.grand_total,
+        status: order.status || 'pending',
+        created_at: order.created_at || '',
+        special_instructions: order.special_instructions || undefined,
+        customer_phone: order.customer_phone || undefined,
+        pickup_time: order.pickup_time || undefined,
+        profiles: order.profiles
+      }));
+
+      setOrders(convertedOrders);
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch orders. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -277,20 +387,24 @@ const OrdersManagement = () => {
                     })}
                   </TableCell>
                   <TableCell>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="border-gray-600 text-white hover:bg-gray-700"
-                      onClick={() => {
-                        // TODO: Implement order details modal
-                        toast({
-                          title: "Order Details",
-                          description: "Order details view coming soon.",
-                        });
-                      }}
-                    >
-                      View
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="border-gray-600 text-white hover:bg-gray-700"
+                        onClick={() => handleViewOrder(order)}
+                      >
+                        <Eye className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="border-gray-600 text-white hover:bg-gray-700"
+                        onClick={() => handleQuickPrint(order)}
+                      >
+                        <Printer className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
@@ -298,6 +412,15 @@ const OrdersManagement = () => {
           </Table>
         </div>
       </Card>
+
+      <OrderDetailsModal
+        order={selectedOrder}
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedOrder(null);
+        }}
+      />
     </div>
   );
 };
