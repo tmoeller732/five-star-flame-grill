@@ -120,7 +120,7 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         from: 'onboarding@resend.dev', // Using Resend's verified domain
-        to: ['restaurant@5stargrill.com'], // Replace with actual restaurant email
+        to: ['5stargrillorders@gmail.com'], // Using the verified email from Resend account
         subject: `New Order #${order.id.slice(0, 8)} - 5 Star Grill`,
         html: emailHtml,
       }),
