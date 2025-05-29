@@ -35,7 +35,7 @@ const STATIC_MENU_IMAGES: Record<number, string> = {
   27: "/lovable-uploads/46218ea0-2d66-45c3-b931-42fbaa354636.png", // Philly Cheesesteak
   28: "/lovable-uploads/342c0916-b1ac-4740-ba82-0899133adca1.png", // Chicken Cheesesteak
   29: "/lovable-uploads/9fbae82d-8125-47d9-aaf0-71aeedd70e40.png", // California Cheesesteak
-  30: "/placeholder.svg", // Chicken Wings - no matching image
+  30: "/lovable-uploads/90796269-77d0-489e-bf63-94bff8bffb1d.png", // Chicken Wings
   31: "/placeholder.svg", // Chicken Nuggets - no matching image
   32: "/placeholder.svg", // Chicken Tenders & Fries - no matching image
   33: "/placeholder.svg", // Turkey & Cheese - no matching image
