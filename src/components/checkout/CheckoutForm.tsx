@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -64,6 +63,33 @@ const CheckoutForm = () => {
         .single();
 
       if (error) throw error;
+
+      console.log('Order created successfully:', orderData);
+
+      // Send email notification to restaurant
+      try {
+        const { data: emailData, error: emailError } = await supabase.functions.invoke('send-order-notification', {
+          body: {
+            order: orderData,
+            customerEmail: user.email
+          }
+        });
+
+        if (emailError) {
+          console.error('Email notification failed:', emailError);
+          // Don't fail the order if email fails, just log it
+          toast({
+            title: "Order Placed",
+            description: "Your order was placed successfully, but email notification failed.",
+            variant: "default"
+          });
+        } else {
+          console.log('Email notification sent:', emailData);
+        }
+      } catch (emailError) {
+        console.error('Email notification error:', emailError);
+        // Don't fail the order if email fails
+      }
 
       // Clear cart
       clearCart();
