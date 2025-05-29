@@ -16,9 +16,10 @@ interface ActiveOrderTimerProps {
 }
 
 const ActiveOrderTimer = ({ order }: ActiveOrderTimerProps) => {
+  // Updated with actual restaurant information
   const restaurantInfo = {
-    phone: '(555) 123-4567',
-    googleMapsUrl: 'https://maps.google.com/?q=123+Grill+Street+Food+City+FC+12345'
+    phone: '(856) 559-4938',
+    googleMapsUrl: 'https://maps.google.com/?q=1681+Lakewood+Rd+Toms+River+NJ+08755'
   };
 
   const handleGetDirections = () => {

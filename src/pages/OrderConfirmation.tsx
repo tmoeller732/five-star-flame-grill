@@ -14,11 +14,11 @@ const OrderConfirmation = () => {
   const { user } = useAuth();
   const order = location.state?.order;
 
-  // Restaurant details
+  // Restaurant details - updated with actual information
   const restaurantInfo = {
-    phone: '(555) 123-4567',
-    address: '123 Grill Street, Food City, FC 12345',
-    googleMapsUrl: 'https://maps.google.com/?q=123+Grill+Street+Food+City+FC+12345'
+    phone: '(856) 559-4938',
+    address: '1681 Lakewood Rd, Toms River, NJ 08755',
+    googleMapsUrl: 'https://maps.google.com/?q=1681+Lakewood+Rd+Toms+River+NJ+08755'
   };
 
   if (!user || !order) {
@@ -113,7 +113,7 @@ const OrderConfirmation = () => {
                 <h3 className="font-semibold text-grill-gold mb-3">Find Us Here</h3>
                 <div className="aspect-video rounded-lg overflow-hidden">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3048.4037!2d-122.4194!3d37.7749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDQ2JzI5LjYiTiAxMjLCsDI1JzA5LjgiVw!5e0!3m2!1sen!2sus!4v1234567890"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3048.4037143825745!2d-74.15986248460547!3d39.94123897942456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c17a1f5b2a8a8f%3A0x123456789abcdef!2s1681%20Lakewood%20Rd%2C%20Toms%20River%2C%20NJ%2008755!5e0!3m2!1sen!2sus!4v1234567890"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
