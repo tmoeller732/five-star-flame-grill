@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
@@ -105,10 +104,10 @@ const handler = async (req: Request): Promise<Response> => {
       </div>
     `;
 
-    // Send email notification to restaurant
+    // Send email notification to restaurant (using your Resend account email temporarily)
     const emailResponse = await resend.emails.send({
       from: "Order Notifications <onboarding@resend.dev>",
-      to: ["5stargrillorders@gmail.com"],
+      to: ["moesenterprises732@gmail.com"], // Using your verified Resend email temporarily
       subject: `New Order #${order.id.slice(0, 8)} - $${order.grand_total.toFixed(2)}`,
       html: emailHtml,
     });
