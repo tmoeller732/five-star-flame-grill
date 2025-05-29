@@ -10,7 +10,11 @@ import { useNavigate } from 'react-router-dom';
 import EmptyCart from './EmptyCart';
 import CartItem from './CartItem';
 
-const CartContent = () => {
+interface CartContentProps {
+  onClose?: () => void;
+}
+
+const CartContent = ({ onClose }: CartContentProps) => {
   const { state, updateQuantity, removeItem, clearCart, getCartTotal } = useCart();
   const { user } = useAuth();
   const { toast } = useToast();
@@ -49,11 +53,11 @@ const CartContent = () => {
 
   const handleCheckout = () => {
     if (!user) {
-      toast({
-        title: "Sign In Required",
-        description: "Please sign in to place your order.",
-        variant: "default"
-      });
+      // Close the cart dialog/sheet first
+      if (onClose) {
+        onClose();
+      }
+      // Navigate to auth page
       navigate('/auth');
       return;
     }

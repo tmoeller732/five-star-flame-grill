@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -26,12 +26,17 @@ interface CartDialogProps {
 const CartDialog = ({ children }: CartDialogProps) => {
   const { state } = useCart();
   const isMobile = useIsMobile();
+  const [isOpen, setIsOpen] = useState(false);
 
   console.log('CartDialog - isMobile:', isMobile, 'cartItems:', state.items.length);
 
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
   if (isMobile) {
     return (
-      <Sheet>
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger asChild>
           {children}
         </SheetTrigger>
@@ -43,7 +48,7 @@ const CartDialog = ({ children }: CartDialogProps) => {
             </SheetTitle>
           </SheetHeader>
           <div className="flex-1 min-h-0 mt-4">
-            <CartContent />
+            <CartContent onClose={handleClose} />
           </div>
         </SheetContent>
       </Sheet>
@@ -51,7 +56,7 @@ const CartDialog = ({ children }: CartDialogProps) => {
   }
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
@@ -63,7 +68,7 @@ const CartDialog = ({ children }: CartDialogProps) => {
           </DialogTitle>
         </DialogHeader>
         <div className="flex-1 min-h-0">
-          <CartContent />
+          <CartContent onClose={handleClose} />
         </div>
       </DialogContent>
     </Dialog>
