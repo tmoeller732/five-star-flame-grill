@@ -116,8 +116,8 @@ serve(async (req) => {
             border-bottom: 1px solid #000;
             padding-bottom: 3px;
             margin-bottom: 5px;
-            margin-top: 15px;
-            padding-top: 10px;
+            margin-top: 25px;
+            padding-top: 20px;
           }
           .header h1 {
             font-size: 14px;
