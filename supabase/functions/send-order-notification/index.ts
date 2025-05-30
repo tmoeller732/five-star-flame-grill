@@ -1,4 +1,5 @@
 
+
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
@@ -110,24 +111,24 @@ serve(async (req) => {
             margin: 0;
             padding: 0.1in;
             background-color: white;
-            font-size: 9px;
+            font-size: 18px;
           }
           .header {
             text-align: center;
             border-bottom: 1px solid #000;
             padding-bottom: 3px;
             margin-bottom: 5px;
-            margin-top: 40px;
+            margin-top: 75px;
             padding-top: 20px;
           }
           .header h1 {
-            font-size: 14px;
+            font-size: 28px;
             font-weight: bold;
             margin: 0;
             letter-spacing: 1px;
           }
           .header p {
-            font-size: 8px;
+            font-size: 16px;
             margin: 1px 0 0 0;
             font-weight: bold;
           }
@@ -137,7 +138,7 @@ serve(async (req) => {
             padding: 3px;
           }
           .order-info h2 {
-            font-size: 10px;
+            font-size: 20px;
             font-weight: bold;
             margin: 0 0 3px 0;
             text-decoration: underline;
@@ -146,7 +147,7 @@ serve(async (req) => {
             display: flex;
             justify-content: space-between;
             margin-bottom: 1px;
-            font-size: 8px;
+            font-size: 16px;
           }
           .info-label {
             font-weight: bold;
@@ -160,7 +161,7 @@ serve(async (req) => {
             margin-bottom: 5px;
           }
           .items-section h3 {
-            font-size: 10px;
+            font-size: 20px;
             font-weight: bold;
             margin: 0 0 3px 0;
             text-decoration: underline;
@@ -170,7 +171,7 @@ serve(async (req) => {
           .item {
             border-bottom: 1px dashed #000;
             padding: 2px 0;
-            font-size: 8px;
+            font-size: 16px;
           }
           .item:last-child {
             border-bottom: none;
@@ -185,11 +186,11 @@ serve(async (req) => {
             align-items: center;
           }
           .item-quantity {
-            font-size: 8px;
+            font-size: 16px;
           }
           .item-price {
             font-weight: bold;
-            font-size: 9px;
+            font-size: 18px;
           }
           .total-section {
             border: 2px solid #000;
@@ -201,11 +202,11 @@ serve(async (req) => {
           }
           .total-section h3 {
             margin: 0;
-            font-size: 9px;
+            font-size: 18px;
             font-weight: normal;
           }
           .total-amount {
-            font-size: 14px;
+            font-size: 28px;
             font-weight: bold;
             margin: 1px 0;
             letter-spacing: 1px;
@@ -217,19 +218,19 @@ serve(async (req) => {
             background-color: #f5f5f5;
           }
           .special-instructions h4 {
-            font-size: 9px;
+            font-size: 18px;
             font-weight: bold;
             margin: 0 0 2px 0;
             text-decoration: underline;
           }
           .special-instructions p {
-            font-size: 8px;
+            font-size: 16px;
             margin: 0;
             word-wrap: break-word;
           }
           .footer {
             text-align: center;
-            font-size: 7px;
+            font-size: 14px;
             margin-top: 5px;
             padding-top: 3px;
             border-top: 1px solid #000;
@@ -241,7 +242,7 @@ serve(async (req) => {
             border-top: 1px dashed #000;
             margin: 5px 0;
             text-align: center;
-            font-size: 6px;
+            font-size: 12px;
             color: #666;
           }
         </style>
@@ -364,3 +365,4 @@ serve(async (req) => {
     )
   }
 })
+
