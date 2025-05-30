@@ -1,3 +1,4 @@
+
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
@@ -89,7 +90,7 @@ serve(async (req) => {
       })
     }
 
-    // Prepare thermal printer optimized email content for 4x6 format
+    // Ultra-compact thermal printer optimized email content for single 4x6 page
     const emailHtml = `
       <!DOCTYPE html>
       <html>
@@ -98,52 +99,52 @@ serve(async (req) => {
           @media print {
             @page {
               size: 4in 6in;
-              margin: 0.25in;
+              margin: 0.1in;
             }
           }
           body {
             font-family: 'Courier New', monospace;
-            line-height: 1.2;
+            line-height: 1.0;
             color: #000;
-            width: 3.5in;
+            width: 3.8in;
             margin: 0;
-            padding: 0.25in;
+            padding: 0.1in;
             background-color: white;
-            font-size: 11px;
+            font-size: 9px;
           }
           .header {
             text-align: center;
-            border-bottom: 2px solid #000;
-            padding-bottom: 8px;
-            margin-bottom: 12px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 3px;
+            margin-bottom: 5px;
           }
           .header h1 {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             margin: 0;
             letter-spacing: 1px;
           }
           .header p {
-            font-size: 10px;
-            margin: 2px 0 0 0;
+            font-size: 8px;
+            margin: 1px 0 0 0;
             font-weight: bold;
           }
           .order-info {
-            margin-bottom: 12px;
+            margin-bottom: 5px;
             border: 1px solid #000;
-            padding: 8px;
+            padding: 3px;
           }
           .order-info h2 {
-            font-size: 12px;
+            font-size: 10px;
             font-weight: bold;
-            margin: 0 0 6px 0;
+            margin: 0 0 3px 0;
             text-decoration: underline;
           }
           .info-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 2px;
-            font-size: 10px;
+            margin-bottom: 1px;
+            font-size: 8px;
           }
           .info-label {
             font-weight: bold;
@@ -154,27 +155,27 @@ serve(async (req) => {
             word-wrap: break-word;
           }
           .items-section {
-            margin-bottom: 12px;
+            margin-bottom: 5px;
           }
           .items-section h3 {
-            font-size: 12px;
+            font-size: 10px;
             font-weight: bold;
-            margin: 0 0 6px 0;
+            margin: 0 0 3px 0;
             text-decoration: underline;
             border-bottom: 1px solid #000;
-            padding-bottom: 2px;
+            padding-bottom: 1px;
           }
           .item {
             border-bottom: 1px dashed #000;
-            padding: 4px 0;
-            font-size: 10px;
+            padding: 2px 0;
+            font-size: 8px;
           }
           .item:last-child {
             border-bottom: none;
           }
           .item-name {
             font-weight: bold;
-            margin-bottom: 2px;
+            margin-bottom: 1px;
           }
           .item-details {
             display: flex;
@@ -182,63 +183,63 @@ serve(async (req) => {
             align-items: center;
           }
           .item-quantity {
-            font-size: 9px;
+            font-size: 8px;
           }
           .item-price {
             font-weight: bold;
-            font-size: 11px;
+            font-size: 9px;
           }
           .total-section {
             border: 2px solid #000;
-            padding: 8px;
+            padding: 4px;
             text-align: center;
-            margin-bottom: 12px;
+            margin-bottom: 5px;
             background-color: #000;
             color: white;
           }
           .total-section h3 {
             margin: 0;
-            font-size: 11px;
+            font-size: 9px;
             font-weight: normal;
           }
           .total-amount {
-            font-size: 18px;
+            font-size: 14px;
             font-weight: bold;
-            margin: 2px 0;
+            margin: 1px 0;
             letter-spacing: 1px;
           }
           .special-instructions {
             border: 1px solid #000;
-            padding: 6px;
-            margin-bottom: 12px;
+            padding: 3px;
+            margin-bottom: 5px;
             background-color: #f5f5f5;
           }
           .special-instructions h4 {
-            font-size: 11px;
+            font-size: 9px;
             font-weight: bold;
-            margin: 0 0 4px 0;
+            margin: 0 0 2px 0;
             text-decoration: underline;
           }
           .special-instructions p {
-            font-size: 10px;
+            font-size: 8px;
             margin: 0;
             word-wrap: break-word;
           }
           .footer {
             text-align: center;
-            font-size: 9px;
-            margin-top: 12px;
-            padding-top: 8px;
+            font-size: 7px;
+            margin-top: 5px;
+            padding-top: 3px;
             border-top: 1px solid #000;
           }
           .footer p {
-            margin: 2px 0;
+            margin: 1px 0;
           }
           .cut-line {
             border-top: 1px dashed #000;
-            margin: 12px 0;
+            margin: 5px 0;
             text-align: center;
-            font-size: 8px;
+            font-size: 6px;
             color: #666;
           }
         </style>
@@ -289,22 +290,21 @@ serve(async (req) => {
         </div>
 
         <div class="total-section">
-          <h3>TOTAL AMOUNT</h3>
+          <h3>TOTAL</h3>
           <div class="total-amount">$${order.grand_total.toFixed(2)}</div>
         </div>
 
         ${order.special_instructions ? `
           <div class="special-instructions">
-            <h4>SPECIAL INSTRUCTIONS</h4>
+            <h4>INSTRUCTIONS</h4>
             <p>${sanitizeText(order.special_instructions)}</p>
           </div>
         ` : ''}
 
         <div class="footer">
           <p><strong>5 STAR GRILL</strong></p>
-          <p>1681 Lakewood Rd, Toms River, NJ 08755</p>
+          <p>1681 Lakewood Rd, Toms River, NJ</p>
           <p>(856) 559-4938</p>
-          <p>*** PREPARE FOR PICKUP ***</p>
         </div>
 
         <div class="cut-line">
