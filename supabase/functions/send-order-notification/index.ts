@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
@@ -90,219 +89,226 @@ serve(async (req) => {
       })
     }
 
-    // Prepare professional email content for full-size pages
+    // Prepare thermal printer optimized email content for 4x6 format
     const emailHtml = `
       <!DOCTYPE html>
       <html>
       <head>
         <style>
-          body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            background-color: #f8f9fa;
+          @media print {
+            @page {
+              size: 4in 6in;
+              margin: 0.25in;
+            }
           }
-          .container {
+          body {
+            font-family: 'Courier New', monospace;
+            line-height: 1.2;
+            color: #000;
+            width: 3.5in;
+            margin: 0;
+            padding: 0.25in;
             background-color: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-size: 11px;
           }
           .header {
             text-align: center;
-            border-bottom: 3px solid #d4af37;
-            padding-bottom: 30px;
-            margin-bottom: 40px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
           }
           .header h1 {
-            color: #d4af37;
-            font-size: 28px;
-            margin: 0;
+            font-size: 16px;
             font-weight: bold;
+            margin: 0;
+            letter-spacing: 1px;
           }
           .header p {
-            color: #666;
-            margin: 10px 0 0 0;
-            font-size: 16px;
+            font-size: 10px;
+            margin: 2px 0 0 0;
+            font-weight: bold;
           }
           .order-info {
-            background-color: #f8f9fa;
-            padding: 25px;
-            border-radius: 6px;
-            margin-bottom: 30px;
-            border-left: 4px solid #d4af37;
+            margin-bottom: 12px;
+            border: 1px solid #000;
+            padding: 8px;
           }
           .order-info h2 {
-            color: #333;
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 0 0 6px 0;
+            text-decoration: underline;
           }
-          .info-grid {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 15px 20px;
-            align-items: center;
-          }
-          .info-label {
-            font-weight: 600;
-            color: #555;
-          }
-          .info-value {
-            color: #333;
-          }
-          .items-section {
-            margin-bottom: 30px;
-          }
-          .items-section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 18px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-          }
-          .item {
+          .info-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 2px;
+            font-size: 10px;
+          }
+          .info-label {
+            font-weight: bold;
+          }
+          .info-value {
+            text-align: right;
+            max-width: 60%;
+            word-wrap: break-word;
+          }
+          .items-section {
+            margin-bottom: 12px;
+          }
+          .items-section h3 {
+            font-size: 12px;
+            font-weight: bold;
+            margin: 0 0 6px 0;
+            text-decoration: underline;
+            border-bottom: 1px solid #000;
+            padding-bottom: 2px;
+          }
+          .item {
+            border-bottom: 1px dashed #000;
+            padding: 4px 0;
+            font-size: 10px;
           }
           .item:last-child {
             border-bottom: none;
           }
-          .item-details {
-            flex: 1;
-          }
           .item-name {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 5px;
+            font-weight: bold;
+            margin-bottom: 2px;
+          }
+          .item-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
           }
           .item-quantity {
-            color: #666;
-            font-size: 14px;
+            font-size: 9px;
           }
           .item-price {
-            font-weight: 600;
-            color: #d4af37;
-            font-size: 16px;
+            font-weight: bold;
+            font-size: 11px;
           }
           .total-section {
-            background-color: #d4af37;
-            color: white;
-            padding: 20px;
-            border-radius: 6px;
+            border: 2px solid #000;
+            padding: 8px;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 12px;
+            background-color: #000;
+            color: white;
           }
           .total-section h3 {
             margin: 0;
-            font-size: 18px;
+            font-size: 11px;
             font-weight: normal;
           }
           .total-amount {
-            font-size: 24px;
+            font-size: 18px;
             font-weight: bold;
-            margin: 5px 0;
+            margin: 2px 0;
+            letter-spacing: 1px;
           }
           .special-instructions {
-            background-color: #fff3cd;
-            border: 1px solid #ffeaa7;
-            padding: 20px;
-            border-radius: 6px;
-            margin-bottom: 30px;
+            border: 1px solid #000;
+            padding: 6px;
+            margin-bottom: 12px;
+            background-color: #f5f5f5;
           }
           .special-instructions h4 {
-            color: #856404;
-            margin-top: 0;
-            margin-bottom: 10px;
+            font-size: 11px;
+            font-weight: bold;
+            margin: 0 0 4px 0;
+            text-decoration: underline;
           }
           .special-instructions p {
-            color: #856404;
+            font-size: 10px;
             margin: 0;
+            word-wrap: break-word;
           }
           .footer {
             text-align: center;
-            color: #666;
-            font-size: 14px;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid #eee;
+            font-size: 9px;
+            margin-top: 12px;
+            padding-top: 8px;
+            border-top: 1px solid #000;
           }
-          @media print {
-            body {
-              background-color: white;
-              padding: 0;
-            }
-            .container {
-              box-shadow: none;
-              padding: 20px;
-            }
+          .footer p {
+            margin: 2px 0;
+          }
+          .cut-line {
+            border-top: 1px dashed #000;
+            margin: 12px 0;
+            text-align: center;
+            font-size: 8px;
+            color: #666;
           }
         </style>
       </head>
       <body>
-        <div class="container">
-          <div class="header">
-            <h1>5 Star Grill</h1>
-            <p>New Order Received</p>
-          </div>
+        <div class="header">
+          <h1>5 STAR GRILL</h1>
+          <p>*** NEW ORDER ***</p>
+        </div>
 
-          <div class="order-info">
-            <h2>Order Information</h2>
-            <div class="info-grid">
-              <span class="info-label">Order ID:</span>
-              <span class="info-value">#${sanitizeText(order.id.slice(0, 8))}</span>
-              
-              <span class="info-label">Customer Email:</span>
-              <span class="info-value">${sanitizeText(customerEmail)}</span>
-              
-              ${order.customer_phone ? `
-                <span class="info-label">Customer Phone:</span>
-                <span class="info-value">${sanitizeText(order.customer_phone)}</span>
-              ` : ''}
-              
-              <span class="info-label">Status:</span>
-              <span class="info-value">${sanitizeText(order.status.charAt(0).toUpperCase() + order.status.slice(1))}</span>
-              
-              <span class="info-label">Order Date:</span>
-              <span class="info-value">${new Date(order.created_at).toLocaleString()}</span>
-            </div>
+        <div class="order-info">
+          <h2>ORDER DETAILS</h2>
+          <div class="info-row">
+            <span class="info-label">Order #:</span>
+            <span class="info-value">${sanitizeText(order.id.slice(0, 8))}</span>
           </div>
-
-          <div class="items-section">
-            <h3>Order Items</h3>
-            ${order.items.map((item: any) => `
-              <div class="item">
-                <div class="item-details">
-                  <div class="item-name">${sanitizeText(item.name)}</div>
-                  <div class="item-quantity">Quantity: ${item.quantity}</div>
-                </div>
-                <div class="item-price">$${item.totalPrice.toFixed(2)}</div>
-              </div>
-            `).join('')}
+          <div class="info-row">
+            <span class="info-label">Customer:</span>
+            <span class="info-value">${sanitizeText(customerEmail)}</span>
           </div>
-
-          <div class="total-section">
-            <h3>Total Amount</h3>
-            <div class="total-amount">$${order.grand_total.toFixed(2)}</div>
-          </div>
-
-          ${order.special_instructions ? `
-            <div class="special-instructions">
-              <h4>Special Instructions</h4>
-              <p>${sanitizeText(order.special_instructions)}</p>
+          ${order.customer_phone ? `
+            <div class="info-row">
+              <span class="info-label">Phone:</span>
+              <span class="info-value">${sanitizeText(order.customer_phone)}</span>
             </div>
           ` : ''}
-
-          <div class="footer">
-            <p>Please prepare this order for pickup as soon as possible.</p>
-            <p><strong>5 Star Grill</strong> | 1681 Lakewood Rd, Toms River, NJ 08755 | (856) 559-4938</p>
+          <div class="info-row">
+            <span class="info-label">Status:</span>
+            <span class="info-value">${sanitizeText(order.status.charAt(0).toUpperCase() + order.status.slice(1))}</span>
           </div>
+          <div class="info-row">
+            <span class="info-label">Time:</span>
+            <span class="info-value">${new Date(order.created_at).toLocaleString()}</span>
+          </div>
+        </div>
+
+        <div class="items-section">
+          <h3>ITEMS ORDERED</h3>
+          ${order.items.map((item: any) => `
+            <div class="item">
+              <div class="item-name">${sanitizeText(item.name)}</div>
+              <div class="item-details">
+                <span class="item-quantity">Qty: ${item.quantity}</span>
+                <span class="item-price">$${item.totalPrice.toFixed(2)}</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div class="total-section">
+          <h3>TOTAL AMOUNT</h3>
+          <div class="total-amount">$${order.grand_total.toFixed(2)}</div>
+        </div>
+
+        ${order.special_instructions ? `
+          <div class="special-instructions">
+            <h4>SPECIAL INSTRUCTIONS</h4>
+            <p>${sanitizeText(order.special_instructions)}</p>
+          </div>
+        ` : ''}
+
+        <div class="footer">
+          <p><strong>5 STAR GRILL</strong></p>
+          <p>1681 Lakewood Rd, Toms River, NJ 08755</p>
+          <p>(856) 559-4938</p>
+          <p>*** PREPARE FOR PICKUP ***</p>
+        </div>
+
+        <div class="cut-line">
+          ✂ - - - - - - - - - - - - - - - - - - - ✂
         </div>
       </body>
       </html>
