@@ -1,5 +1,3 @@
-
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
@@ -192,24 +190,35 @@ serve(async (req) => {
             font-weight: bold;
             font-size: 18px;
           }
-          .total-section {
-            border: 2px solid #000;
+          .totals-section {
+            border: 1px solid #000;
             padding: 4px;
-            text-align: center;
             margin-bottom: 5px;
-            background-color: #000;
-            color: white;
           }
-          .total-section h3 {
-            margin: 0;
+          .totals-section h3 {
+            margin: 0 0 3px 0;
             font-size: 18px;
+            font-weight: bold;
+            text-decoration: underline;
+          }
+          .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2px;
+            font-size: 16px;
+          }
+          .total-row.subtotal {
             font-weight: normal;
           }
-          .total-amount {
-            font-size: 28px;
+          .total-row.tax {
+            font-weight: normal;
+          }
+          .total-row.grand-total {
             font-weight: bold;
-            margin: 1px 0;
-            letter-spacing: 1px;
+            font-size: 20px;
+            border-top: 1px solid #000;
+            padding-top: 2px;
+            margin-top: 3px;
           }
           .special-instructions {
             border: 1px solid #000;
@@ -292,9 +301,20 @@ serve(async (req) => {
           `).join('')}
         </div>
 
-        <div class="total-section">
-          <h3>TOTAL</h3>
-          <div class="total-amount">$${order.grand_total.toFixed(2)}</div>
+        <div class="totals-section">
+          <h3>ORDER TOTAL</h3>
+          <div class="total-row subtotal">
+            <span>Subtotal:</span>
+            <span>$${order.total.toFixed(2)}</span>
+          </div>
+          <div class="total-row tax">
+            <span>Tax (6.625%):</span>
+            <span>$${order.tax_amount.toFixed(2)}</span>
+          </div>
+          <div class="total-row grand-total">
+            <span>GRAND TOTAL:</span>
+            <span>$${order.grand_total.toFixed(2)}</span>
+          </div>
         </div>
 
         ${order.special_instructions ? `
@@ -365,4 +385,3 @@ serve(async (req) => {
     )
   }
 })
-

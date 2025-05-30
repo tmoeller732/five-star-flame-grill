@@ -50,13 +50,13 @@ const OrderSummary = () => {
           <span>${state.total.toFixed(2)}</span>
         </div>
         <div className="flex justify-between text-white">
-          <span>Tax (8.5%):</span>
-          <span>${(state.total * 0.085).toFixed(2)}</span>
+          <span>Tax (6.625%):</span>
+          <span>${(state.total * 0.06625).toFixed(2)}</span>
         </div>
         <Separator className="my-2 bg-gray-600" />
         <div className="flex justify-between text-lg font-bold text-grill-gold">
           <span>Total:</span>
-          <span>${(state.total * 1.085).toFixed(2)}</span>
+          <span>${(state.total * 1.06625).toFixed(2)}</span>
         </div>
       </div>
 

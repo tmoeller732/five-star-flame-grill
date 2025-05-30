@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -46,7 +47,7 @@ const CheckoutForm = () => {
     setIsSubmitting(true);
 
     try {
-      const taxAmount = state.total * 0.085;
+      const taxAmount = state.total * 0.06625; // NJ sales tax rate 6.625%
       const grandTotal = state.total + taxAmount;
       const waitMinutes = calculateWaitTime(grandTotal);
       const pickupTime = new Date(Date.now() + waitMinutes * 60000);
@@ -170,10 +171,10 @@ const CheckoutForm = () => {
         <div className="bg-gray-800 p-4 rounded-lg border border-gray-600">
           <h3 className="font-semibold text-grill-gold mb-2">Estimated Wait Time</h3>
           <p className="text-grill-gold text-lg font-semibold">
-            {calculateWaitTime(state.total + (state.total * 0.085))} minutes
+            {calculateWaitTime(state.total + (state.total * 0.06625))} minutes
           </p>
           <p className="text-gray-300 text-sm mt-1">
-            Based on your order total of ${(state.total + (state.total * 0.085)).toFixed(2)}
+            Based on your order total of ${(state.total + (state.total * 0.06625)).toFixed(2)}
           </p>
         </div>
 
