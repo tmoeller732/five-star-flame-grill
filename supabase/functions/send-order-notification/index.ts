@@ -109,24 +109,24 @@ serve(async (req) => {
             margin: 0;
             padding: 0.1in;
             background-color: white;
-            font-size: 18px;
+            font-size: 11px;
           }
           .header {
             text-align: center;
             border-bottom: 1px solid #000;
             padding-bottom: 3px;
             margin-bottom: 5px;
-            margin-top: 75px;
+            margin-top: 25px;
             padding-top: 20px;
           }
           .header h1 {
-            font-size: 28px;
+            font-size: 17px;
             font-weight: bold;
             margin: 0;
             letter-spacing: 1px;
           }
           .header p {
-            font-size: 16px;
+            font-size: 10px;
             margin: 1px 0 0 0;
             font-weight: bold;
           }
@@ -136,7 +136,7 @@ serve(async (req) => {
             padding: 3px;
           }
           .order-info h2 {
-            font-size: 20px;
+            font-size: 12px;
             font-weight: bold;
             margin: 0 0 3px 0;
             text-decoration: underline;
@@ -145,7 +145,7 @@ serve(async (req) => {
             display: flex;
             justify-content: space-between;
             margin-bottom: 1px;
-            font-size: 16px;
+            font-size: 10px;
           }
           .info-label {
             font-weight: bold;
@@ -159,7 +159,7 @@ serve(async (req) => {
             margin-bottom: 5px;
           }
           .items-section h3 {
-            font-size: 20px;
+            font-size: 12px;
             font-weight: bold;
             margin: 0 0 3px 0;
             text-decoration: underline;
@@ -169,7 +169,7 @@ serve(async (req) => {
           .item {
             border-bottom: 1px dashed #000;
             padding: 2px 0;
-            font-size: 16px;
+            font-size: 10px;
           }
           .item:last-child {
             border-bottom: none;
@@ -184,11 +184,11 @@ serve(async (req) => {
             align-items: center;
           }
           .item-quantity {
-            font-size: 16px;
+            font-size: 10px;
           }
           .item-price {
             font-weight: bold;
-            font-size: 18px;
+            font-size: 11px;
           }
           .totals-section {
             border: 1px solid #000;
@@ -197,7 +197,7 @@ serve(async (req) => {
           }
           .totals-section h3 {
             margin: 0 0 3px 0;
-            font-size: 18px;
+            font-size: 11px;
             font-weight: bold;
             text-decoration: underline;
           }
@@ -205,7 +205,7 @@ serve(async (req) => {
             display: flex;
             justify-content: space-between;
             margin-bottom: 2px;
-            font-size: 16px;
+            font-size: 10px;
           }
           .total-row.subtotal {
             font-weight: normal;
@@ -215,7 +215,7 @@ serve(async (req) => {
           }
           .total-row.grand-total {
             font-weight: bold;
-            font-size: 20px;
+            font-size: 12px;
             border-top: 1px solid #000;
             padding-top: 2px;
             margin-top: 3px;
@@ -227,19 +227,19 @@ serve(async (req) => {
             background-color: #f5f5f5;
           }
           .special-instructions h4 {
-            font-size: 18px;
+            font-size: 11px;
             font-weight: bold;
             margin: 0 0 2px 0;
             text-decoration: underline;
           }
           .special-instructions p {
-            font-size: 16px;
+            font-size: 10px;
             margin: 0;
             word-wrap: break-word;
           }
           .footer {
             text-align: center;
-            font-size: 14px;
+            font-size: 8px;
             margin-top: 5px;
             padding-top: 3px;
             border-top: 1px solid #000;
@@ -251,7 +251,7 @@ serve(async (req) => {
             border-top: 1px dashed #000;
             margin: 5px 0;
             text-align: center;
-            font-size: 12px;
+            font-size: 7px;
             color: #666;
           }
         </style>
