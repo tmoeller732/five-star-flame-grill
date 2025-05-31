@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { Card } from "@/components/ui/card";
@@ -8,10 +7,12 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from '../contexts/AuthContext';
+import { useCart } from '../contexts/CartContext';
 import { supabase } from '@/integrations/supabase/client';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet-async';
+import { RotateCcw } from 'lucide-react';
 import type { Database } from '@/integrations/supabase/types';
 
 interface Profile {
@@ -36,6 +37,7 @@ interface Order {
 
 const Account = () => {
   const { user, signOut, updateProfile, loading: authLoading } = useAuth();
+  const { addItem } = useCart();
   const { toast } = useToast();
   
   const [profile, setProfile] = useState<Profile>({
@@ -122,6 +124,37 @@ const Account = () => {
       setOrders(convertedOrders);
     } catch (error) {
       console.error('Error fetching orders:', error);
+    }
+  };
+
+  const handleReorder = async (order: Order) => {
+    try {
+      // Add each item from the order back to the cart
+      order.items.forEach((item: any) => {
+        const cartItem = {
+          menuItemId: item.menuItemId || item.id,
+          name: item.name,
+          description: item.description || '',
+          basePrice: item.basePrice || item.price || 0,
+          quantity: item.quantity || 1,
+          customizations: item.customizations || [],
+          category: item.category || 'lunch' as const
+        };
+        
+        addItem(cartItem);
+      });
+
+      toast({
+        title: "Items Added to Cart",
+        description: `${order.items.length} item(s) from order #${order.id.slice(0, 8)} have been added to your cart.`,
+      });
+    } catch (error) {
+      console.error('Error reordering:', error);
+      toast({
+        title: "Reorder Failed",
+        description: "There was an error adding items to your cart. Please try again.",
+        variant: "destructive"
+      });
     }
   };
 
@@ -301,14 +334,23 @@ const Account = () => {
                             </span>
                           </div>
                         </div>
-                        <div className="text-sm text-gray-400">
+                        <div className="text-sm text-gray-400 mb-3">
                           {order.items.length} item{order.items.length !== 1 ? 's' : ''}
                         </div>
                         {order.special_instructions && (
-                          <div className="text-sm text-gray-400 mt-1">
+                          <div className="text-sm text-gray-400 mb-3">
                             Note: {order.special_instructions}
                           </div>
                         )}
+                        <Button
+                          onClick={() => handleReorder(order)}
+                          variant="outline"
+                          size="sm"
+                          className="w-full border-grill-gold text-grill-gold hover:bg-grill-gold hover:text-grill-black"
+                        >
+                          <RotateCcw className="w-4 h-4 mr-2" />
+                          Reorder
+                        </Button>
                       </div>
                     ))}
                   </div>

@@ -95,6 +95,36 @@ export type Database = {
         }
         Relationships: []
       }
+      user_favorite_orders: {
+        Row: {
+          created_at: string
+          id: string
+          items: Json
+          order_name: string
+          total: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          items: Json
+          order_name: string
+          total: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          items?: Json
+          order_name?: string
+          total?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null
@@ -113,6 +143,33 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      user_viewed_items: {
+        Row: {
+          id: string
+          menu_item_data: Json
+          menu_item_id: number
+          menu_item_name: string
+          user_id: string
+          viewed_at: string
+        }
+        Insert: {
+          id?: string
+          menu_item_data: Json
+          menu_item_id: number
+          menu_item_name: string
+          user_id: string
+          viewed_at?: string
+        }
+        Update: {
+          id?: string
+          menu_item_data?: Json
+          menu_item_id?: number
+          menu_item_name?: string
+          user_id?: string
+          viewed_at?: string
         }
         Relationships: []
       }
