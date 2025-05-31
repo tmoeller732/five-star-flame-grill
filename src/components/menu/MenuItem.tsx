@@ -4,11 +4,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
-import { Link } from 'react-router-dom';
 import { cn } from "@/lib/utils";
-import { CheckCircle2, AlertTriangle } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, ShoppingCart, Plus } from 'lucide-react';
 import ItemCustomizationModal from './ItemCustomizationModal';
 import { useTrackViewedItem } from '../../hooks/useViewedItems';
+import { useCart } from '../../contexts/CartContext';
+import { useToast } from "@/hooks/use-toast";
 
 export interface MenuItemProps {
   id: number;
@@ -39,6 +40,8 @@ const MenuItem: React.FC<MenuItemComponentProps> = ({ item }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(item.imageUrl || item.image);
   const { trackViewedItem } = useTrackViewedItem();
+  const { addItem } = useCart();
+  const { toast } = useToast();
 
   useEffect(() => {
     // Use imageUrl if available, otherwise fall back to image
@@ -46,20 +49,54 @@ const MenuItem: React.FC<MenuItemComponentProps> = ({ item }) => {
     const img = new Image();
     img.src = imageToUse;
     img.onload = () => setSelectedImage(imageToUse);
-    img.onerror = () => setSelectedImage("/placeholder.svg"); // Fallback image
+    img.onerror = () => setSelectedImage("/placeholder.svg");
   }, [item.image, item.imageUrl]);
 
-  const handleItemClick = async () => {
-    // Track that the user viewed this item
+  const handleItemClick = async (e: React.MouseEvent) => {
+    // Prevent modal from opening if clicking on buttons
+    if ((e.target as HTMLElement).closest('button')) {
+      return;
+    }
+    
     await trackViewedItem(item);
     setIsModalOpen(true);
+  };
+
+  const handleQuickAdd = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    
+    if (!item.isAvailable) return;
+    
+    // If item has customizations, open modal instead
+    if (item.customizations && item.customizations.length > 0) {
+      await trackViewedItem(item);
+      setIsModalOpen(true);
+      return;
+    }
+    
+    // Quick add without customizations
+    const cartItem = {
+      menuItemId: item.id,
+      name: item.name,
+      description: item.description,
+      basePrice: item.price,
+      quantity: 1,
+      customizations: [],
+      category: item.category as 'breakfast' | 'lunch' | 'bowls'
+    };
+    
+    addItem(cartItem);
+    toast({
+      title: "Added to cart",
+      description: `${item.name} has been added to your cart.`,
+      duration: 2000,
+    });
   };
 
   const handleImageError = () => {
     setSelectedImage("/placeholder.svg");
   };
 
-  // Default to available if isAvailable is not specified
   const isAvailable = item.isAvailable !== false;
 
   return (
@@ -103,9 +140,24 @@ const MenuItem: React.FC<MenuItemComponentProps> = ({ item }) => {
               </Badge>
             )}
           </div>
-          {isAvailable && (
-            <CheckCircle2 className="text-green-500 opacity-0 group-hover:opacity-100 transition-opacity ml-auto" />
-          )}
+          <Button
+            onClick={handleQuickAdd}
+            disabled={!isAvailable}
+            size="sm"
+            className="bg-grill-gold hover:bg-grill-orange text-grill-black"
+          >
+            {item.customizations && item.customizations.length > 0 ? (
+              <>
+                <Plus className="h-4 w-4 mr-1" />
+                Customize
+              </>
+            ) : (
+              <>
+                <ShoppingCart className="h-4 w-4 mr-1" />
+                Add to Cart
+              </>
+            )}
+          </Button>
         </CardFooter>
       </Card>
 

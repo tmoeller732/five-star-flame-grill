@@ -7,6 +7,7 @@ import { Minus, Plus, ShoppingCart } from 'lucide-react';
 import { MenuItemProps } from './MenuItem';
 import { useCart } from '../../contexts/CartContext';
 import { CartItem } from '../../types/cart';
+import { useToast } from "@/hooks/use-toast";
 
 interface ItemCustomizationModalProps {
   item: MenuItemProps;
@@ -27,6 +28,7 @@ const ItemCustomizationModal: React.FC<ItemCustomizationModalProps> = ({
     category: string;
   }>>([]);
   const { addItem } = useCart();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (open) {
@@ -79,6 +81,11 @@ const ItemCustomizationModal: React.FC<ItemCustomizationModalProps> = ({
     };
 
     addItem(cartItem);
+    toast({
+      title: "Added to cart",
+      description: `${item.name} has been added to your cart.`,
+      duration: 2000,
+    });
     onOpenChange(false);
   };
 
