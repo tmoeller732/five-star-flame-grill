@@ -10,7 +10,27 @@ export const MENU_ITEMS: MenuItemProps[] = [
     price: 5.99, 
     image: "", 
     category: "breakfast",
-    isAvailable: true
+    isAvailable: true,
+    customizations: [
+      {
+        id: 1,
+        name: "Bread Choice",
+        options: [
+          { id: 1, name: "Roll", price: 0 },
+          { id: 2, name: "Croissant", price: 0.50 },
+          { id: 3, name: "Bagel", price: 0.25 }
+        ]
+      },
+      {
+        id: 2,
+        name: "Add Extras",
+        options: [
+          { id: 4, name: "Extra Cheese", price: 1.00 },
+          { id: 5, name: "Avocado", price: 1.99 },
+          { id: 6, name: "Hash Brown", price: 1.50 }
+        ]
+      }
+    ]
   },
   { 
     id: 2, 
@@ -20,7 +40,27 @@ export const MENU_ITEMS: MenuItemProps[] = [
     image: "", 
     category: "breakfast",
     popular: true,
-    isAvailable: true
+    isAvailable: true,
+    customizations: [
+      {
+        id: 1,
+        name: "Meat Choice",
+        options: [
+          { id: 1, name: "Bacon", price: 0 },
+          { id: 2, name: "Turkey Bacon", price: 0 },
+          { id: 3, name: "Sausage", price: 0 }
+        ]
+      },
+      {
+        id: 2,
+        name: "Bread Choice",
+        options: [
+          { id: 4, name: "Roll", price: 0 },
+          { id: 5, name: "Croissant", price: 0.50 },
+          { id: 6, name: "Bagel", price: 0.25 }
+        ]
+      }
+    ]
   },
   { 
     id: 3, 
@@ -48,7 +88,28 @@ export const MENU_ITEMS: MenuItemProps[] = [
     price: 7.99, 
     image: "", 
     category: "breakfast",
-    isAvailable: true
+    isAvailable: true,
+    customizations: [
+      {
+        id: 1,
+        name: "Egg Style",
+        options: [
+          { id: 1, name: "Scrambled", price: 0 },
+          { id: 2, name: "Over Easy", price: 0 },
+          { id: 3, name: "Over Medium", price: 0 },
+          { id: 4, name: "Over Hard", price: 0 }
+        ]
+      },
+      {
+        id: 2,
+        name: "Toast Choice",
+        options: [
+          { id: 5, name: "White", price: 0 },
+          { id: 6, name: "Wheat", price: 0 },
+          { id: 7, name: "Rye", price: 0 }
+        ]
+      }
+    ]
   },
   { 
     id: 6, 
@@ -123,7 +184,28 @@ export const MENU_ITEMS: MenuItemProps[] = [
     image: "", 
     category: "lunch",
     popular: true,
-    isAvailable: true
+    isAvailable: true,
+    customizations: [
+      {
+        id: 1,
+        name: "Spice Level",
+        options: [
+          { id: 1, name: "Mild", price: 0 },
+          { id: 2, name: "Medium", price: 0 },
+          { id: 3, name: "Hot", price: 0 },
+          { id: 4, name: "Extra Hot", price: 0 }
+        ]
+      },
+      {
+        id: 2,
+        name: "Add Extras",
+        options: [
+          { id: 5, name: "Extra Chorizo", price: 2.99 },
+          { id: 6, name: "Guacamole", price: 1.99 },
+          { id: 7, name: "Sour Cream", price: 0.99 }
+        ]
+      }
+    ]
   },
   { 
     id: 14, 
@@ -178,7 +260,29 @@ export const MENU_ITEMS: MenuItemProps[] = [
     image: "", 
     category: "lunch",
     popular: true,
-    isAvailable: true
+    isAvailable: true,
+    customizations: [
+      {
+        id: 1,
+        name: "Cooking Style",
+        options: [
+          { id: 1, name: "Medium Rare", price: 0 },
+          { id: 2, name: "Medium", price: 0 },
+          { id: 3, name: "Medium Well", price: 0 },
+          { id: 4, name: "Well Done", price: 0 }
+        ]
+      },
+      {
+        id: 2,
+        name: "Add Toppings",
+        options: [
+          { id: 5, name: "Bacon", price: 2.99 },
+          { id: 6, name: "Avocado", price: 1.99 },
+          { id: 7, name: "Extra Cheese", price: 1.50 },
+          { id: 8, name: "Mushrooms", price: 1.00 }
+        ]
+      }
+    ]
   },
   { 
     id: 20, 
@@ -196,7 +300,27 @@ export const MENU_ITEMS: MenuItemProps[] = [
     price: 11.99, 
     image: "", 
     category: "lunch",
-    isAvailable: true
+    isAvailable: true,
+    customizations: [
+      {
+        id: 1,
+        name: "Cooking Style",
+        options: [
+          { id: 1, name: "Grilled", price: 0 },
+          { id: 2, name: "Fried", price: 0 }
+        ]
+      },
+      {
+        id: 2,
+        name: "Sauce",
+        options: [
+          { id: 3, name: "Mayo", price: 0 },
+          { id: 4, name: "Buffalo", price: 0 },
+          { id: 5, name: "BBQ", price: 0 },
+          { id: 6, name: "Ranch", price: 0 }
+        ]
+      }
+    ]
   },
   { 
     id: 22, 
@@ -277,7 +401,29 @@ export const MENU_ITEMS: MenuItemProps[] = [
     price: 8.99, 
     image: "", 
     category: "lunch",
-    isAvailable: true
+    isAvailable: true,
+    customizations: [
+      {
+        id: 1,
+        name: "Sauce Choice",
+        options: [
+          { id: 1, name: "Buffalo", price: 0 },
+          { id: 2, name: "BBQ", price: 0 },
+          { id: 3, name: "Honey Mustard", price: 0 },
+          { id: 4, name: "Teriyaki", price: 0 },
+          { id: 5, name: "Extra Hot", price: 0 }
+        ]
+      },
+      {
+        id: 2,
+        name: "Add Extras",
+        options: [
+          { id: 6, name: "Extra Wings (6)", price: 8.99 },
+          { id: 7, name: "Celery Sticks", price: 1.00 },
+          { id: 8, name: "Ranch Dip", price: 0.75 }
+        ]
+      }
+    ]
   },
   { 
     id: 31, 
@@ -361,7 +507,36 @@ export const MENU_ITEMS: MenuItemProps[] = [
     image: "", 
     category: "bowls",
     popular: true,
-    isAvailable: true
+    isAvailable: true,
+    customizations: [
+      {
+        id: 1,
+        name: "Rice Choice",
+        options: [
+          { id: 1, name: "White Rice", price: 0 },
+          { id: 2, name: "Brown Rice", price: 0 },
+          { id: 3, name: "Cilantro Lime Rice", price: 0.50 }
+        ]
+      },
+      {
+        id: 2,
+        name: "Bean Choice",
+        options: [
+          { id: 4, name: "Black Beans", price: 0 },
+          { id: 5, name: "Pinto Beans", price: 0 },
+          { id: 6, name: "No Beans", price: 0 }
+        ]
+      },
+      {
+        id: 3,
+        name: "Add Extras",
+        options: [
+          { id: 7, name: "Extra Chicken", price: 3.99 },
+          { id: 8, name: "Guacamole", price: 1.99 },
+          { id: 9, name: "Extra Cheese", price: 1.00 }
+        ]
+      }
+    ]
   },
   { 
     id: 40, 
@@ -388,7 +563,29 @@ export const MENU_ITEMS: MenuItemProps[] = [
     price: 9.99, 
     image: "", 
     category: "bowls",
-    isAvailable: true
+    isAvailable: true,
+    customizations: [
+      {
+        id: 1,
+        name: "Dressing Choice",
+        options: [
+          { id: 1, name: "Ranch", price: 0 },
+          { id: 2, name: "Italian", price: 0 },
+          { id: 3, name: "Caesar", price: 0 },
+          { id: 4, name: "Balsamic", price: 0 },
+          { id: 5, name: "Honey Mustard", price: 0 }
+        ]
+      },
+      {
+        id: 2,
+        name: "Add Protein",
+        options: [
+          { id: 6, name: "Grilled Chicken", price: 4.99 },
+          { id: 7, name: "Steak", price: 6.99 },
+          { id: 8, name: "Hard Boiled Egg", price: 1.50 }
+        ]
+      }
+    ]
   },
   { 
     id: 43, 
@@ -416,7 +613,27 @@ export const MENU_ITEMS: MenuItemProps[] = [
     image: "", 
     category: "bowls",
     popular: true,
-    isAvailable: true
+    isAvailable: true,
+    customizations: [
+      {
+        id: 1,
+        name: "Add Protein",
+        options: [
+          { id: 1, name: "Grilled Chicken", price: 4.99 },
+          { id: 2, name: "Blackened Chicken", price: 4.99 },
+          { id: 3, name: "Grilled Shrimp", price: 6.99 }
+        ]
+      },
+      {
+        id: 2,
+        name: "Extra Toppings",
+        options: [
+          { id: 4, name: "Extra Parmesan", price: 1.50 },
+          { id: 5, name: "Extra Croutons", price: 1.00 },
+          { id: 6, name: "Anchovies", price: 2.00 }
+        ]
+      }
+    ]
   },
   { 
     id: 46, 

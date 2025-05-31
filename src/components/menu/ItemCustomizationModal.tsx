@@ -7,7 +7,6 @@ import { Minus, Plus, ShoppingCart } from 'lucide-react';
 import { MenuItemProps } from './MenuItem';
 import { useCart } from '../../contexts/CartContext';
 import { CartItem } from '../../types/cart';
-import { v4 as uuidv4 } from 'uuid';
 
 interface ItemCustomizationModalProps {
   item: MenuItemProps;
@@ -87,6 +86,9 @@ const ItemCustomizationModal: React.FC<ItemCustomizationModalProps> = ({
     setQuantity(prev => Math.max(1, prev + change));
   };
 
+  // Use imageUrl if available, otherwise fall back to image, then to placeholder
+  const displayImage = item.imageUrl || item.image || "/placeholder.svg";
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md bg-card border-gray-700">
@@ -97,9 +99,13 @@ const ItemCustomizationModal: React.FC<ItemCustomizationModalProps> = ({
         <div className="space-y-4">
           <div className="aspect-video rounded-lg overflow-hidden">
             <img
-              src={item.image}
+              src={displayImage}
               alt={item.name}
               className="w-full h-full object-cover"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = "/placeholder.svg";
+              }}
             />
           </div>
           
@@ -107,6 +113,11 @@ const ItemCustomizationModal: React.FC<ItemCustomizationModalProps> = ({
           
           <div className="flex items-center justify-between">
             <span className="text-lg font-bold text-white">Base Price: ${item.price.toFixed(2)}</span>
+            {item.popular && (
+              <Badge className="bg-grill-gold text-grill-black">
+                Popular
+              </Badge>
+            )}
           </div>
 
           {item.customizations && item.customizations.length > 0 && (
@@ -168,9 +179,10 @@ const ItemCustomizationModal: React.FC<ItemCustomizationModalProps> = ({
           <Button
             onClick={handleAddToCart}
             className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black"
+            disabled={!item.isAvailable}
           >
             <ShoppingCart className="mr-2 h-4 w-4" />
-            Add to Cart
+            {item.isAvailable ? 'Add to Cart' : 'Unavailable'}
           </Button>
         </div>
       </DialogContent>
