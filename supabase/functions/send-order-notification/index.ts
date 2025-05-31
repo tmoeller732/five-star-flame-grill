@@ -1,12 +1,12 @@
-import { serve } from '@supabase/functions-js';
-import { createClient } from '@supabase/supabase-js';
 
-const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
+const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY');
 
 if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
   console.error('Missing SUPABASE_URL or SUPABASE_ANON_KEY environment variables.');
-  process.exit(1);
 }
 
 const corsHeaders = {
@@ -31,7 +31,7 @@ serve(async (req) => {
       });
     }
 
-    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+    const supabaseClient = createClient(SUPABASE_URL!, SUPABASE_ANON_KEY!, {
       auth: {
         persistSession: false,
       },
@@ -169,7 +169,7 @@ serve(async (req) => {
             margin: 0;
             padding: 0.1in;
             background-color: white;
-            font-size: 11px;
+            font-size: 6.6px;
           }
           .header {
             text-align: center;
@@ -177,16 +177,16 @@ serve(async (req) => {
             padding-bottom: 3px;
             margin-bottom: 5px;
             margin-top: 10px;
-            padding-top: 20px;
+            padding-top: 10px;
           }
           .header h1 {
-            font-size: 17px;
+            font-size: 10.2px;
             font-weight: bold;
             margin: 0;
             letter-spacing: 1px;
           }
           .header p {
-            font-size: 10px;
+            font-size: 6px;
             margin: 1px 0 0 0;
             font-weight: bold;
           }
@@ -196,7 +196,7 @@ serve(async (req) => {
             padding: 3px;
           }
           .order-info h2 {
-            font-size: 12px;
+            font-size: 7.2px;
             font-weight: bold;
             margin: 0 0 3px 0;
             text-decoration: underline;
@@ -205,7 +205,7 @@ serve(async (req) => {
             display: flex;
             justify-content: space-between;
             margin-bottom: 1px;
-            font-size: 10px;
+            font-size: 6px;
           }
           .info-label {
             font-weight: bold;
@@ -216,7 +216,7 @@ serve(async (req) => {
             padding: 3px;
           }
           .items-section h3 {
-            font-size: 12px;
+            font-size: 7.2px;
             font-weight: bold;
             margin: 0 0 3px 0;
             text-decoration: underline;
@@ -224,7 +224,7 @@ serve(async (req) => {
           .item {
             border-bottom: 1px dashed #000;
             padding: 2px 0;
-            font-size: 10px;
+            font-size: 6px;
           }
           .item:last-child {
             border-bottom: none;
@@ -240,11 +240,11 @@ serve(async (req) => {
             align-items: center;
           }
           .item-quantity {
-            font-size: 10px;
+            font-size: 6px;
           }
           .item-price {
             font-weight: bold;
-            font-size: 11px;
+            font-size: 6.6px;
           }
           .totals-section {
             border: 1px solid #000;
@@ -253,7 +253,7 @@ serve(async (req) => {
           }
           .totals-section h3 {
             margin: 0 0 3px 0;
-            font-size: 11px;
+            font-size: 6.6px;
             font-weight: bold;
             text-decoration: underline;
           }
@@ -261,7 +261,7 @@ serve(async (req) => {
             display: flex;
             justify-content: space-between;
             margin-bottom: 2px;
-            font-size: 10px;
+            font-size: 6px;
           }
           .total-row.subtotal {
             font-weight: normal;
@@ -271,7 +271,7 @@ serve(async (req) => {
           }
           .total-row.grand-total {
             font-weight: bold;
-            font-size: 12px;
+            font-size: 7.2px;
             border-top: 1px solid #000;
             padding-top: 2px;
             margin-top: 3px;
@@ -283,19 +283,19 @@ serve(async (req) => {
             background-color: #f5f5f5;
           }
           .special-instructions h4 {
-            font-size: 11px;
+            font-size: 6.6px;
             font-weight: bold;
             margin: 0 0 2px 0;
             text-decoration: underline;
           }
           .special-instructions p {
-            font-size: 10px;
+            font-size: 6px;
             margin: 0;
             word-wrap: break-word;
           }
           .footer {
             text-align: center;
-            font-size: 8px;
+            font-size: 4.8px;
             margin-top: 5px;
             padding-top: 3px;
             border-top: 1px solid #000;
@@ -306,7 +306,7 @@ serve(async (req) => {
             border-top: 1px dashed #000;
             margin: 5px 0;
             text-align: center;
-            font-size: 7px;
+            font-size: 4.2px;
             color: #666;
           }
         </style>
