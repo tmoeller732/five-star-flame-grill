@@ -53,7 +53,11 @@ export const useGetViewedItems = () => {
 
       if (error) throw error;
 
-      return data?.map(item => item.menu_item_data as MenuItemProps) || [];
+      return data?.map(item => {
+        // Safely cast the JSON data to MenuItemProps
+        const menuItemData = item.menu_item_data as unknown as MenuItemProps;
+        return menuItemData;
+      }).filter(Boolean) || [];
     } catch (error) {
       console.error('Error fetching viewed items:', error);
       return [];
