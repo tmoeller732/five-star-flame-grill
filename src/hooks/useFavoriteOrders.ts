@@ -36,7 +36,7 @@ export const useFavoriteOrders = () => {
       const convertedOrders: FavoriteOrder[] = (data || []).map(order => ({
         id: order.id,
         order_name: order.order_name,
-        items: Array.isArray(order.items) ? order.items : [],
+        items: Array.isArray(order.items) ? order.items as CartItem[] : [],
         total: order.total,
         created_at: order.created_at
       }));
@@ -58,7 +58,7 @@ export const useFavoriteOrders = () => {
         .insert({
           user_id: user.id,
           order_name: orderName,
-          items: items,
+          items: items as any,
           total: total
         })
         .select()

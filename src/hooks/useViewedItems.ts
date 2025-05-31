@@ -25,7 +25,7 @@ export const useTrackViewedItem = () => {
           user_id: user.id,
           menu_item_id: item.id,
           menu_item_name: item.name,
-          menu_item_data: item
+          menu_item_data: item as any
         });
 
       console.log('Tracked viewed item:', item.name);

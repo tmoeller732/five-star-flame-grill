@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -120,7 +119,7 @@ const Featured = () => {
         
         return {
           ...item,
-          imageUrl: imageMapping[item.id] || item.imageUrl || "/placeholder.svg"
+          imageUrl: imageMapping[item.id] || item.image || "/placeholder.svg"
         };
       });
       
@@ -181,7 +180,7 @@ const Featured = () => {
           {featuredItems.map((item, index) => (
             <FeaturedItem 
               key={item.id}
-              image={item.imageUrl || '/placeholder.svg'}
+              image={item.imageUrl || item.image || '/placeholder.svg'}
               title={item.name}
               description={item.description}
               tag="Lunch/Dinner"

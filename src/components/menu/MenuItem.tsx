@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +16,9 @@ export interface MenuItemProps {
   description: string;
   price: number;
   image: string;
+  imageUrl?: string;
   category: string;
+  popular?: boolean;
   isAvailable?: boolean;
   customizations?: {
     id: number;
@@ -94,8 +97,8 @@ const MenuItem: React.FC<MenuItemComponentProps> = ({ item }) => {
 
       <ItemCustomizationModal
         item={item}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
       />
     </>
   );
