@@ -1,3 +1,4 @@
+
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
@@ -116,8 +117,8 @@ serve(async (req) => {
             border-bottom: 1px solid #000;
             padding-bottom: 3px;
             margin-bottom: 5px;
-            margin-top: 25px;
-            padding-top: 20px;
+            margin-top: 10px;
+            padding-top: 10px;
           }
           .header h1 {
             font-size: 17px;

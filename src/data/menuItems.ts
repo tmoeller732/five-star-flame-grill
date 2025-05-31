@@ -1,4 +1,3 @@
-
 import { MenuItemProps } from '../components/menu/MenuItem';
 
 export const MENU_ITEMS: MenuItemProps[] = [
@@ -106,7 +105,7 @@ export const MENU_ITEMS: MenuItemProps[] = [
   { 
     id: 13, 
     name: "#1 Chorizo Tacos", 
-    description: "Three soft corn tortillas filled with chorizo, fresh cilantro, onions, and lime, delivering authentic Mexican flavor with classic fresh toppings.", 
+    description: "Three soft corn tortillas filled with chorizo, fresh cilantro, onions, and lime.", 
     price: 12.99, 
     imageUrl: "", 
     category: "lunch",
