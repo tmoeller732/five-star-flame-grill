@@ -1,52 +1,103 @@
-
-import React from 'react';
-import { Card } from "@/components/ui/card";
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
+import { Link } from 'react-router-dom';
+import { cn } from "@/lib/utils";
+import { CheckCircle2, AlertTriangle } from 'lucide-react';
 import ItemCustomizationModal from './ItemCustomizationModal';
+import { useTrackViewedItem } from '../../hooks/useViewedItems';
 
 export interface MenuItemProps {
   id: number;
   name: string;
   description: string;
   price: number;
-  imageUrl: string;
-  category: 'breakfast' | 'lunch' | 'bowls';
-  popular?: boolean;
+  image: string;
+  category: string;
+  isAvailable?: boolean;
+  customizations?: {
+    id: number;
+    name: string;
+    options: Array<{
+      id: number;
+      name: string;
+      price: number;
+    }>;
+  }[];
 }
 
-const MenuItem = ({ item }: { item: MenuItemProps }) => {
-  if (!item) {
-    return null;
-  }
-  
+interface MenuItemComponentProps {
+  item: MenuItemProps;
+}
+
+const MenuItem: React.FC<MenuItemComponentProps> = ({ item }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(item.image);
+  const { trackViewedItem } = useTrackViewedItem();
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = item.image;
+    img.onload = () => setSelectedImage(item.image);
+    img.onerror = () => setSelectedImage("/img/placeholder.jpg"); // Fallback image
+  }, [item.image]);
+
+  const handleItemClick = async () => {
+    // Track that the user viewed this item
+    await trackViewedItem(item);
+    setIsModalOpen(true);
+  };
+
+  const handleImageError = () => {
+    setSelectedImage("/img/placeholder.jpg");
+  };
+
   return (
-    <Card className="overflow-hidden bg-card hover:shadow-lg transition-all duration-300 menu-item">
-      <div className="aspect-video overflow-hidden bg-muted">
-        {item.imageUrl ? (
-          <img 
-            src={item.imageUrl} 
-            alt={item.name} 
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-muted">
-            <div className="animate-pulse bg-secondary/20 w-full h-full"></div>
+    <>
+      <Card 
+        className="bg-card border-gray-700 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group" 
+        onClick={handleItemClick}
+      >
+        <CardHeader>
+          <CardTitle className="text-xl font-semibold text-grill-gold">{item.name}</CardTitle>
+        </CardHeader>
+        <CardContent className="p-0">
+          <AspectRatio ratio={16 / 9}>
+            <img
+              src={selectedImage}
+              alt={item.name}
+              className="object-cover w-full h-full transition-transform group-hover:scale-105"
+              onError={handleImageError}
+            />
+          </AspectRatio>
+          <div className="p-4">
+            <CardDescription className="text-sm text-gray-400 line-clamp-3">{item.description}</CardDescription>
           </div>
-        )}
-      </div>
-      <div className="p-4">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="font-playfair text-xl text-grill-gold">{item.name}</h3>
-          <span className="font-medium text-lg text-white">${item.price.toFixed(2)}</span>
-        </div>
-        <p className="text-gray-400 text-sm mb-4">{item.description}</p>
-        <ItemCustomizationModal item={item}>
-          <Button className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black">
-            Add to Order
-          </Button>
-        </ItemCustomizationModal>
-      </div>
-    </Card>
+        </CardContent>
+        <CardFooter className="flex items-center justify-between p-4">
+          <div className="flex items-center gap-2">
+            <span className="text-lg font-bold text-white">${item.price.toFixed(2)}</span>
+            {!item.isAvailable && (
+              <Badge variant="destructive" className="opacity-80 hover:opacity-100">
+                <AlertTriangle className="h-3 w-3 mr-1" />
+                Unavailable
+              </Badge>
+            )}
+          </div>
+          {item.isAvailable && (
+            <CheckCircle2 className="text-green-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+          )}
+        </CardFooter>
+      </Card>
+
+      <ItemCustomizationModal
+        item={item}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+    </>
   );
 };
 

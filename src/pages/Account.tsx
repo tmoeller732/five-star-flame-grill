@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { Card } from "@/components/ui/card";
@@ -8,10 +7,13 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from '../contexts/AuthContext';
+import { useCart } from '../contexts/CartContext';
+import { useFavoriteOrders } from '../hooks/useFavoriteOrders';
 import { supabase } from '@/integrations/supabase/client';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet-async';
+import { Heart, ShoppingCart, Trash2, RotateCcw } from 'lucide-react';
 import type { Database } from '@/integrations/supabase/types';
 
 interface Profile {
@@ -36,6 +38,8 @@ interface Order {
 
 const Account = () => {
   const { user, signOut, updateProfile, loading: authLoading } = useAuth();
+  const { addItem, clearCart } = useCart();
+  const { favoriteOrders, loading: favoritesLoading, saveFavoriteOrder, deleteFavoriteOrder } = useFavoriteOrders();
   const { toast } = useToast();
   
   const [profile, setProfile] = useState<Profile>({
@@ -47,6 +51,9 @@ const Account = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
+  const [favoriteOrderName, setFavoriteOrderName] = useState('');
+  const [showSaveFavoriteDialog, setShowSaveFavoriteDialog] = useState(false);
+  const [orderToSave, setOrderToSave] = useState<Order | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -169,6 +176,107 @@ const Account = () => {
     });
   };
 
+  const handleReorderLastOrder = () => {
+    if (orders.length === 0) {
+      toast({
+        title: "No Orders Found",
+        description: "You haven't placed any orders yet.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const lastOrder = orders[0];
+    clearCart();
+    
+    lastOrder.items.forEach(item => {
+      addItem({
+        name: item.name,
+        basePrice: item.basePrice,
+        quantity: item.quantity,
+        customizations: item.customizations || []
+      });
+    });
+
+    toast({
+      title: "Items Added to Cart",
+      description: "Your last order has been added to your cart.",
+    });
+  };
+
+  const handleReorderFavorite = (favoriteOrder: any) => {
+    clearCart();
+    
+    favoriteOrder.items.forEach((item: any) => {
+      addItem({
+        name: item.name,
+        basePrice: item.basePrice,
+        quantity: item.quantity,
+        customizations: item.customizations || []
+      });
+    });
+
+    toast({
+      title: "Items Added to Cart",
+      description: `"${favoriteOrder.order_name}" has been added to your cart.`,
+    });
+  };
+
+  const handleSaveOrderAsFavorite = (order: Order) => {
+    setOrderToSave(order);
+    setShowSaveFavoriteDialog(true);
+  };
+
+  const handleConfirmSaveFavorite = async () => {
+    if (!orderToSave || !favoriteOrderName.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a name for this favorite order.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const { error } = await saveFavoriteOrder(
+      favoriteOrderName.trim(),
+      orderToSave.items,
+      orderToSave.total
+    );
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save favorite order. Please try again.",
+        variant: "destructive"
+      });
+    } else {
+      toast({
+        title: "Favorite Saved",
+        description: `"${favoriteOrderName}" has been saved to your favorites.`,
+      });
+      setShowSaveFavoriteDialog(false);
+      setFavoriteOrderName('');
+      setOrderToSave(null);
+    }
+  };
+
+  const handleDeleteFavorite = async (favoriteId: string, orderName: string) => {
+    const { error } = await deleteFavoriteOrder(favoriteId);
+    
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete favorite order.",
+        variant: "destructive"
+      });
+    } else {
+      toast({
+        title: "Favorite Deleted",
+        description: `"${orderName}" has been removed from your favorites.`,
+      });
+    }
+  };
+
   if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-grill-black flex items-center justify-center">
@@ -192,10 +300,10 @@ const Account = () => {
       
       <main className="pt-36 pb-16 min-h-screen bg-grill-black">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <h1 className="text-3xl font-bold text-grill-gold mb-8">My Account</h1>
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Profile Information */}
               <Card className="p-6 bg-card border-gray-700">
                 <h2 className="text-xl font-bold text-grill-gold mb-4">Profile Information</h2>
@@ -265,6 +373,62 @@ const Account = () => {
                 </Button>
               </Card>
 
+              {/* Quick Actions */}
+              <Card className="p-6 bg-card border-gray-700">
+                <h2 className="text-xl font-bold text-grill-gold mb-4">Quick Actions</h2>
+                
+                <div className="space-y-4">
+                  <Button
+                    onClick={handleReorderLastOrder}
+                    disabled={orders.length === 0}
+                    className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black flex items-center gap-2"
+                  >
+                    <RotateCcw className="h-4 w-4" />
+                    Reorder Last Order
+                  </Button>
+                </div>
+
+                <Separator className="my-6 bg-gray-600" />
+
+                <h3 className="text-lg font-bold text-grill-gold mb-4">Favorite Orders</h3>
+                
+                {favoritesLoading ? (
+                  <p className="text-gray-400">Loading favorites...</p>
+                ) : favoriteOrders.length === 0 ? (
+                  <p className="text-gray-400">No favorite orders saved yet.</p>
+                ) : (
+                  <div className="space-y-3">
+                    {favoriteOrders.map((favorite) => (
+                      <div key={favorite.id} className="bg-gray-800 p-3 rounded-lg">
+                        <div className="flex justify-between items-start mb-2">
+                          <h4 className="font-medium text-white">{favorite.order_name}</h4>
+                          <div className="flex gap-1">
+                            <Button
+                              size="sm"
+                              onClick={() => handleReorderFavorite(favorite)}
+                              className="bg-grill-gold hover:bg-grill-orange text-grill-black"
+                            >
+                              <ShoppingCart className="h-3 w-3" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleDeleteFavorite(favorite.id, favorite.order_name)}
+                              className="border-red-600 text-red-400 hover:bg-red-900"
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
+                        <p className="text-sm text-gray-400">
+                          {favorite.items.length} item{favorite.items.length !== 1 ? 's' : ''} • ${favorite.total.toFixed(2)}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </Card>
+
               {/* Order History */}
               <Card className="p-6 bg-card border-gray-700">
                 <h2 className="text-xl font-bold text-grill-gold mb-4">Order History</h2>
@@ -301,8 +465,27 @@ const Account = () => {
                             </span>
                           </div>
                         </div>
-                        <div className="text-sm text-gray-400">
+                        <div className="text-sm text-gray-400 mb-3">
                           {order.items.length} item{order.items.length !== 1 ? 's' : ''}
+                        </div>
+                        <div className="flex gap-2">
+                          <Button
+                            size="sm"
+                            onClick={() => handleReorderFavorite({ items: order.items })}
+                            className="bg-grill-gold hover:bg-grill-orange text-grill-black flex items-center gap-1"
+                          >
+                            <RotateCcw className="h-3 w-3" />
+                            Reorder
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleSaveOrderAsFavorite(order)}
+                            className="border-gray-600 text-white hover:bg-gray-700 flex items-center gap-1"
+                          >
+                            <Heart className="h-3 w-3" />
+                            Save as Favorite
+                          </Button>
                         </div>
                         {order.special_instructions && (
                           <div className="text-sm text-gray-400 mt-1">
@@ -317,6 +500,42 @@ const Account = () => {
             </div>
           </div>
         </div>
+
+        {/* Save Favorite Dialog */}
+        {showSaveFavoriteDialog && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-gray-900 p-6 rounded-lg max-w-md w-full mx-4">
+              <h3 className="text-lg font-bold text-grill-gold mb-4">Save as Favorite</h3>
+              <Label htmlFor="favoriteName" className="text-white">Order Name</Label>
+              <Input
+                id="favoriteName"
+                value={favoriteOrderName}
+                onChange={(e) => setFavoriteOrderName(e.target.value)}
+                placeholder="e.g., My Usual Order"
+                className="bg-gray-800 border-gray-600 text-white mb-4"
+              />
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleConfirmSaveFavorite}
+                  className="bg-grill-gold hover:bg-grill-orange text-grill-black flex-1"
+                >
+                  Save Favorite
+                </Button>
+                <Button
+                  onClick={() => {
+                    setShowSaveFavoriteDialog(false);
+                    setFavoriteOrderName('');
+                    setOrderToSave(null);
+                  }}
+                  variant="outline"
+                  className="border-gray-600 text-white hover:bg-gray-800"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
       
       <Footer />
