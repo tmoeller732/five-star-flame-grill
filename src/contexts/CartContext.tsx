@@ -28,14 +28,8 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       const totalPrice = calculateItemTotal(action.payload);
       
       const newItem: CartItem = {
+        ...action.payload,
         id: newId,
-        menuItemId: action.payload.menuItemId,
-        name: action.payload.name,
-        description: action.payload.description,
-        basePrice: action.payload.basePrice,
-        quantity: action.payload.quantity,
-        customizations: action.payload.customizations,
-        category: action.payload.category,
         totalPrice,
       };
 

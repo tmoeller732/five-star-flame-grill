@@ -1,137 +1,52 @@
 
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
+import React from 'react';
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { CheckCircle2, AlertTriangle, ShoppingCart } from 'lucide-react';
 import ItemCustomizationModal from './ItemCustomizationModal';
-import { useTrackViewedItem } from '../../hooks/useViewedItems';
 
 export interface MenuItemProps {
   id: number;
   name: string;
   description: string;
   price: number;
-  image: string;
-  imageUrl?: string;
-  category: string;
+  imageUrl: string;
+  category: 'breakfast' | 'lunch' | 'bowls';
   popular?: boolean;
-  isAvailable?: boolean;
-  customizations?: {
-    id: number;
-    name: string;
-    options: Array<{
-      id: number;
-      name: string;
-      price: number;
-    }>;
-  }[];
 }
 
-interface MenuItemComponentProps {
-  item: MenuItemProps;
-}
-
-const MenuItem: React.FC<MenuItemComponentProps> = ({ item }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(item.imageUrl || item.image);
-  const { trackViewedItem } = useTrackViewedItem();
-
-  useEffect(() => {
-    // Use imageUrl if available, otherwise fall back to image
-    const imageToUse = item.imageUrl || item.image;
-    const img = new Image();
-    img.src = imageToUse;
-    img.onload = () => setSelectedImage(imageToUse);
-    img.onerror = () => setSelectedImage("/placeholder.svg");
-  }, [item.image, item.imageUrl]);
-
-  const handleItemClick = async (e: React.MouseEvent) => {
-    // Prevent modal from opening if clicking on buttons
-    if ((e.target as HTMLElement).closest('button')) {
-      return;
-    }
-    
-    await trackViewedItem(item);
-    setIsModalOpen(true);
-  };
-
-  const handleCustomize = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    
-    if (!item.isAvailable) return;
-    
-    await trackViewedItem(item);
-    setIsModalOpen(true);
-  };
-
-  const handleImageError = () => {
-    setSelectedImage("/placeholder.svg");
-  };
-
-  const isAvailable = item.isAvailable !== false;
-
+const MenuItem = ({ item }: { item: MenuItemProps }) => {
+  if (!item) {
+    return null;
+  }
+  
   return (
-    <>
-      <Card 
-        className="bg-card border-gray-700 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group" 
-        onClick={handleItemClick}
-      >
-        <CardContent className="p-0">
-          <AspectRatio ratio={16 / 9}>
-            <img
-              src={selectedImage}
-              alt={item.name}
-              className="object-cover w-full h-full transition-transform group-hover:scale-105"
-              onError={handleImageError}
-            />
-          </AspectRatio>
-        </CardContent>
-        <CardHeader className="pb-2">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-lg font-semibold text-grill-gold truncate pr-2 leading-tight">
-              {item.name}
-            </CardTitle>
-            <span className="text-lg font-bold text-white whitespace-nowrap">${item.price.toFixed(2)}</span>
+    <Card className="overflow-hidden bg-card hover:shadow-lg transition-all duration-300 menu-item">
+      <div className="aspect-video overflow-hidden bg-muted">
+        {item.imageUrl ? (
+          <img 
+            src={item.imageUrl} 
+            alt={item.name} 
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-muted">
+            <div className="animate-pulse bg-secondary/20 w-full h-full"></div>
           </div>
-          {item.popular && (
-            <Badge className="w-fit bg-grill-gold text-grill-black">
-              Popular
-            </Badge>
-          )}
-        </CardHeader>
-        <CardContent className="pt-0 pb-4">
-          <CardDescription className="text-sm text-gray-400 line-clamp-2">{item.description}</CardDescription>
-        </CardContent>
-        <CardFooter className="flex items-center justify-center pt-0">
-          <div className="flex items-center gap-2">
-            {!isAvailable && (
-              <Badge variant="destructive" className="opacity-80 hover:opacity-100 mb-2">
-                <AlertTriangle className="h-3 w-3 mr-1" />
-                Unavailable
-              </Badge>
-            )}
-          </div>
-          <Button
-            onClick={handleCustomize}
-            disabled={!isAvailable}
-            size="sm"
-            className="bg-grill-gold hover:bg-grill-orange text-grill-black"
-          >
-            <ShoppingCart className="h-4 w-4 mr-1" />
-            Add To Order
+        )}
+      </div>
+      <div className="p-4">
+        <div className="flex justify-between items-start mb-2">
+          <h3 className="font-playfair text-xl text-grill-gold">{item.name}</h3>
+          <span className="font-medium text-lg text-white">${item.price.toFixed(2)}</span>
+        </div>
+        <p className="text-gray-400 text-sm mb-4">{item.description}</p>
+        <ItemCustomizationModal item={item}>
+          <Button className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black">
+            Add to Order
           </Button>
-        </CardFooter>
-      </Card>
-
-      <ItemCustomizationModal
-        item={item}
-        open={isModalOpen}
-        onOpenChange={setIsModalOpen}
-      />
-    </>
+        </ItemCustomizationModal>
+      </div>
+    </Card>
   );
 };
 

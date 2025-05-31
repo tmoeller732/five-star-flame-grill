@@ -1,202 +1,142 @@
-
-import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-
-const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
-const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY');
-
-if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-  console.error('Missing SUPABASE_URL or SUPABASE_ANON_KEY environment variables.');
-}
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'X-XSS-Protection': '1; mode=block',
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+}
 
 serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders });
+    return new Response('ok', { headers: corsHeaders })
   }
 
   try {
-    const { orderId, customerEmail } = await req.json();
-    console.log('Processing order notification:', { orderId, customerEmail });
-
-    if (!orderId || !customerEmail) {
-      console.error('Missing orderId or customerEmail in request.');
-      return new Response(JSON.stringify({ error: 'Missing orderId or customerEmail' }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+    // Validate request method
+    if (req.method !== 'POST') {
+      return new Response(
+        JSON.stringify({ error: 'Method not allowed' }),
+        { 
+          status: 405, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
     }
 
-    const supabaseClient = createClient(SUPABASE_URL!, SUPABASE_ANON_KEY!, {
-      auth: {
-        persistSession: false,
-      },
-    });
+    const { order, customerEmail } = await req.json()
 
-    const { data: order, error: orderError } = await supabaseClient
-      .from('orders')
-      .select('*')
-      .eq('id', orderId)
-      .single();
-
-    if (orderError) {
-      console.error('Error fetching order:', orderError);
-      return new Response(JSON.stringify({ error: 'Failed to fetch order' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+    // Input validation
+    if (!order || !customerEmail) {
+      return new Response(
+        JSON.stringify({ error: 'Missing required fields: order and customerEmail' }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
     }
 
-    if (!order) {
-      console.error('Order not found:', orderId);
-      return new Response(JSON.stringify({ error: 'Order not found' }), {
-        status: 404,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(customerEmail)) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid email format' }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
     }
 
-    const orderItems = (order.items || []).map((item: any) => ({
-      quantity: item.quantity,
-      name: item.name,
-      totalPrice: item.totalPrice,
-      customizations: item.customizations || [],
-    }));
+    console.log('Processing order notification:', { orderId: order.id, customerEmail })
 
+    // Initialize Supabase client
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    const supabase = createClient(supabaseUrl, supabaseServiceKey)
+
+    // Get the Resend API key
+    const resendApiKey = Deno.env.get('RESEND_API_KEY')
+    
+    if (!resendApiKey) {
+      console.error('RESEND_API_KEY not found')
+      return new Response(
+        JSON.stringify({ error: 'Email service not configured' }),
+        { 
+          status: 500, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
+    }
+
+    // Sanitize order data for email
+    const sanitizeText = (text: string) => {
+      return text.replace(/[<>&"']/g, (char) => {
+        const entities: { [key: string]: string } = {
+          '<': '&lt;',
+          '>': '&gt;',
+          '&': '&amp;',
+          '"': '&quot;',
+          "'": '&#x27;'
+        }
+        return entities[char] || char
+      })
+    }
+
+    // Ultra-compact thermal printer optimized email content for single 4x6 page
     const emailHtml = `
       <!DOCTYPE html>
       <html>
-        <head>
-          <meta charset="utf-8">
-          <title>Order Receipt - 5 Star Grill</title>
-        </head>
-        <body>
-          <div class="receipt">
-            <div class="header">
-              <h1>5 STAR GRILL</h1>
-              <p>1814 Route 37 East, Toms River, NJ 08753</p>
-              <p>Phone: (732) 736-7827</p>
-            </div>
-            
-            <div class="order-info">
-              <h2>ORDER RECEIPT</h2>
-              <div class="info-row">
-                <span class="info-label">Order #:</span>
-                <span>${order.id.substring(0, 8).toUpperCase()}</span>
-              </div>
-              <div class="info-row">
-                <span class="info-label">Date:</span>
-                <span>${new Date(order.created_at).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit'
-                })}</span>
-              </div>
-              <div class="info-row">
-                <span class="info-label">Status:</span>
-                <span>${order.status?.toUpperCase() || 'PENDING'}</span>
-              </div>
-              ${order.pickup_time ? `
-                <div class="info-row">
-                  <span class="info-label">Pickup Time:</span>
-                  <span>${new Date(order.pickup_time).toLocaleString('en-US')}</span>
-                </div>
-              ` : ''}
-            </div>
-
-            <div class="items-section">
-              <h3>ORDER ITEMS</h3>
-              ${orderItems.map(item => `
-                <div class="item">
-                  <div class="item-header">
-                    <span class="item-quantity">${item.quantity}x</span>
-                    <span class="item-name">${item.name}</span>
-                    <span class="item-price">$${item.totalPrice.toFixed(2)}</span>
-                  </div>
-                  ${item.customizations && item.customizations.length > 0 ? `
-                    <div class="item-customizations">
-                      ${item.customizations.map(custom => `
-                        <div class="customization">+ ${custom.name} (+$${custom.price.toFixed(2)})</div>
-                      `).join('')}
-                    </div>
-                  ` : ''}
-                </div>
-              `).join('')}
-            </div>
-
-            <div class="totals-section">
-              <h3>ORDER TOTAL</h3>
-              <div class="total-row subtotal">
-                <span>Subtotal:</span>
-                <span>$${order.total.toFixed(2)}</span>
-              </div>
-              <div class="total-row tax">
-                <span>Tax (6.625%):</span>
-                <span>$${order.tax_amount.toFixed(2)}</span>
-              </div>
-              <div class="total-row grand-total">
-                <span>Grand Total:</span>
-                <span>$${order.grand_total.toFixed(2)}</span>
-              </div>
-            </div>
-
-            ${order.special_instructions ? `
-              <div class="special-instructions">
-                <h4>Special Instructions:</h4>
-                <p>${order.special_instructions}</p>
-              </div>
-            ` : ''}
-
-            <div class="footer">
-              <p>Thank you for choosing 5 Star Grill!</p>
-              <p>We appreciate your business!</p>
-            </div>
-
-            <div class="cut-line">
-              ✂️ CUT HERE ✂️
-            </div>
-          </div>
-
+      <head>
         <style>
-          .receipt {
+          @media print {
+            @page {
+              size: 4in 6in;
+              margin: 0.1in;
+            }
+          }
+          body {
             font-family: 'Courier New', monospace;
-            max-width: 3in;
+            line-height: 1.0;
+            color: #000;
+            width: 3.8in;
             margin: 0;
             padding: 0.1in;
             background-color: white;
-            font-size: 6.6px;
+            font-size: 11px;
           }
           .header {
             text-align: center;
             border-bottom: 1px solid #000;
             padding-bottom: 3px;
             margin-bottom: 5px;
-            margin-top: 10px;
-            padding-top: 10px;
+            margin-top: 25px;
+            padding-top: 20px;
           }
           .header h1 {
-            font-size: 10.2px;
+            font-size: 17px;
             font-weight: bold;
             margin: 0;
             letter-spacing: 1px;
           }
           .header p {
-            font-size: 6px;
+            font-size: 10px;
             margin: 1px 0 0 0;
             font-weight: bold;
           }
           .order-info {
-            border-bottom: 1px solid #000;
             margin-bottom: 5px;
+            border: 1px solid #000;
             padding: 3px;
           }
           .order-info h2 {
-            font-size: 7.2px;
+            font-size: 12px;
             font-weight: bold;
             margin: 0 0 3px 0;
             text-decoration: underline;
@@ -205,55 +145,59 @@ serve(async (req) => {
             display: flex;
             justify-content: space-between;
             margin-bottom: 1px;
-            font-size: 6px;
+            font-size: 10px;
           }
           .info-label {
             font-weight: bold;
           }
+          .info-value {
+            text-align: right;
+            max-width: 60%;
+            word-wrap: break-word;
+          }
           .items-section {
-            border-bottom: 1px solid #000;
             margin-bottom: 5px;
-            padding: 3px;
           }
           .items-section h3 {
-            font-size: 7.2px;
+            font-size: 12px;
             font-weight: bold;
             margin: 0 0 3px 0;
             text-decoration: underline;
+            border-bottom: 1px solid #000;
+            padding-bottom: 1px;
           }
           .item {
             border-bottom: 1px dashed #000;
             padding: 2px 0;
-            font-size: 6px;
+            font-size: 10px;
           }
           .item:last-child {
             border-bottom: none;
           }
-          .item-header {
+          .item-name {
+            font-weight: bold;
+            margin-bottom: 1px;
+          }
+          .item-details {
             display: flex;
             justify-content: space-between;
-            gap: 5px;
-          }
-          .item-name {
-            flex-grow: 1;
-            text-align: center;
             align-items: center;
           }
           .item-quantity {
-            font-size: 6px;
+            font-size: 10px;
           }
           .item-price {
             font-weight: bold;
-            font-size: 6.6px;
+            font-size: 11px;
           }
           .totals-section {
             border: 1px solid #000;
-            padding: 3px;
+            padding: 4px;
             margin-bottom: 5px;
           }
           .totals-section h3 {
             margin: 0 0 3px 0;
-            font-size: 6.6px;
+            font-size: 11px;
             font-weight: bold;
             text-decoration: underline;
           }
@@ -261,7 +205,7 @@ serve(async (req) => {
             display: flex;
             justify-content: space-between;
             margin-bottom: 2px;
-            font-size: 6px;
+            font-size: 10px;
           }
           .total-row.subtotal {
             font-weight: normal;
@@ -271,7 +215,7 @@ serve(async (req) => {
           }
           .total-row.grand-total {
             font-weight: bold;
-            font-size: 7.2px;
+            font-size: 12px;
             border-top: 1px solid #000;
             padding-top: 2px;
             margin-top: 3px;
@@ -283,62 +227,161 @@ serve(async (req) => {
             background-color: #f5f5f5;
           }
           .special-instructions h4 {
-            font-size: 6.6px;
+            font-size: 11px;
             font-weight: bold;
             margin: 0 0 2px 0;
             text-decoration: underline;
           }
           .special-instructions p {
-            font-size: 6px;
+            font-size: 10px;
             margin: 0;
             word-wrap: break-word;
           }
           .footer {
             text-align: center;
-            font-size: 4.8px;
+            font-size: 8px;
             margin-top: 5px;
             padding-top: 3px;
             border-top: 1px solid #000;
-            font-weight: bold;
+          }
+          .footer p {
+            margin: 1px 0;
           }
           .cut-line {
-            text-align: center;
             border-top: 1px dashed #000;
             margin: 5px 0;
             text-align: center;
-            font-size: 4.2px;
+            font-size: 7px;
             color: #666;
           }
         </style>
-        </body>
+      </head>
+      <body>
+        <div class="header">
+          <h1>5 STAR GRILL</h1>
+          <p>*** NEW ORDER ***</p>
+        </div>
+
+        <div class="order-info">
+          <h2>ORDER DETAILS</h2>
+          <div class="info-row">
+            <span class="info-label">Order #:</span>
+            <span class="info-value">${sanitizeText(order.id.slice(0, 8))}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Customer:</span>
+            <span class="info-value">${sanitizeText(customerEmail)}</span>
+          </div>
+          ${order.customer_phone ? `
+            <div class="info-row">
+              <span class="info-label">Phone:</span>
+              <span class="info-value">${sanitizeText(order.customer_phone)}</span>
+            </div>
+          ` : ''}
+          <div class="info-row">
+            <span class="info-label">Status:</span>
+            <span class="info-value">${sanitizeText(order.status.charAt(0).toUpperCase() + order.status.slice(1))}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Time:</span>
+            <span class="info-value">${new Date(order.created_at).toLocaleString()}</span>
+          </div>
+        </div>
+
+        <div class="items-section">
+          <h3>ITEMS ORDERED</h3>
+          ${order.items.map((item: any) => `
+            <div class="item">
+              <div class="item-name">${sanitizeText(item.name)}</div>
+              <div class="item-details">
+                <span class="item-quantity">Qty: ${item.quantity}</span>
+                <span class="item-price">$${item.totalPrice.toFixed(2)}</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div class="totals-section">
+          <h3>ORDER TOTAL</h3>
+          <div class="total-row subtotal">
+            <span>Subtotal:</span>
+            <span>$${order.total.toFixed(2)}</span>
+          </div>
+          <div class="total-row tax">
+            <span>Tax (6.625%):</span>
+            <span>$${order.tax_amount.toFixed(2)}</span>
+          </div>
+          <div class="total-row grand-total">
+            <span>GRAND TOTAL:</span>
+            <span>$${order.grand_total.toFixed(2)}</span>
+          </div>
+        </div>
+
+        ${order.special_instructions ? `
+          <div class="special-instructions">
+            <h4>INSTRUCTIONS</h4>
+            <p>${sanitizeText(order.special_instructions)}</p>
+          </div>
+        ` : ''}
+
+        <div class="footer">
+          <p><strong>5 STAR GRILL</strong></p>
+          <p>1681 Lakewood Rd, Toms River, NJ</p>
+          <p>(856) 559-4938</p>
+        </div>
+
+        <div class="cut-line">
+          ✂ - - - - - - - - - - - - - - - - - - - ✂
+        </div>
+      </body>
       </html>
-    `;
+    `
 
-    const { error: emailError } = await supabaseClient.functions.invoke('send-email', {
-      body: {
-        to: customerEmail,
-        subject: `5 Star Grill - Order Receipt #${order.id.substring(0, 8).toUpperCase()}`,
-        html: emailHtml,
+    // Send email using Resend with verified domain
+    const emailResponse = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${resendApiKey}`,
+        'Content-Type': 'application/json',
       },
-    });
+      body: JSON.stringify({
+        from: 'onboarding@resend.dev', // Using Resend's verified domain
+        to: ['5stargrillorders@gmail.com'], // Using the verified email from Resend account
+        subject: `New Order #${order.id.slice(0, 8)} - 5 Star Grill`,
+        html: emailHtml,
+      }),
+    })
 
-    if (emailError) {
-      console.error('Error sending email:', emailError);
-      return new Response(JSON.stringify({ error: 'Failed to send email' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+    const emailResult = await emailResponse.json()
+
+    if (!emailResponse.ok) {
+      console.error('Failed to send email:', emailResult)
+      return new Response(
+        JSON.stringify({ error: 'Failed to send email notification', details: emailResult }),
+        { 
+          status: 500, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
     }
 
-    return new Response(JSON.stringify({ message: 'Order notification processed successfully' }), {
-      status: 200,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    console.log('Email sent successfully:', emailResult)
+
+    return new Response(
+      JSON.stringify({ success: true, emailId: emailResult.id }),
+      { 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      }
+    )
+
   } catch (error) {
-    console.error('Function execution error:', error);
-    return new Response(JSON.stringify({ error: 'Internal server error' }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    console.error('Error in send-order-notification function:', error)
+    return new Response(
+      JSON.stringify({ error: 'Internal server error' }),
+      { 
+        status: 500, 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      }
+    )
   }
-});
+})

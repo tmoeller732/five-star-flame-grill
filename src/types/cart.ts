@@ -16,7 +16,6 @@ export interface CartItem {
   customizations: CartCustomization[];
   totalPrice: number;
   category: 'breakfast' | 'lunch' | 'bowls';
-  [key: string]: any; // Add index signature for JSON compatibility
 }
 
 export interface CartState {
