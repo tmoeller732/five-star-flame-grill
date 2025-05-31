@@ -34,8 +34,11 @@ const ItemCustomizationModal: React.FC<ItemCustomizationModalProps> = ({
     if (open) {
       setQuantity(1);
       setSelectedCustomizations([]);
+      // Debug log to see what customizations are available
+      console.log('Modal opened for item:', item.name);
+      console.log('Item customizations:', item.customizations);
     }
-  }, [open]);
+  }, [open, item]);
 
   const handleCustomizationToggle = (customization: {
     id: number;
@@ -127,26 +130,33 @@ const ItemCustomizationModal: React.FC<ItemCustomizationModalProps> = ({
             )}
           </div>
 
-          {item.customizations && item.customizations.length > 0 && (
+          {/* Debug info - remove this after testing */}
+          {process.env.NODE_ENV === 'development' && (
+            <div className="text-xs text-gray-500">
+              Debug: Customizations available: {item.customizations ? item.customizations.length : 0}
+            </div>
+          )}
+
+          {item.customizations && item.customizations.length > 0 ? (
             <div className="space-y-4">
-              <h3 className="font-semibold text-white">Customizations</h3>
+              <h3 className="font-semibold text-white text-lg">Customizations</h3>
               {item.customizations.map((category) => (
-                <div key={category.id} className="space-y-2">
-                  <h4 className="font-medium text-gray-300">{category.name}</h4>
+                <div key={category.id} className="space-y-3">
+                  <h4 className="font-medium text-gray-300 text-base">{category.name}</h4>
                   <div className="grid grid-cols-1 gap-2">
                     {category.options.map((option) => (
                       <div
                         key={option.id}
-                        className={`p-3 rounded-lg border cursor-pointer transition-colors ${
+                        className={`p-3 rounded-lg border cursor-pointer transition-all hover:scale-[1.02] ${
                           isCustomizationSelected(option.id, category.name)
-                            ? 'border-grill-gold bg-grill-gold/10'
-                            : 'border-gray-600 hover:border-gray-500'
+                            ? 'border-grill-gold bg-grill-gold/20 shadow-md'
+                            : 'border-gray-600 hover:border-gray-500 bg-gray-800/50'
                         }`}
                         onClick={() => handleCustomizationToggle(option, category.name)}
                       >
                         <div className="flex justify-between items-center">
-                          <span className="text-white">{option.name}</span>
-                          <span className="text-grill-gold">
+                          <span className="text-white font-medium">{option.name}</span>
+                          <span className="text-grill-gold font-semibold">
                             {option.price > 0 ? `+$${option.price.toFixed(2)}` : 'Free'}
                           </span>
                         </div>
@@ -155,6 +165,10 @@ const ItemCustomizationModal: React.FC<ItemCustomizationModalProps> = ({
                   </div>
                 </div>
               ))}
+            </div>
+          ) : (
+            <div className="text-gray-400 text-sm">
+              No customization options available for this item.
             </div>
           )}
 
@@ -165,14 +179,16 @@ const ItemCustomizationModal: React.FC<ItemCustomizationModalProps> = ({
                 size="sm"
                 onClick={() => adjustQuantity(-1)}
                 disabled={quantity <= 1}
+                className="border-gray-600 text-white hover:bg-gray-700"
               >
                 <Minus className="h-4 w-4" />
               </Button>
-              <span className="text-white font-medium">{quantity}</span>
+              <span className="text-white font-medium text-lg">{quantity}</span>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => adjustQuantity(1)}
+                className="border-gray-600 text-white hover:bg-gray-700"
               >
                 <Plus className="h-4 w-4" />
               </Button>
@@ -187,7 +203,7 @@ const ItemCustomizationModal: React.FC<ItemCustomizationModalProps> = ({
 
           <Button
             onClick={handleAddToCart}
-            className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black"
+            className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black font-semibold"
             disabled={!item.isAvailable}
           >
             <ShoppingCart className="mr-2 h-4 w-4" />
