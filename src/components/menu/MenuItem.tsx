@@ -37,15 +37,17 @@ interface MenuItemComponentProps {
 
 const MenuItem: React.FC<MenuItemComponentProps> = ({ item }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(item.image);
+  const [selectedImage, setSelectedImage] = useState(item.imageUrl || item.image);
   const { trackViewedItem } = useTrackViewedItem();
 
   useEffect(() => {
+    // Use imageUrl if available, otherwise fall back to image
+    const imageToUse = item.imageUrl || item.image;
     const img = new Image();
-    img.src = item.image;
-    img.onload = () => setSelectedImage(item.image);
-    img.onerror = () => setSelectedImage("/img/placeholder.jpg"); // Fallback image
-  }, [item.image]);
+    img.src = imageToUse;
+    img.onload = () => setSelectedImage(imageToUse);
+    img.onerror = () => setSelectedImage("/placeholder.svg"); // Fallback image
+  }, [item.image, item.imageUrl]);
 
   const handleItemClick = async () => {
     // Track that the user viewed this item
@@ -54,8 +56,11 @@ const MenuItem: React.FC<MenuItemComponentProps> = ({ item }) => {
   };
 
   const handleImageError = () => {
-    setSelectedImage("/img/placeholder.jpg");
+    setSelectedImage("/placeholder.svg");
   };
+
+  // Default to available if isAvailable is not specified
+  const isAvailable = item.isAvailable !== false;
 
   return (
     <>
@@ -82,14 +87,14 @@ const MenuItem: React.FC<MenuItemComponentProps> = ({ item }) => {
         <CardFooter className="flex items-center justify-between p-4">
           <div className="flex items-center gap-2">
             <span className="text-lg font-bold text-white">${item.price.toFixed(2)}</span>
-            {!item.isAvailable && (
+            {!isAvailable && (
               <Badge variant="destructive" className="opacity-80 hover:opacity-100">
                 <AlertTriangle className="h-3 w-3 mr-1" />
                 Unavailable
               </Badge>
             )}
           </div>
-          {item.isAvailable && (
+          {isAvailable && (
             <CheckCircle2 className="text-green-500 opacity-0 group-hover:opacity-100 transition-opacity" />
           )}
         </CardFooter>

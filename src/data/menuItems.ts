@@ -9,7 +9,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "roll, croissant, or bagel", 
     price: 5.99, 
     image: "", 
-    category: "breakfast"
+    category: "breakfast",
+    isAvailable: true
   },
   { 
     id: 2, 
@@ -18,7 +19,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     price: 8.79, 
     image: "", 
     category: "breakfast",
-    popular: true
+    popular: true,
+    isAvailable: true
   },
   { 
     id: 3, 
@@ -26,7 +28,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "roll, croissant, or bagel", 
     price: 9.99, 
     image: "", 
-    category: "breakfast" 
+    category: "breakfast",
+    isAvailable: true
   },
   { 
     id: 4, 
@@ -35,7 +38,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     price: 8.49, 
     image: "", 
     category: "breakfast",
-    popular: true
+    popular: true,
+    isAvailable: true
   },
   { 
     id: 5, 
@@ -43,7 +47,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "eggs, home fries, toast", 
     price: 7.99, 
     image: "", 
-    category: "breakfast" 
+    category: "breakfast",
+    isAvailable: true
   },
   { 
     id: 6, 
@@ -51,7 +56,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "eggs, home fries, toast, choice of meat", 
     price: 10.99, 
     image: "", 
-    category: "breakfast" 
+    category: "breakfast",
+    isAvailable: true
   },
   { 
     id: 7, 
@@ -59,7 +65,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Fresh bagel served with butter", 
     price: 2.99, 
     image: "", 
-    category: "breakfast" 
+    category: "breakfast",
+    isAvailable: true
   },
   { 
     id: 8, 
@@ -67,7 +74,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Fresh bagel served with cream cheese", 
     price: 2.99, 
     image: "", 
-    category: "breakfast" 
+    category: "breakfast",
+    isAvailable: true
   },
   { 
     id: 9, 
@@ -75,7 +83,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Seasoned diced potatoes", 
     price: 3.99, 
     image: "", 
-    category: "breakfast" 
+    category: "breakfast",
+    isAvailable: true
   },
   { 
     id: 10, 
@@ -83,7 +92,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Crispy shredded potato patty", 
     price: 1.50, 
     image: "", 
-    category: "breakfast" 
+    category: "breakfast",
+    isAvailable: true
   },
   { 
     id: 11, 
@@ -91,7 +101,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Additional serving of breakfast meat", 
     price: 1.99, 
     image: "", 
-    category: "breakfast" 
+    category: "breakfast",
+    isAvailable: true
   },
   { 
     id: 12, 
@@ -99,7 +110,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Fresh sliced avocado", 
     price: 1.99, 
     image: "", 
-    category: "breakfast" 
+    category: "breakfast",
+    isAvailable: true
   },
   
   // Lunch/Dinner Menu
@@ -110,7 +122,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     price: 12.99, 
     image: "", 
     category: "lunch",
-    popular: true
+    popular: true,
+    isAvailable: true
   },
   { 
     id: 14, 
@@ -118,7 +131,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Three soft corn tortillas loaded with seasoned chicken, fresh cilantro, diced onions, and lime for authentic flavor!", 
     price: 12.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 15, 
@@ -126,7 +140,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Three soft corn tortillas filled with savory grilled steak, topped with fresh cilantro, diced onions, and zesty lime!", 
     price: 14.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 16, 
@@ -134,7 +149,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Hearty chorizo burrito packed with seasoned chorizo, lettuce, tomato, cheese, rice and beans wrapped in a warm flour tortilla.", 
     price: 11.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 17, 
@@ -142,7 +158,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Savory chicken burrito filled with tender chicken, lettuce, tomato, and cheese, rice and beans wrapped in a soft flour tortilla.", 
     price: 12.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 18, 
@@ -150,7 +167,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Loaded steak burrito stuffed with grilled steak, fresh lettuce, tomato, cheese, rice and beans in a warm flour tortilla.", 
     price: 14.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 19, 
@@ -159,7 +177,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     price: 9.99, 
     image: "", 
     category: "lunch",
-    popular: true 
+    popular: true,
+    isAvailable: true
   },
   { 
     id: 20, 
@@ -167,7 +186,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Classic beef burger made with seasoned ground beef, grilled to perfection and served on a brioche bun with fresh toppings.", 
     price: 9.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 21, 
@@ -175,7 +195,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Chicken sandwich-grilled or fried-served on a brioche bun with lettuce, tomato, mayo, and melted cheese.", 
     price: 11.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 22, 
@@ -183,7 +204,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Grilled steak quesadilla loaded with melted cheese, served in a golden toasted tortilla with lettuce, tomato, pico, and sour cream.", 
     price: 14.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 23, 
@@ -191,7 +213,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Savory chicken quesadilla filled with melted cheese, served in a toasted tortilla.", 
     price: 12.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 24, 
@@ -199,7 +222,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Steak torta on toasted roll with lettuce, tomato, pico de gallo, sour cream, and melted cheese.", 
     price: 13.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 25, 
@@ -207,7 +231,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Stacked with spicy Mexican sausage, fresh avocado, lettuce, tomato, and mayo on a toasted bolillo roll.", 
     price: 12.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 26, 
@@ -215,7 +240,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Chicken torta on a toasted roll with lettuce, tomato, pico de gallo, sour cream, and melted cheese.", 
     price: 10.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 27, 
@@ -223,7 +249,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Classic Philly cheesesteak with sautéed onions, peppers, and mushrooms on a toasted hoagie roll.", 
     price: 8.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 28, 
@@ -231,7 +258,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Packed with grilled chicken, melted cheese, sautéed onions, peppers, and mushrooms on a toasted hoagie roll.", 
     price: 9.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 29, 
@@ -239,7 +267,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Served on a fresh roll with tender roast beef, crisp. Stacked with steak, melted cheese, lettuce, tomato, and lettuce, tomato, mayo, and a crunchy pickle spear.", 
     price: 10.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 30, 
@@ -247,7 +276,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Our famous chicken wings-six per order-fried to crispy perfection, served hot and juicy, tossed in your choice of delicious, flavorful signature sauces.", 
     price: 8.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 31, 
@@ -255,7 +285,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "These chicken nuggets are amazing! Perfectly golden and crispy on the outside, tender and juicy on the inside.", 
     price: 6.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 32, 
@@ -263,7 +294,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "The chicken tenders are fantastic-crispy, golden coating with juicy, flavorful chicken inside. Perfectly cooked and delicious with dipping sauce. Served with an order of fries.", 
     price: 10.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 33, 
@@ -271,7 +303,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Served on a fresh roll with sliced turkey, melted cheese, crisp lettuce, tomato, mayo, and a crunchy pickle spear.", 
     price: 8.49, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 34, 
@@ -279,7 +312,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Served on a fresh roll with sliced ham, melted cheese, crisp lettuce, tomato, mayo, and a crunchy pickle spear.", 
     price: 8.49, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 35, 
@@ -287,7 +321,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Served on a fresh roll with sliced roast beef, crisp lettuce, tomato, and a crunchy pickle spear.", 
     price: 8.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 36, 
@@ -295,7 +330,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Golden, crispy french fries freshly cooked and lightly salted-served hot, delicious, and perfect for dipping or enjoying as a tasty side.", 
     price: 4.49, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 37, 
@@ -303,7 +339,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Crispy golden fries topped generously with creamy melted American cheese-served hot and delicious, perfect for sharing or savoring solo!", 
     price: 6.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
   { 
     id: 38, 
@@ -311,7 +348,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Golden, crispy onion rings lightly battered and fried to perfection-hot, delicious, and great for dipping or as a tasty snack!", 
     price: 4.99, 
     image: "", 
-    category: "lunch" 
+    category: "lunch",
+    isAvailable: true
   },
 
   // Bowls & Salads
@@ -322,7 +360,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     price: 11.99, 
     image: "", 
     category: "bowls",
-    popular: true
+    popular: true,
+    isAvailable: true
   },
   { 
     id: 40, 
@@ -330,7 +369,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Chorizo, rice, beans, lettuce, tomato, pico de gio, sour cream, cheese", 
     price: 11.99, 
     image: "", 
-    category: "bowls" 
+    category: "bowls",
+    isAvailable: true
   },
   { 
     id: 41, 
@@ -338,7 +378,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Steak, rice, beans, lettuce, tomato, pico de gio, sour cream, cheese", 
     price: 14.99, 
     image: "", 
-    category: "bowls" 
+    category: "bowls",
+    isAvailable: true
   },
   { 
     id: 42, 
@@ -346,7 +387,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Crisp iceberg lettuce with tomato, onion, cucumber, croutons, and your choice of dressing. A classic, refreshing salad. 32 OZ.", 
     price: 9.99, 
     image: "", 
-    category: "bowls" 
+    category: "bowls",
+    isAvailable: true
   },
   { 
     id: 43, 
@@ -354,7 +396,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Fresh romaine lettuce topped with tomato, onion, cucumber, croutons, and your choice of dressing. 32 OZ.", 
     price: 9.99, 
     image: "", 
-    category: "bowls" 
+    category: "bowls",
+    isAvailable: true
   },
   { 
     id: 44, 
@@ -362,7 +405,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "A fresh mix of crisp lettuces, topped with tomato, onion, cucumber, croutons, and your choice of dressing. A vibrant, classic favorite. 32 OZ.", 
     price: 9.99, 
     image: "", 
-    category: "bowls" 
+    category: "bowls",
+    isAvailable: true
   },
   { 
     id: 45, 
@@ -371,7 +415,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     price: 9.99, 
     image: "", 
     category: "bowls",
-    popular: true
+    popular: true,
+    isAvailable: true
   },
   { 
     id: 46, 
@@ -379,7 +424,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Grilled chicken, rice, beans, romaine lettuce, tomato, pico de gio, sour cream, cheese. Served in a fried taco shell bowl", 
     price: 12.99, 
     image: "", 
-    category: "bowls" 
+    category: "bowls",
+    isAvailable: true
   },
   { 
     id: 47, 
@@ -387,7 +433,8 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Chorizo, rice, beans, romaine lettuce, tomato, pico de gio, sour cream, cheese. Served in a fried taco shell bowl", 
     price: 12.99, 
     image: "", 
-    category: "bowls" 
+    category: "bowls",
+    isAvailable: true
   },
   { 
     id: 48, 
@@ -395,6 +442,7 @@ export const MENU_ITEMS: MenuItemProps[] = [
     description: "Steak, rice, beans, romaine lettuce, tomato, pico de gio, sour cream, cheese. Served in a fried taco shell bowl", 
     price: 14.99, 
     image: "", 
-    category: "bowls" 
+    category: "bowls",
+    isAvailable: true
   }
 ];
