@@ -68,9 +68,6 @@ const MenuItem: React.FC<MenuItemComponentProps> = ({ item }) => {
         className="bg-card border-gray-700 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group" 
         onClick={handleItemClick}
       >
-        <CardHeader>
-          <CardTitle className="text-xl font-semibold text-grill-gold">{item.name}</CardTitle>
-        </CardHeader>
         <CardContent className="p-0">
           <AspectRatio ratio={16 / 9}>
             <img
@@ -80,13 +77,25 @@ const MenuItem: React.FC<MenuItemComponentProps> = ({ item }) => {
               onError={handleImageError}
             />
           </AspectRatio>
-          <div className="p-4">
-            <CardDescription className="text-sm text-gray-400 line-clamp-3">{item.description}</CardDescription>
-          </div>
         </CardContent>
-        <CardFooter className="flex items-center justify-between p-4">
+        <CardHeader className="pb-2">
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-lg font-semibold text-grill-gold truncate pr-2 leading-tight">
+              {item.name}
+            </CardTitle>
+            <span className="text-lg font-bold text-white whitespace-nowrap">${item.price.toFixed(2)}</span>
+          </div>
+          {item.popular && (
+            <Badge className="w-fit bg-grill-gold text-grill-black">
+              Popular
+            </Badge>
+          )}
+        </CardHeader>
+        <CardContent className="pt-0 pb-4">
+          <CardDescription className="text-sm text-gray-400 line-clamp-2">{item.description}</CardDescription>
+        </CardContent>
+        <CardFooter className="flex items-center justify-between pt-0">
           <div className="flex items-center gap-2">
-            <span className="text-lg font-bold text-white">${item.price.toFixed(2)}</span>
             {!isAvailable && (
               <Badge variant="destructive" className="opacity-80 hover:opacity-100">
                 <AlertTriangle className="h-3 w-3 mr-1" />
@@ -95,7 +104,7 @@ const MenuItem: React.FC<MenuItemComponentProps> = ({ item }) => {
             )}
           </div>
           {isAvailable && (
-            <CheckCircle2 className="text-green-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <CheckCircle2 className="text-green-500 opacity-0 group-hover:opacity-100 transition-opacity ml-auto" />
           )}
         </CardFooter>
       </Card>
