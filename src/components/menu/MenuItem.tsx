@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CheckCircle2, AlertTriangle, Settings } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, ShoppingCart } from 'lucide-react';
 import ItemCustomizationModal from './ItemCustomizationModal';
 import { useTrackViewedItem } from '../../hooks/useViewedItems';
 
@@ -120,8 +120,8 @@ const MenuItem: React.FC<MenuItemComponentProps> = ({ item }) => {
             size="sm"
             className="bg-grill-gold hover:bg-grill-orange text-grill-black"
           >
-            <Settings className="h-4 w-4 mr-1" />
-            Customize
+            <ShoppingCart className="h-4 w-4 mr-1" />
+            Add To Order
           </Button>
         </CardFooter>
       </Card>

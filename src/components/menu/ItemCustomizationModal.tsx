@@ -98,7 +98,7 @@ const ItemCustomizationModal: React.FC<ItemCustomizationModalProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md bg-card border-gray-700">
+      <DialogContent className="max-w-md bg-card border-gray-700 max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-grill-gold">{item.name}</DialogTitle>
         </DialogHeader>
@@ -146,7 +146,9 @@ const ItemCustomizationModal: React.FC<ItemCustomizationModalProps> = ({
                       >
                         <div className="flex justify-between items-center">
                           <span className="text-white">{option.name}</span>
-                          <span className="text-grill-gold">+${option.price.toFixed(2)}</span>
+                          <span className="text-grill-gold">
+                            {option.price > 0 ? `+$${option.price.toFixed(2)}` : 'Free'}
+                          </span>
                         </div>
                       </div>
                     ))}
