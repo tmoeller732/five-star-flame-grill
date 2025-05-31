@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MENU_ITEMS } from '../data/menuItems';
@@ -41,10 +40,8 @@ const MenuContent = () => {
       // Query the user_viewed_items table to get the most viewed items
       const { data: viewedItems, error } = await supabase
         .from('user_viewed_items')
-        .select('menu_item_id, COUNT(*) as view_count')
-        .group('menu_item_id')
-        .order('view_count', { ascending: false })
-        .limit(3);
+        .select('menu_item_id, menu_item_name')
+        .order('viewed_at', { ascending: false });
 
       if (error) {
         console.error('Error fetching popular items:', error);
@@ -54,17 +51,28 @@ const MenuContent = () => {
         return;
       }
 
+      // Count occurrences of each menu item
+      const itemCounts: { [key: number]: number } = {};
+      if (viewedItems && viewedItems.length > 0) {
+        viewedItems.forEach((viewedItem: any) => {
+          itemCounts[viewedItem.menu_item_id] = (itemCounts[viewedItem.menu_item_id] || 0) + 1;
+        });
+      }
+
+      // Sort by count and get top 3
+      const sortedItems = Object.entries(itemCounts)
+        .sort(([, a], [, b]) => b - a)
+        .slice(0, 3);
+
       // Map the most viewed items to our menu items
       const popularMenuItems: MenuItemProps[] = [];
       
-      if (viewedItems && viewedItems.length > 0) {
-        viewedItems.forEach((viewedItem: any) => {
-          const menuItem = items.find(item => item.id === viewedItem.menu_item_id);
-          if (menuItem) {
-            popularMenuItems.push(menuItem);
-          }
-        });
-      }
+      sortedItems.forEach(([menuItemId]) => {
+        const menuItem = items.find(item => item.id === parseInt(menuItemId));
+        if (menuItem) {
+          popularMenuItems.push(menuItem);
+        }
+      });
 
       // If we don't have enough popular items from views, fill with items marked as popular
       if (popularMenuItems.length < 3) {
