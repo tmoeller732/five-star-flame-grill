@@ -12,16 +12,19 @@ import {
 import { cn } from "@/lib/utils";
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
+import { useLanguage } from '../contexts/LanguageContext';
 
 const OrderDropdown = () => {
+  const { t } = useLanguage();
+
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Order</NavigationMenuTrigger>
+          <NavigationMenuTrigger>{t('nav.order')}</NavigationMenuTrigger>
           <NavigationMenuContent>
             <div className="bg-card w-[500px] p-6 flex flex-col gap-6">
-              <h3 className="text-xl font-playfair text-grill-gold text-center mb-2">Choose how to order</h3>
+              <h3 className="text-xl font-playfair text-grill-gold text-center mb-2">{t('order.title')}</h3>
               
               <div className="grid grid-cols-3 gap-6">
                 {/* Order Pickup - First Position */}
@@ -39,7 +42,7 @@ const OrderDropdown = () => {
                       className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black"
                     >
                       <Link to="/menu">
-                        Order Pickup
+                        {t('order.pickup')}
                       </Link>
                     </Button>
                   </NavigationMenuLink>
@@ -59,7 +62,7 @@ const OrderDropdown = () => {
                     className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black"
                   >
                     <a href="#" className="flex items-center justify-center">
-                      Order on GrubHub
+                      {t('order.grubhub')}
                     </a>
                   </Button>
                 </div>
@@ -78,7 +81,7 @@ const OrderDropdown = () => {
                     className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black"
                   >
                     <a href="#" className="flex items-center justify-center">
-                      Order on DoorDash
+                      {t('order.doordash')}
                     </a>
                   </Button>
                 </div>

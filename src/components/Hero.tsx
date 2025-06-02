@@ -3,9 +3,11 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     setIsVisible(true);
@@ -32,11 +34,11 @@ const Hero = () => {
             </div>
 
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 font-playfair">
-              Best New <span className="text-grill-gold">Grill in Toms River, NJ</span>
+              {t('hero.title')}
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-200 mb-8">
-              Serving the finest American classics, Spanish delights, and fresh salads since 2025
+              {t('hero.subtitle')}
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -45,7 +47,7 @@ const Hero = () => {
                 className="bg-grill-gold hover:bg-grill-orange text-grill-black text-lg px-6 py-6"
               >
                 <Link to="/menu">
-                  Order Pickup <ArrowRight className="ml-2" size={18} />
+                  {t('hero.orderPickup')} <ArrowRight className="ml-2" size={18} />
                 </Link>
               </Button>
               
@@ -55,13 +57,13 @@ const Hero = () => {
                 className="border-grill-gold text-grill-gold hover:bg-grill-gold/10 text-lg px-6 py-6"
               >
                 <Link to="/order">
-                  Order Delivery <ArrowRight className="ml-2" size={18} />
+                  {t('hero.orderDelivery')} <ArrowRight className="ml-2" size={18} />
                 </Link>
               </Button>
             </div>
             
             <div className="mt-6 text-grill-gold font-medium">
-              Open 7 Days a Week | Daily Specials
+              {t('hero.openDaily')}
             </div>
           </div>
         </div>

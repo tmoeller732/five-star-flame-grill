@@ -3,9 +3,11 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import CountdownTimer from './CountdownTimer';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const OrderPartners = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -39,9 +41,9 @@ const OrderPartners = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className={`text-center mb-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h2 className="text-3xl md:text-4xl font-playfair mb-4 text-grill-gold">Affordable Quality, Easy Access</h2>
+          <h2 className="text-3xl md:text-4xl font-playfair mb-4 text-grill-gold">{t('orderPartners.title')}</h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Open seven days a week with easy options for both pick-up and delivery. Enjoy our quality meals at reasonable prices, delivered right to your door.
+            {t('orderPartners.subtitle')}
           </p>
         </div>
 
@@ -60,7 +62,7 @@ const OrderPartners = () => {
               className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black"
             >
               <Link to="/menu" className="flex items-center justify-center">
-                Order Pickup
+                {t('order.pickup')}
               </Link>
             </Button>
           </div>
@@ -79,7 +81,7 @@ const OrderPartners = () => {
               className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black mb-4"
             >
               <a href="#" className="flex items-center justify-center">
-                Order on GrubHub
+                {t('order.grubhub')}
               </a>
             </Button>
             <CountdownTimer className="inline-flex justify-center w-full" />
@@ -99,7 +101,7 @@ const OrderPartners = () => {
               className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black mb-4"
             >
               <a href="#" className="flex items-center justify-center">
-                Order on DoorDash
+                {t('order.doordash')}
               </a>
             </Button>
             <CountdownTimer className="inline-flex justify-center w-full" />

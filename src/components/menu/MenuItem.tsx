@@ -3,6 +3,7 @@ import React from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import ItemCustomizationModal from './ItemCustomizationModal';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 export interface MenuItemProps {
   id: number;
@@ -15,6 +16,8 @@ export interface MenuItemProps {
 }
 
 const MenuItem = ({ item }: { item: MenuItemProps }) => {
+  const { t } = useLanguage();
+  
   if (!item) {
     return null;
   }
@@ -42,7 +45,7 @@ const MenuItem = ({ item }: { item: MenuItemProps }) => {
         <p className="text-gray-400 text-sm mb-4">{item.description}</p>
         <ItemCustomizationModal item={item}>
           <Button className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black">
-            Add to Order
+            {t('menu.addToOrder')}
           </Button>
         </ItemCustomizationModal>
       </div>

@@ -1,9 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { Phone, Star, Gift } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const ScrollingBanner = () => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
+  const { t } = useLanguage();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -20,15 +22,15 @@ const ScrollingBanner = () => {
   const bannerItems = [
     {
       icon: <Phone size={16} className="text-grill-orange mr-1" />,
-      text: "Call (856) 559-4938 to order direct"
+      text: t('banner.call')
     },
     {
       icon: <Star size={16} className="text-grill-gold mr-1" />,
-      text: "Earn 1 point per $1 spent • Get $10 off every 100 points"
+      text: t('banner.loyalty')
     },
     {
       icon: <Gift size={16} className="text-grill-gold mr-1" />,
-      text: "Join our loyalty program and save on every order"
+      text: t('banner.join')
     }
   ];
   
@@ -46,7 +48,7 @@ const ScrollingBanner = () => {
         <div className="inline-block animate-marquee py-2">
           <div className="flex items-center justify-center space-x-8">
             <span className="text-sm font-medium text-white">
-              Open 7 Days a Week | Daily Specials
+              {t('hero.openDaily')}
             </span>
             
             {bannerItems.map((item, index) => (
