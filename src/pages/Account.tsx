@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { Card } from "@/components/ui/card";
@@ -11,6 +12,7 @@ import { useCart } from '../contexts/CartContext';
 import { supabase } from '@/integrations/supabase/client';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import LoyaltyPointsCard from '../components/loyalty/LoyaltyPointsCard';
 import { Helmet } from 'react-helmet-async';
 import { RotateCcw } from 'lucide-react';
 import type { Database } from '@/integrations/supabase/types';
@@ -218,17 +220,17 @@ const Account = () => {
     <>
       <Helmet>
         <title>My Account | 5 Star Grill</title>
-        <meta name="description" content="Manage your account, view order history, and update your profile at 5 Star Grill." />
+        <meta name="description" content="Manage your account, view order history, and track your loyalty points at 5 Star Grill." />
       </Helmet>
       
       <Header />
       
       <main className="pt-36 pb-16 min-h-screen bg-grill-black">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <h1 className="text-3xl font-bold text-grill-gold mb-8">My Account</h1>
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Profile Information */}
               <Card className="p-6 bg-card border-gray-700">
                 <h2 className="text-xl font-bold text-grill-gold mb-4">Profile Information</h2>
@@ -297,6 +299,9 @@ const Account = () => {
                   Sign Out
                 </Button>
               </Card>
+
+              {/* Loyalty Points */}
+              <LoyaltyPointsCard />
 
               {/* Order History */}
               <Card className="p-6 bg-card border-gray-700">

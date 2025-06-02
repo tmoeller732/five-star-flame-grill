@@ -9,13 +9,87 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      loyalty_points: {
+        Row: {
+          created_at: string
+          current_balance: number
+          id: string
+          points_earned: number
+          points_redeemed: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          current_balance?: number
+          id?: string
+          points_earned?: number
+          points_redeemed?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          current_balance?: number
+          id?: string
+          points_earned?: number
+          points_redeemed?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      loyalty_transactions: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          order_id: string | null
+          points: number
+          transaction_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          order_id?: string | null
+          points: number
+          transaction_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          order_id?: string | null
+          points?: number
+          transaction_type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "loyalty_transactions_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       orders: {
         Row: {
+          coupon_code: string | null
           created_at: string | null
           customer_phone: string | null
+          discount_amount: number | null
           estimated_wait_minutes: number | null
           grand_total: number
+          guest_email: string | null
+          guest_first_name: string | null
+          guest_last_name: string | null
           id: string
+          is_guest_order: boolean | null
           items: Json
           pickup_time: string | null
           special_instructions: string | null
@@ -26,11 +100,17 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          coupon_code?: string | null
           created_at?: string | null
           customer_phone?: string | null
+          discount_amount?: number | null
           estimated_wait_minutes?: number | null
           grand_total: number
+          guest_email?: string | null
+          guest_first_name?: string | null
+          guest_last_name?: string | null
           id?: string
+          is_guest_order?: boolean | null
           items: Json
           pickup_time?: string | null
           special_instructions?: string | null
@@ -41,11 +121,17 @@ export type Database = {
           user_id: string
         }
         Update: {
+          coupon_code?: string | null
           created_at?: string | null
           customer_phone?: string | null
+          discount_amount?: number | null
           estimated_wait_minutes?: number | null
           grand_total?: number
+          guest_email?: string | null
+          guest_first_name?: string | null
+          guest_last_name?: string | null
           id?: string
+          is_guest_order?: boolean | null
           items?: Json
           pickup_time?: string | null
           special_instructions?: string | null
@@ -92,6 +178,39 @@ export type Database = {
           last_name?: string | null
           phone?: string | null
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      user_coupons: {
+        Row: {
+          coupon_code: string
+          created_at: string
+          discount_amount: number
+          expires_at: string
+          id: string
+          is_used: boolean
+          used_at: string | null
+          user_id: string
+        }
+        Insert: {
+          coupon_code: string
+          created_at?: string
+          discount_amount?: number
+          expires_at?: string
+          id?: string
+          is_used?: boolean
+          used_at?: string | null
+          user_id: string
+        }
+        Update: {
+          coupon_code?: string
+          created_at?: string
+          discount_amount?: number
+          expires_at?: string
+          id?: string
+          is_used?: boolean
+          used_at?: string | null
+          user_id?: string
         }
         Relationships: []
       }
