@@ -5,11 +5,13 @@ import { Separator } from "@/components/ui/separator";
 import { useCart } from '../../contexts/CartContext';
 
 const OrderSummary = () => {
-  const { state } = useCart();
+  const { state, getCartTotal } = useCart();
 
   if (state.items.length === 0) {
     return null;
   }
+
+  const cartTotal = getCartTotal();
 
   return (
     <Card className="p-6 bg-card border-gray-700 sticky top-4">
@@ -47,16 +49,16 @@ const OrderSummary = () => {
       <div className="space-y-2">
         <div className="flex justify-between text-white">
           <span>Subtotal:</span>
-          <span>${state.total.toFixed(2)}</span>
+          <span>${cartTotal.toFixed(2)}</span>
         </div>
         <div className="flex justify-between text-white">
           <span>Tax (6.625%):</span>
-          <span>${(state.total * 0.06625).toFixed(2)}</span>
+          <span>${(cartTotal * 0.06625).toFixed(2)}</span>
         </div>
         <Separator className="my-2 bg-gray-600" />
         <div className="flex justify-between text-lg font-bold text-grill-gold">
           <span>Total:</span>
-          <span>${(state.total * 1.06625).toFixed(2)}</span>
+          <span>${(cartTotal * 1.06625).toFixed(2)}</span>
         </div>
       </div>
 

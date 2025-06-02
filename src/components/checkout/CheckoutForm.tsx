@@ -13,7 +13,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { validateSpecialInstructions } from '../../utils/security';
 
 const CheckoutForm = () => {
-  const { state, clearCart } = useCart();
+  const { state, clearCart, getCartTotal } = useCart();
   const { user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -47,8 +47,9 @@ const CheckoutForm = () => {
     setIsSubmitting(true);
 
     try {
-      const taxAmount = state.total * 0.06625; // NJ sales tax rate 6.625%
-      const grandTotal = state.total + taxAmount;
+      const cartTotal = getCartTotal();
+      const taxAmount = cartTotal * 0.06625; // NJ sales tax rate 6.625%
+      const grandTotal = cartTotal + taxAmount;
       const waitMinutes = calculateWaitTime(grandTotal);
       const pickupTime = new Date(Date.now() + waitMinutes * 60000);
 
@@ -68,7 +69,7 @@ const CheckoutForm = () => {
         .insert({
           user_id: user.id,
           items: state.items as any,
-          total: state.total,
+          total: cartTotal,
           tax_amount: taxAmount,
           grand_total: grandTotal,
           special_instructions: sanitizedInstructions || null,
@@ -137,6 +138,8 @@ const CheckoutForm = () => {
     setIsSubmitting(false);
   };
 
+  const cartTotal = getCartTotal();
+
   return (
     <Card className="p-6 bg-card border-gray-700">
       <h2 className="text-2xl font-bold text-grill-gold mb-6">Order Details</h2>
@@ -171,10 +174,10 @@ const CheckoutForm = () => {
         <div className="bg-gray-800 p-4 rounded-lg border border-gray-600">
           <h3 className="font-semibold text-grill-gold mb-2">Estimated Wait Time</h3>
           <p className="text-grill-gold text-lg font-semibold">
-            {calculateWaitTime(state.total + (state.total * 0.06625))} minutes
+            {calculateWaitTime(cartTotal + (cartTotal * 0.06625))} minutes
           </p>
           <p className="text-gray-300 text-sm mt-1">
-            Based on your order total of ${(state.total + (state.total * 0.06625)).toFixed(2)}
+            Based on your order total of ${(cartTotal + (cartTotal * 0.06625)).toFixed(2)}
           </p>
         </div>
 
