@@ -49,7 +49,17 @@ const WelcomeBackModal: React.FC<WelcomeBackModalProps> = ({ isOpen, onClose }) 
         .limit(3);
 
       if (error) throw error;
-      setRecentOrders(data || []);
+      
+      // Transform the data to match our interface
+      const transformedOrders: RecentOrder[] = (data || []).map(order => ({
+        id: order.id,
+        items: Array.isArray(order.items) ? order.items : [],
+        total: order.total,
+        grand_total: order.grand_total,
+        created_at: order.created_at
+      }));
+      
+      setRecentOrders(transformedOrders);
     } catch (error) {
       console.error('Error fetching recent orders:', error);
     } finally {

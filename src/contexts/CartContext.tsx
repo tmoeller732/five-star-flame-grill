@@ -1,6 +1,6 @@
 
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { CartItem, CartState, CartAction, CustomizationOption } from '../types/cart';
+import { CartItem, CartState, CartAction } from '../types/cart';
 import { useCartPersistence } from '../hooks/useCartPersistence';
 
 interface GuestData {
@@ -17,6 +17,7 @@ interface CartContextType {
   updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
   getCartTotal: () => number;
+  getItemCount: () => number;
   setGuestData: (data: GuestData) => void;
   guestData: GuestData | null;
 }
@@ -102,6 +103,9 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         itemCount: 0
       };
 
+    case 'LOAD_CART':
+      return action.payload;
+
     default:
       return state;
   }
@@ -135,6 +139,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return state.items.reduce((total, item) => total + item.totalPrice, 0);
   };
 
+  const getItemCount = (): number => {
+    return state.itemCount;
+  };
+
   const setGuestData = (data: GuestData) => {
     setGuestDataState(data);
   };
@@ -146,6 +154,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     updateQuantity,
     clearCart,
     getCartTotal,
+    getItemCount,
     setGuestData,
     guestData
   };
