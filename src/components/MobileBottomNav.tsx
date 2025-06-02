@@ -6,6 +6,7 @@ import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useIsMobile } from '../hooks/use-mobile';
+import CartDialog from './cart/CartDialog';
 
 const MobileBottomNav = () => {
   const location = useLocation();
@@ -35,20 +36,19 @@ const MobileBottomNav = () => {
           <span className="text-xs mt-1">{t('nav.menu')}</span>
         </Link>
         
-        <Link
-          to="/menu"
-          className={`flex flex-col items-center p-3 transition-colors relative ${
-            isActive('/checkout') ? 'text-grill-gold' : 'text-white hover:text-grill-gold'
-          }`}
-        >
-          <ShoppingCart size={20} />
-          {cartItemCount > 0 && (
-            <span className="absolute -top-1 -right-1 bg-grill-gold text-grill-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-              {cartItemCount}
-            </span>
-          )}
-          <span className="text-xs mt-1">{t('nav.cart')}</span>
-        </Link>
+        <CartDialog>
+          <button
+            className={`flex flex-col items-center p-3 transition-colors relative text-white hover:text-grill-gold`}
+          >
+            <ShoppingCart size={20} />
+            {cartItemCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-grill-gold text-grill-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                {cartItemCount}
+              </span>
+            )}
+            <span className="text-xs mt-1">{t('nav.cart')}</span>
+          </button>
+        </CartDialog>
         
         <Link
           to={user ? "/account" : "/auth"}

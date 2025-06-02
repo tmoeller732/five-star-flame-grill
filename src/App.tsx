@@ -11,6 +11,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import AdminRoute from "./components/admin/AdminRoute";
 import WelcomeBackModal from "./components/WelcomeBackModal";
+import MobileBottomNav from "./components/MobileBottomNav";
 import { useWelcomeBack } from "./hooks/useWelcomeBack";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -72,6 +73,7 @@ const AppContent = () => {
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <MobileBottomNav />
     </>
   );
 };

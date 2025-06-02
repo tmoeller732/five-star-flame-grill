@@ -7,6 +7,7 @@ import MenuContent from '../components/MenuContent';
 import FlameEffect from '../components/effects/FlameEffect';
 import useFlameEffect from '../hooks/useFlameEffect';
 import ReviewWidget from '../components/ReviewWidget';
+import MobileBottomNav from '../components/MobileBottomNav';
 
 const Menu = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -35,6 +36,7 @@ const Menu = () => {
       </main>
       
       <Footer />
+      <MobileBottomNav />
     </>
   );
 };
