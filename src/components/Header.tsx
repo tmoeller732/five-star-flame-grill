@@ -112,8 +112,8 @@ const Header = () => {
               </Link>
             )}
 
-            {/* Left navigation items - spaced wider apart */}
-            <nav className="hidden md:flex space-x-10 mr-36">
+            {/* Left navigation items - moved closer to logo */}
+            <nav className="hidden md:flex space-x-10 mr-20">
               <Link to="/" className="nav-item group">
                 <div className="relative">
                   <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
@@ -140,8 +140,13 @@ const Header = () => {
               </Link>
             </nav>
 
-            {/* Right navigation items - spaced wider apart */}
-            <nav className="hidden md:flex space-x-6 ml-36 items-center">
+            {/* Right navigation items - added language toggle next to first item */}
+            <nav className="hidden md:flex space-x-6 ml-20 items-center">
+              {/* Language Toggle moved to right side */}
+              <div className="nav-item">
+                <LanguageToggle />
+              </div>
+              
               <div className="nav-item group">
                 <OrderDropdown />
               </div>
@@ -161,11 +166,6 @@ const Header = () => {
                   </span>
                 </div>
               </Link>
-              
-              {/* Language Toggle */}
-              <div className="nav-item">
-                <LanguageToggle />
-              </div>
               
               {/* Admin Panel Link - only show for admin users */}
               {isAdmin && (
