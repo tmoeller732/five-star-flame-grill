@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCart } from '../../contexts/CartContext';
 import { useAuth } from '../../contexts/AuthContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -15,6 +16,7 @@ import { validateSpecialInstructions } from '../../utils/security';
 const CheckoutForm = () => {
   const { state, clearCart, getCartTotal } = useCart();
   const { user } = useAuth();
+  const { t } = useLanguage();
   const { toast } = useToast();
   const navigate = useNavigate();
   
@@ -142,49 +144,49 @@ const CheckoutForm = () => {
 
   return (
     <Card className="p-6 bg-card border-gray-700">
-      <h2 className="text-2xl font-bold text-grill-gold mb-6">Order Details</h2>
+      <h2 className="text-2xl font-bold text-grill-gold mb-6">{t('checkout.orderDetails')}</h2>
       
       <div className="mb-6 p-4 bg-gray-800 rounded-lg border border-gray-600">
-        <h3 className="font-semibold text-grill-gold mb-2">Ordering as:</h3>
+        <h3 className="font-semibold text-grill-gold mb-2">{t('checkout.orderingAs')}</h3>
         <p className="text-white">{user?.email}</p>
         <p className="text-sm text-gray-400">
-          Update your profile information in your account settings if needed.
+          {t('checkout.updateProfile')}
         </p>
       </div>
       
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <Label htmlFor="specialInstructions" className="text-white">
-            Special Instructions (Optional)
+            {t('checkout.specialInstructions')}
           </Label>
           <Textarea
             id="specialInstructions"
             value={specialInstructions}
             onChange={handleSpecialInstructionsChange}
             className="bg-gray-800 border-gray-600 text-white"
-            placeholder="Any special requests, dietary restrictions, or cooking preferences... (max 500 characters)"
+            placeholder={t('checkout.specialInstructionsPlaceholder')}
             rows={3}
             maxLength={500}
           />
           <p className="text-xs text-gray-400 mt-1">
-            {specialInstructions.length}/500 characters
+            {specialInstructions.length}/500 {t('checkout.characters')}
           </p>
         </div>
 
         <div className="bg-gray-800 p-4 rounded-lg border border-gray-600">
-          <h3 className="font-semibold text-grill-gold mb-2">Estimated Wait Time</h3>
+          <h3 className="font-semibold text-grill-gold mb-2">{t('checkout.estimatedWaitTime')}</h3>
           <p className="text-grill-gold text-lg font-semibold">
-            {calculateWaitTime(cartTotal + (cartTotal * 0.06625))} minutes
+            {calculateWaitTime(cartTotal + (cartTotal * 0.06625))} {t('checkout.minutes')}
           </p>
           <p className="text-gray-300 text-sm mt-1">
-            Based on your order total of ${(cartTotal + (cartTotal * 0.06625)).toFixed(2)}
+            {t('checkout.basedOnTotal')} ${(cartTotal + (cartTotal * 0.06625)).toFixed(2)}
           </p>
         </div>
 
         <div className="bg-gray-800 p-4 rounded-lg border border-gray-600">
-          <h3 className="font-semibold text-grill-gold mb-2">Payment Information</h3>
+          <h3 className="font-semibold text-grill-gold mb-2">{t('checkout.paymentInfo')}</h3>
           <p className="text-gray-300 text-sm">
-            Payment will be collected upon pickup. We accept cash and all major credit cards.
+            {t('checkout.paymentDescription')}
           </p>
         </div>
 
@@ -193,7 +195,7 @@ const CheckoutForm = () => {
           disabled={isSubmitting}
           className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black font-semibold py-3"
         >
-          {isSubmitting ? 'Processing Order...' : 'Place Order'}
+          {isSubmitting ? t('checkout.processing') : t('checkout.placeOrder')}
         </Button>
       </form>
     </Card>

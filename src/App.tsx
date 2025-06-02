@@ -7,6 +7,7 @@ import { Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { CartProvider } from "./contexts/CartContext";
 import { AuthProvider } from "./contexts/AuthContext";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import AdminRoute from "./components/admin/AdminRoute";
 import WelcomeBackModal from "./components/WelcomeBackModal";
@@ -79,11 +80,13 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <HelmetProvider>
       <AuthProvider>
-        <CartProvider>
-          <TooltipProvider>
-            <AppContent />
-          </TooltipProvider>
-        </CartProvider>
+        <LanguageProvider>
+          <CartProvider>
+            <TooltipProvider>
+              <AppContent />
+            </TooltipProvider>
+          </CartProvider>
+        </LanguageProvider>
       </AuthProvider>
     </HelmetProvider>
   </QueryClientProvider>

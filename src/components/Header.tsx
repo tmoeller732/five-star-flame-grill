@@ -7,6 +7,8 @@ import { supabase } from '@/integrations/supabase/client';
 import OrderDropdown from './OrderDropdown';
 import ScrollingBanner from './ScrollingBanner';
 import CartDialog from './cart/CartDialog';
+import LanguageToggle from './LanguageToggle';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -16,6 +18,7 @@ const Header = () => {
   const location = useLocation();
   const { getItemCount } = useCart();
   const { user } = useAuth();
+  const { t } = useLanguage();
 
   // Check if user is admin
   useEffect(() => {
@@ -115,7 +118,7 @@ const Header = () => {
                 <div className="relative">
                   <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
                   <span className={`font-medium font-bold text-lg px-4 py-2 rounded transition-all duration-300 hover:text-grill-gold ${isActive('/') ? 'text-grill-gold' : 'text-white'}`}>
-                    Home
+                    {t('nav.home')}
                   </span>
                 </div>
               </Link>
@@ -123,7 +126,7 @@ const Header = () => {
                 <div className="relative">
                   <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
                   <span className={`font-medium font-bold text-lg px-4 py-2 rounded transition-all duration-300 hover:text-grill-gold ${isActive('/about') ? 'text-grill-gold' : 'text-white'}`}>
-                    About
+                    {t('nav.about')}
                   </span>
                 </div>
               </Link>
@@ -131,7 +134,7 @@ const Header = () => {
                 <div className="relative">
                   <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
                   <span className={`font-medium font-bold text-lg px-4 py-2 rounded transition-all duration-300 hover:text-grill-gold ${isActive('/menu') ? 'text-grill-gold' : 'text-white'}`}>
-                    Menu
+                    {t('nav.menu')}
                   </span>
                 </div>
               </Link>
@@ -146,7 +149,7 @@ const Header = () => {
                 <div className="relative">
                   <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
                   <span className={`font-medium font-bold text-lg px-4 py-2 rounded transition-all duration-300 hover:text-grill-gold ${isActive('/blog') ? 'text-grill-gold' : 'text-white'}`}>
-                    Blog
+                    {t('nav.blog')}
                   </span>
                 </div>
               </Link>
@@ -154,10 +157,15 @@ const Header = () => {
                 <div className="relative">
                   <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
                   <span className={`font-medium font-bold text-lg px-4 py-2 rounded transition-all duration-300 hover:text-grill-gold ${isActive('/contact') ? 'text-grill-gold' : 'text-white'}`}>
-                    Contact
+                    {t('nav.contact')}
                   </span>
                 </div>
               </Link>
+              
+              {/* Language Toggle */}
+              <div className="nav-item">
+                <LanguageToggle />
+              </div>
               
               {/* Admin Panel Link - only show for admin users */}
               {isAdmin && (
@@ -165,7 +173,7 @@ const Header = () => {
                   <div className="relative">
                     <Flame size={20} className="absolute -left-6 top-1/2 -translate-y-1/2 text-grill-gold opacity-0 group-hover:opacity-100 transition-all duration-300 animate-flame" />
                     <span className={`font-medium font-bold text-lg px-4 py-2 rounded transition-all duration-300 hover:text-grill-gold ${isActive('/admin') ? 'text-grill-gold' : 'text-white'}`}>
-                      Admin
+                      {t('nav.admin')}
                     </span>
                   </div>
                 </Link>
@@ -218,7 +226,7 @@ const Header = () => {
                 onClick={closeMobileMenu}
               >
                 <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
-                Home
+                {t('nav.home')}
               </Link>
               <Link 
                 to="/about" 
@@ -226,7 +234,7 @@ const Header = () => {
                 onClick={closeMobileMenu}
               >
                 <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
-                About
+                {t('nav.about')}
               </Link>
               <Link 
                 to="/menu" 
@@ -234,7 +242,7 @@ const Header = () => {
                 onClick={closeMobileMenu}
               >
                 <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
-                Menu
+                {t('nav.menu')}
               </Link>
               <Link 
                 to="/order" 
@@ -242,7 +250,7 @@ const Header = () => {
                 onClick={closeMobileMenu}
               >
                 <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
-                Order
+                {t('nav.order')}
               </Link>
               <Link 
                 to="/blog" 
@@ -250,7 +258,7 @@ const Header = () => {
                 onClick={closeMobileMenu}
               >
                 <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
-                Blog
+                {t('nav.blog')}
               </Link>
               <Link 
                 to="/contact" 
@@ -258,8 +266,13 @@ const Header = () => {
                 onClick={closeMobileMenu}
               >
                 <Flame size={18} className="mr-2 text-grill-gold animate-flame" />
-                Contact
+                {t('nav.contact')}
               </Link>
+              
+              {/* Language Toggle in Mobile Menu */}
+              <div className="px-4 py-2">
+                <LanguageToggle />
+              </div>
               
               {/* Mobile Admin Link - only show for admin users */}
               {isAdmin && (
@@ -269,17 +282,17 @@ const Header = () => {
                   onClick={closeMobileMenu}
                 >
                   <Shield size={18} className="mr-2 text-grill-gold" />
-                  Admin Panel
+                  {t('nav.admin')}
                 </Link>
               )}
               
-              {/* Mobile Cart - Remove the onClick={closeMobileMenu} to prevent interference */}
+              {/* Mobile Cart */}
               <CartDialog>
                 <button 
                   className="font-bold text-lg transition-colors hover:text-grill-gold px-4 py-2 rounded text-white flex items-center"
                 >
                   <ShoppingCart size={18} className="mr-2 text-grill-gold" />
-                  Cart {cartItemCount > 0 && `(${cartItemCount})`}
+                  {t('nav.cart')} {cartItemCount > 0 && `(${cartItemCount})`}
                 </button>
               </CartDialog>
               
@@ -290,7 +303,7 @@ const Header = () => {
                 onClick={closeMobileMenu}
               >
                 <User size={18} className="mr-2 text-grill-gold" />
-                {user ? 'Account' : 'Sign In'}
+                {user ? t('nav.account') : t('nav.signIn')}
               </Link>
             </nav>
           </div>
