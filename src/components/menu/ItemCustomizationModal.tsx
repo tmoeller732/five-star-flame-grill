@@ -40,6 +40,13 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
           { id: 'hard-roll', name: 'Hard Roll', price: 0, category: 'Bread Choice' },
           { id: 'croissant', name: 'Croissant', price: 0, category: 'Bread Choice' },
           { id: 'bagel', name: 'Bagel', price: 0, category: 'Bread Choice' },
+        ],
+        'Make it a Meal': [
+          { id: 'meal', name: 'Hash Brown + 20oz Coffee', price: 2.99, category: 'Make it a Meal', type: 'checkbox' },
+        ],
+        'Add-ons': [
+          { id: 'hash-brown', name: 'Hash Brown', price: 1.50, category: 'Add-ons', type: 'checkbox' },
+          { id: 'avocado', name: 'Avocado', price: 1.99, category: 'Add-ons', type: 'checkbox' },
         ]
       };
     }
@@ -57,6 +64,14 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
           { id: 'hard-roll', name: 'Hard Roll', price: 0, category: 'Bread Choice' },
           { id: 'croissant', name: 'Croissant', price: 0, category: 'Bread Choice' },
           { id: 'bagel', name: 'Bagel', price: 0, category: 'Bread Choice' },
+        ],
+        'Make it a Meal': [
+          { id: 'meal', name: 'Hash Brown + 20oz Coffee', price: 2.99, category: 'Make it a Meal', type: 'checkbox' },
+        ],
+        'Add-ons': [
+          { id: 'hash-brown', name: 'Hash Brown', price: 1.50, category: 'Add-ons', type: 'checkbox' },
+          { id: 'extra-meat', name: 'Extra Meat', price: 1.99, category: 'Add-ons', type: 'checkbox' },
+          { id: 'avocado', name: 'Avocado', price: 1.99, category: 'Add-ons', type: 'checkbox' },
         ]
       };
     }
@@ -68,6 +83,13 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
           { id: 'hard-roll', name: 'Hard Roll', price: 0, category: 'Bread Choice' },
           { id: 'croissant', name: 'Croissant', price: 0, category: 'Bread Choice' },
           { id: 'bagel', name: 'Bagel', price: 0, category: 'Bread Choice' },
+        ],
+        'Make it a Meal': [
+          { id: 'meal', name: 'Hash Brown + 20oz Coffee', price: 2.99, category: 'Make it a Meal', type: 'checkbox' },
+        ],
+        'Add-ons': [
+          { id: 'hash-brown', name: 'Hash Brown', price: 1.50, category: 'Add-ons', type: 'checkbox' },
+          { id: 'avocado', name: 'Avocado', price: 1.99, category: 'Add-ons', type: 'checkbox' },
         ]
       };
     }
@@ -79,13 +101,28 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
           { id: 'hard-roll', name: 'Hard Roll', price: 0, category: 'Bread Choice' },
           { id: 'croissant', name: 'Croissant', price: 0, category: 'Bread Choice' },
           { id: 'bagel', name: 'Bagel', price: 0, category: 'Bread Choice' },
+        ],
+        'Make it a Meal': [
+          { id: 'meal', name: 'Hash Brown + 20oz Coffee', price: 2.99, category: 'Make it a Meal', type: 'checkbox' },
+        ],
+        'Add-ons': [
+          { id: 'hash-brown', name: 'Hash Brown', price: 1.50, category: 'Add-ons', type: 'checkbox' },
+          { id: 'avocado', name: 'Avocado', price: 1.99, category: 'Add-ons', type: 'checkbox' },
         ]
       };
     }
 
-    // #5 CLASSIC BREAKFAST PLATE - no options
+    // #5 CLASSIC BREAKFAST PLATE
     if (item.id === 5) {
-      return {};
+      return {
+        'Make it a Meal': [
+          { id: 'meal', name: 'Hash Brown + 20oz Coffee', price: 2.99, category: 'Make it a Meal', type: 'checkbox' },
+        ],
+        'Add-ons': [
+          { id: 'hash-brown', name: 'Hash Brown', price: 1.50, category: 'Add-ons', type: 'checkbox' },
+          { id: 'avocado', name: 'Avocado', price: 1.99, category: 'Add-ons', type: 'checkbox' },
+        ]
+      };
     }
 
     // #6 BREAKFAST PLATE W/MEAT
@@ -96,44 +133,30 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
           { id: 'sausage', name: 'Sausage', price: 0, category: 'Meat Choice' },
           { id: 'chorizo', name: 'Chorizo', price: 0, category: 'Meat Choice' },
           { id: 'pork-roll', name: 'Pork Roll', price: 0, category: 'Meat Choice' },
+        ],
+        'Make it a Meal': [
+          { id: 'meal', name: 'Hash Brown + 20oz Coffee', price: 2.99, category: 'Make it a Meal', type: 'checkbox' },
+        ],
+        'Add-ons': [
+          { id: 'hash-brown', name: 'Hash Brown', price: 1.50, category: 'Add-ons', type: 'checkbox' },
+          { id: 'extra-meat', name: 'Extra Meat', price: 1.99, category: 'Add-ons', type: 'checkbox' },
+          { id: 'avocado', name: 'Avocado', price: 1.99, category: 'Add-ons', type: 'checkbox' },
         ]
       };
     }
 
-    // #7 BAGEL WITH BUTTER - no options
+    // #7 BAGEL WITH BUTTER - no meal option, no add-ons
     if (item.id === 7) {
       return {};
     }
 
-    // #8 BAGEL WITH CREAM CHEESE - no options
+    // #8 BAGEL WITH CREAM CHEESE - no meal option, no add-ons
     if (item.id === 8) {
       return {};
     }
 
     // #9 HOME FRIES - no options
     if (item.id === 9) {
-      return {};
-    }
-
-    // #10 HASH BROWN - no options
-    if (item.id === 10) {
-      return {};
-    }
-
-    // #11 EXTRA MEAT
-    if (item.id === 11) {
-      return {
-        'Meat Choice': [
-          { id: 'bacon', name: 'Bacon', price: 0, category: 'Meat Choice' },
-          { id: 'sausage', name: 'Sausage', price: 0, category: 'Meat Choice' },
-          { id: 'chorizo', name: 'Chorizo', price: 0, category: 'Meat Choice' },
-          { id: 'pork-roll', name: 'Pork Roll', price: 0, category: 'Meat Choice' },
-        ]
-      };
-    }
-
-    // #12 AVOCADO - no options
-    if (item.id === 12) {
       return {};
     }
   }

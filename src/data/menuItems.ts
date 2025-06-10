@@ -76,30 +76,6 @@ export const MENU_ITEMS: MenuItemProps[] = [
     imageUrl: "", 
     category: "breakfast" 
   },
-  { 
-    id: 10, 
-    name: "#10 HASH BROWN", 
-    description: "Crispy shredded potato patty", 
-    price: 1.50, 
-    imageUrl: "", 
-    category: "breakfast" 
-  },
-  { 
-    id: 11, 
-    name: "#11 EXTRA MEAT", 
-    description: "Additional serving of breakfast meat", 
-    price: 1.99, 
-    imageUrl: "", 
-    category: "breakfast" 
-  },
-  { 
-    id: 12, 
-    name: "#12 AVOCADO", 
-    description: "Fresh sliced avocado", 
-    price: 1.99, 
-    imageUrl: "", 
-    category: "breakfast" 
-  },
   
   // Lunch/Dinner Menu
   { 
