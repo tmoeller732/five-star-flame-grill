@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import {
   Dialog,
@@ -54,11 +55,17 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
     // #2 EGG & CHEESE W/MEAT
     if (item.id === 2) {
       return {
-        'Meat Choice': [
-          { id: 'bacon', name: 'Bacon', price: 0, category: 'Meat Choice' },
-          { id: 'sausage', name: 'Sausage', price: 0, category: 'Meat Choice' },
-          { id: 'chorizo', name: 'Chorizo', price: 0, category: 'Meat Choice' },
-          { id: 'pork-roll', name: 'Pork Roll', price: 0, category: 'Meat Choice' },
+        'Meat Choice (Required)': [
+          { id: 'bacon', name: 'Bacon', price: 0, category: 'Meat Choice (Required)' },
+          { id: 'sausage', name: 'Sausage', price: 0, category: 'Meat Choice (Required)' },
+          { id: 'chorizo', name: 'Chorizo', price: 0, category: 'Meat Choice (Required)' },
+          { id: 'pork-roll', name: 'Pork Roll', price: 0, category: 'Meat Choice (Required)' },
+        ],
+        'Additional Meat': [
+          { id: 'extra-bacon', name: 'Add Bacon', price: 1.99, category: 'Additional Meat', type: 'checkbox' },
+          { id: 'extra-sausage', name: 'Add Sausage', price: 1.99, category: 'Additional Meat', type: 'checkbox' },
+          { id: 'extra-chorizo', name: 'Add Chorizo', price: 1.99, category: 'Additional Meat', type: 'checkbox' },
+          { id: 'extra-pork-roll', name: 'Add Pork Roll', price: 1.99, category: 'Additional Meat', type: 'checkbox' },
         ],
         'Bread Choice': [
           { id: 'hard-roll', name: 'Hard Roll', price: 0, category: 'Bread Choice' },
@@ -70,7 +77,6 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
         ],
         'Add-ons': [
           { id: 'hash-brown', name: 'Hash Brown', price: 1.50, category: 'Add-ons', type: 'checkbox' },
-          { id: 'extra-meat', name: 'Extra Meat', price: 1.99, category: 'Add-ons', type: 'checkbox' },
           { id: 'avocado', name: 'Avocado', price: 1.99, category: 'Add-ons', type: 'checkbox' },
         ]
       };
@@ -128,18 +134,23 @@ const getCustomizationOptions = (item: MenuItemProps): Record<string, Customizat
     // #6 BREAKFAST PLATE W/MEAT
     if (item.id === 6) {
       return {
-        'Meat Choice': [
-          { id: 'bacon', name: 'Bacon', price: 0, category: 'Meat Choice' },
-          { id: 'sausage', name: 'Sausage', price: 0, category: 'Meat Choice' },
-          { id: 'chorizo', name: 'Chorizo', price: 0, category: 'Meat Choice' },
-          { id: 'pork-roll', name: 'Pork Roll', price: 0, category: 'Meat Choice' },
+        'Meat Choice (Required)': [
+          { id: 'bacon', name: 'Bacon', price: 0, category: 'Meat Choice (Required)' },
+          { id: 'sausage', name: 'Sausage', price: 0, category: 'Meat Choice (Required)' },
+          { id: 'chorizo', name: 'Chorizo', price: 0, category: 'Meat Choice (Required)' },
+          { id: 'pork-roll', name: 'Pork Roll', price: 0, category: 'Meat Choice (Required)' },
+        ],
+        'Additional Meat': [
+          { id: 'extra-bacon', name: 'Add Bacon', price: 1.99, category: 'Additional Meat', type: 'checkbox' },
+          { id: 'extra-sausage', name: 'Add Sausage', price: 1.99, category: 'Additional Meat', type: 'checkbox' },
+          { id: 'extra-chorizo', name: 'Add Chorizo', price: 1.99, category: 'Additional Meat', type: 'checkbox' },
+          { id: 'extra-pork-roll', name: 'Add Pork Roll', price: 1.99, category: 'Additional Meat', type: 'checkbox' },
         ],
         'Make it a Meal': [
           { id: 'meal', name: 'Hash Brown + 20oz Coffee', price: 2.99, category: 'Make it a Meal', type: 'checkbox' },
         ],
         'Add-ons': [
           { id: 'hash-brown', name: 'Hash Brown', price: 1.50, category: 'Add-ons', type: 'checkbox' },
-          { id: 'extra-meat', name: 'Extra Meat', price: 1.99, category: 'Add-ons', type: 'checkbox' },
           { id: 'avocado', name: 'Avocado', price: 1.99, category: 'Add-ons', type: 'checkbox' },
         ]
       };
@@ -324,6 +335,23 @@ const ItemCustomizationModal = ({ item, children }: ItemCustomizationModalProps)
 
   const customizationOptions = getCustomizationOptions(item);
 
+  // Set default selections when modal opens
+  React.useEffect(() => {
+    if (isCustomizationOpen) {
+      const defaults: Record<string, CustomizationOption> = {};
+      
+      // Set hard roll as default for bread choice
+      if (customizationOptions['Bread Choice']) {
+        const hardRoll = customizationOptions['Bread Choice'].find(opt => opt.id === 'hard-roll');
+        if (hardRoll) {
+          defaults['Bread Choice'] = hardRoll;
+        }
+      }
+      
+      setSelectedCustomizations(defaults);
+    }
+  }, [isCustomizationOpen, customizationOptions]);
+
   const handleCustomizationChange = (category: string, option: CustomizationOption) => {
     setSelectedCustomizations(prev => ({
       ...prev,
@@ -353,7 +381,21 @@ const ItemCustomizationModal = ({ item, children }: ItemCustomizationModalProps)
     return (item.price + customizationsPrice + checkboxPrice) * quantity;
   };
 
+  const isValidToAddToCart = () => {
+    // Check if required meat selection is made for items that require it
+    const hasMeatRequirement = Object.keys(customizationOptions).some(key => key.includes('(Required)'));
+    if (hasMeatRequirement) {
+      const hasSelectedRequiredMeat = Object.keys(selectedCustomizations).some(key => key.includes('(Required)'));
+      return hasSelectedRequiredMeat;
+    }
+    return true;
+  };
+
   const handleAddToCart = () => {
+    if (!isValidToAddToCart()) {
+      return; // Don't add to cart if validation fails
+    }
+
     const radioCustomizations: CartCustomization[] = Object.values(selectedCustomizations).map(option => ({
       id: option.id,
       name: option.name,
@@ -420,7 +462,10 @@ const ItemCustomizationModal = ({ item, children }: ItemCustomizationModalProps)
 
             {Object.entries(customizationOptions).map(([categoryName, options]) => (
               <div key={categoryName}>
-                <h4 className="font-medium mb-3">{categoryName}</h4>
+                <h4 className="font-medium mb-3">
+                  {categoryName}
+                  {categoryName.includes('(Required)') && <span className="text-red-500 ml-1">*</span>}
+                </h4>
                 
                 {/* Check if this category should use checkboxes */}
                 {options.some(opt => opt.type === 'checkbox') ? (
@@ -505,10 +550,14 @@ const ItemCustomizationModal = ({ item, children }: ItemCustomizationModalProps)
 
             <Button 
               onClick={handleAddToCart}
-              className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black"
+              disabled={!isValidToAddToCart()}
+              className="w-full bg-grill-gold hover:bg-grill-orange text-grill-black disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Add to Cart
             </Button>
+            {!isValidToAddToCart() && (
+              <p className="text-red-500 text-sm text-center">Please select required options</p>
+            )}
           </div>
         </DialogContent>
       </Dialog>
